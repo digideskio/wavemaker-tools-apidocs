@@ -87,6 +87,12 @@
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
+				<groupId>javax.persistence</groupId>
+				<artifactId>persistence-api</artifactId>
+				<version>1.0.2</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
 				<groupId>com.wavemaker.studio</groupId>
 				<artifactId>wavemaker-runtime</artifactId>
 				<version>${wavemaker.studio.version}</version>
@@ -105,5 +111,4 @@
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
 	</dependencies>
-
 </project>

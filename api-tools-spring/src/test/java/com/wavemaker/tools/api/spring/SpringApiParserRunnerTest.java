@@ -52,7 +52,6 @@ public class SpringApiParserRunnerTest {
                             document.getName() + ".json"),
                     Charset.defaultCharset());
         }
-        System.out.println("File created at:" + outputDir.getCanonicalPath());
     }
 
 }

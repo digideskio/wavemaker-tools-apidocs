@@ -22,8 +22,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
-		<!-- dependency> <groupId>com.wavemaker.studio</groupId> <artifactId>wavemaker-runtime</artifactId> 
-			</dependency -->
+		<dependency>
+			<groupId>com.wavemaker.studio</groupId>
+			<artifactId>wavemaker-runtime</artifactId> 
+		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -32,6 +34,9 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+		</dependency>
 	</dependencies>
-
 </project>
