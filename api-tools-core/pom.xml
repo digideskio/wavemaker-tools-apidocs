@@ -1,30 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
-		<groupId>com.wavemaker.apidocs</groupId>
+		<groupId>com.wavemaker.tools</groupId>
 		<artifactId>wavemaker-apidocs-tools</artifactId>
 		<version>1.0.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-
 	<artifactId>api-tools-core</artifactId>
 	<packaging>jar</packaging>
-
-	<!-- name>core</name -->
-
 	<dependencies>
 		<dependency>
-			<groupId>com.wavemaker.apidocs</groupId>
+			<groupId>com.wavemaker.tools</groupId>
 			<artifactId>wavemaker-elasticsearch</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.wavemaker.apidocs</groupId>
+			<groupId>com.wavemaker.tools</groupId>
 			<artifactId>wavemaker-apidocs-core</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -38,14 +29,5 @@
 			<groupId>com.wordnik</groupId>
 			<artifactId>swagger-annotations</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-commons</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-elasticsearch</artifactId>
-		</dependency>
 	</dependencies>
-
 </project>
