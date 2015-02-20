@@ -1,0 +1,53 @@
+/**
+ * Copyright (c) 2013 - 2014 WaveMaker, Inc. All Rights Reserved.
+ *
+ * This software is the confidential and proprietary information of WaveMaker, Inc.
+ * You shall not disclose such Confidential Information and shall use it only in accordance
+ * with the terms of the source code license agreement you entered into with WaveMaker, Inc.
+ */
+package com.wavemaker.tools.apidocs.tools.spring.parser;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.wavemaker.tools.apidocs.tools.core.parser.EndPointsParser;
+import com.wavemaker.tools.apidocs.tools.core.parsers.impl.AbstractApiParser;
+
+/**
+ * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
+ * @since 13/11/14
+ */
+public class SpringApiParser extends AbstractApiParser {
+
+    public SpringApiParser(final Class<?> type) {
+        super(type);
+    }
+
+    @Override
+    protected Set<String> getProduces() {
+        return new HashSet<>(Arrays.asList(type.getAnnotation(RequestMapping.class).produces()));
+    }
+
+    @Override
+    protected Set<String> getConsumes() {
+        return new HashSet<>(Arrays.asList(type.getAnnotation(RequestMapping.class).consumes()));
+    }
+
+    @Override
+    protected String getRelativePath() {
+        return type.getAnnotation(RequestMapping.class).value()[0];// fix this.
+    }
+
+    @Override
+    protected EndPointsParser getEndPointParser(final Class<?> typeToParse) {
+        return new SpringEndPointsParser(typeToParse);
+    }
+
+    @Override
+    public boolean isRestApi() {
+        return type.isAnnotationPresent(RequestMapping.class);
+    }
+}

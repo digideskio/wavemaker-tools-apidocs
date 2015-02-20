@@ -3,16 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.wavemaker.tools</groupId>
+		<groupId>com.wavemaker</groupId>
 		<artifactId>wavemaker-apidocs</artifactId>
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>wavemaker-apidocs-tools</artifactId>
 	<packaging>pom</packaging>
 	<modules>
-		<module>api-tools-core</module>
-		<module>api-tools-spring</module>
-		<module>api-tools-factory</module>
+		<module>wavemaker-apidocs-tools-core</module>
+		<module>wavemaker-apidocs-tools-spring</module>
+		<module>wavemaker-apidocs-tools-factory</module>
 	</modules>
 	<properties>
 		<wavemaker.studio.version>7.1.0</wavemaker.studio.version>
@@ -20,7 +20,7 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.wavemaker.tools</groupId>
+				<groupId>com.wavemaker</groupId>
 				<artifactId>wavemaker-apidocs-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
