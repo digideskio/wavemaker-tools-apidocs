@@ -6,6 +6,9 @@
 		<version>1.0.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
+	<properties>
+        	<main.basedir>${basedir}/../../..</main.basedir>
+	</properties>
 	<artifactId>wavemaker-apidocs-tools-spring</artifactId>
 	<packaging>jar</packaging>
 	<dependencies>

@@ -15,6 +15,7 @@
 		<module>wavemaker-apidocs-tools-factory</module>
 	</modules>
 	<properties>
+        	<main.basedir>${basedir}/../..</main.basedir>
 		<wavemaker.studio.version>7.1.0</wavemaker.studio.version>
 	</properties>
 	<dependencyManagement>
