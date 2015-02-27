@@ -44,7 +44,7 @@ public class ApiDocument extends BaseDocument {
 	@Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private String baseURL;
 
-    private transient List<EndPoint> endPoints;
+    private List<EndPoint> endPoints;
 
     private List<Model> models;
     
