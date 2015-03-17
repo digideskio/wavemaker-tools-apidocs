@@ -17,6 +17,7 @@ public enum ParameterType {
     PATH,
     BODY,
     FORM,
-    HEADER
+    HEADER,
+    COOKIE
 
 }

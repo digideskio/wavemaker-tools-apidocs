@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.wavemaker.tools.apidocs.tools.core.config.ApiParserConfiguration;
-import com.wavemaker.tools.apidocs.tools.core.config.ApiParserConfigurationBuilder;
-import com.wavemaker.tools.apidocs.tools.core.runner.ApiParserRunner;
-import com.wavemaker.tools.apidocs.tools.spring.SpringApiParserRunner;
+import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfiguration;
+import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfigurationBuilder;
+import com.wavemaker.tools.apidocs.tools.parser.runner.SwaggerParser;
+import com.wavemaker.tools.apidocs.tools.spring.SpringSwaggerParser;
 import com.wavemaker.tools.apidocs.tools.spring.resolver.MultiPartFileResolver;
 import com.wavemaker.tools.apidocs.tools.spring.resolver.MultiPartRequestResolver;
 import com.wavemaker.tools.apidocs.tools.spring.resolver.ServletMetaTypesResolver;
@@ -26,7 +26,7 @@ import com.wavemaker.tools.apidocs.tools.spring.resolver.ServletMetaTypesResolve
  */
 public class ApiParserFactory {
 
-    public static ApiParserRunner newSpringApiParserRunner(final ApiParserConfigurationBuilder builder) {
+    public static SwaggerParser newSpringApiParserRunner(final ApiParserConfigurationBuilder builder) {
 
         builder.addParameterResolver(MultipartFile.class, MultiPartFileResolver.getInstance());
         builder.addParameterResolver(MultipartHttpServletRequest.class, MultiPartRequestResolver.getInstance());
@@ -35,14 +35,14 @@ public class ApiParserFactory {
         return newApiParserRunner(FrameworkType.SPRING, builder);
     }
 
-    public static ApiParserRunner newApiParserRunner(
+    public static SwaggerParser newApiParserRunner(
             final FrameworkType frameworkType, final ApiParserConfigurationBuilder builder) {
         return newApiParserRunner(frameworkType, builder.build());
     }
 
-    public static ApiParserRunner newApiParserRunner(
+    public static SwaggerParser newApiParserRunner(
             FrameworkType frameworkType, final ApiParserConfiguration configuration) {
 
-        return new SpringApiParserRunner(configuration);
+        return new SpringSwaggerParser(configuration);
     }
 }

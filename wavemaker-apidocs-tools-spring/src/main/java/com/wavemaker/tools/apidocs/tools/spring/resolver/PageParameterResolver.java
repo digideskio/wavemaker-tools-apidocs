@@ -11,14 +11,14 @@ import java.lang.annotation.Annotation;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.wavemaker.tools.apidocs.tools.core.builder.ParameterBuilder;
-import com.wavemaker.tools.apidocs.tools.core.builder.PrimitiveType;
 import com.wavemaker.tools.apidocs.tools.core.model.FoundTypesWrapper;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 import com.wavemaker.tools.apidocs.tools.core.model.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.model.ParameterType;
-import com.wavemaker.tools.apidocs.tools.core.resolver.ParameterResolver;
-import com.wavemaker.tools.apidocs.tools.core.util.DataTypeUtil;
+import com.wavemaker.tools.apidocs.tools.parser.builder.ParameterBuilder;
+import com.wavemaker.tools.apidocs.tools.parser.builder.PrimitiveType;
+import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
+import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>

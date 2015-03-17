@@ -14,7 +14,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.wavemaker</groupId>
-			<artifactId>wavemaker-apidocs-tools-core</artifactId>
+			<artifactId>wavemaker-apidocs-tools-parser</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -25,10 +25,19 @@
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${javax.servlet.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 </project>

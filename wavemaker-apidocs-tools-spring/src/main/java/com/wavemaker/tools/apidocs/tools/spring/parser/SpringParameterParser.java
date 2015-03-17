@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ValueConstants;
 
-import com.wavemaker.tools.apidocs.tools.core.builder.ParameterBuilder;
 import com.wavemaker.tools.apidocs.tools.core.model.ParameterType;
-import com.wavemaker.tools.apidocs.tools.core.parsers.impl.AbstractParameterParser;
+import com.wavemaker.tools.apidocs.tools.parser.builder.ParameterBuilder;
+import com.wavemaker.tools.apidocs.tools.parser.impl.AbstractParameterParser;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>

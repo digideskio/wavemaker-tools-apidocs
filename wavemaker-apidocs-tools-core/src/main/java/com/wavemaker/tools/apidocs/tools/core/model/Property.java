@@ -9,10 +9,6 @@ package com.wavemaker.tools.apidocs.tools.core.model;
 
 import java.util.List;
 
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldIndex;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 6/11/14
@@ -21,32 +17,24 @@ public class Property {
 
     private String id;
     
-    @Field(type = FieldType.String)
     private String name;
     
     private String type;
     
     private List<String> typeArguments;
     
-    @Field(type = FieldType.String)
     private String fullyQualifiedType;
     
-    @Field(type = FieldType.String)
     private String format;
     
-    @Field(type = FieldType.Boolean)
     private boolean isRequired;
     
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private String description;
     
-    @Field(type = FieldType.Object)
     private List<String> allowableValues;
     
-    @Field(type = FieldType.Double)
     private double minimum;
     
-    @Field(type = FieldType.Double)
     private double maximum;
 
 

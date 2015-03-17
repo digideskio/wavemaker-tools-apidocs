@@ -1,0 +1,79 @@
+/**
+ * Copyright (c) 2013 - 2014 WaveMaker, Inc. All Rights Reserved.
+ *
+ * This software is the confidential and proprietary information of WaveMaker, Inc.
+ * You shall not disclose such Confidential Information and shall use it only in accordance
+ * with the terms of the source code license agreement you entered into with WaveMaker, Inc.
+ */
+package com.wavemaker.tools.apidocs.tools.parser.impl;
+
+import java.util.Set;
+
+import com.wavemaker.tools.apidocs.tools.core.annotation.WMAccessVisibility;
+import com.wavemaker.tools.apidocs.tools.core.model.Resource;
+import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Path;
+import com.wavemaker.tools.apidocs.tools.parser.context.ApiParserContext;
+import com.wavemaker.tools.apidocs.tools.parser.parser.ApiParser;
+import com.wavemaker.tools.apidocs.tools.parser.parser.PathsParser;
+import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
+import com.wordnik.swagger.annotations.Api;
+
+/**
+ * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
+ * @since 13/11/14
+ */
+public abstract class AbstractApiParser implements ApiParser {
+
+    protected final Class<?> type;
+
+    protected AbstractApiParser(Class<?> type) {
+        this.type = type;
+    }
+
+    @Override
+    public Resource parse() {
+        Resource resource = new Resource();
+
+        if (type.isAnnotationPresent(Api.class)) {
+            resource.setDescription(type.getAnnotation(Api.class).description());
+        }
+        resource.setName(DataTypeUtil.getUniqueClassName(type));
+        resource.setFullyQualifiedName(type.getName());
+
+        ApiParserContext.getContext().setResourcePath(getResourcePath());
+        resource.setVersion(""); // XXX think it later?
+
+        // For now it is commented, because we dropped BaseModel dependency while refactoring.
+        // resource.setEditable(ParserRunnerContext.getInstance().getParserConfiguration().isEditable());
+
+        //for end points use
+        if (type.isAnnotationPresent(WMAccessVisibility.class)) {
+            ApiParserContext.getContext().setSpecifier(type.getAnnotation(WMAccessVisibility.class).value());
+        }
+        ApiParserContext.getContext().setConsumes(getConsumes());
+        ApiParserContext.getContext().setProduces(getProduces());
+
+        resource.setPathMap(getPathParser(type).parse());
+        return resource;
+    }
+
+    protected abstract Set<String> getProduces();
+
+    protected abstract Set<String> getConsumes();
+
+    /**
+     * It should return the path of the api.
+     *
+     * @return path of the api.
+     */
+    protected abstract String getResourcePath();
+
+    /**
+     * It should give the {@link PathsParser} instance.
+     *
+     * @param typeToParse class to parse for {@link Path}.
+     * @return {@link PathsParser} instance.
+     */
+    protected abstract PathsParser getPathParser(Class<?> typeToParse);
+
+}

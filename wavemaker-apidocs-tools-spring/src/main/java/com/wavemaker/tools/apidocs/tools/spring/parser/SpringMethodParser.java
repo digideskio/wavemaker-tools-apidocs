@@ -16,12 +16,13 @@ import java.util.HashSet;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.wavemaker.tools.apidocs.tools.core.model.HTTPMethod;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 import com.wavemaker.tools.apidocs.tools.core.model.ResponseMessage;
-import com.wavemaker.tools.apidocs.tools.core.parser.ParameterParser;
-import com.wavemaker.tools.apidocs.tools.core.parsers.impl.AbstractMethodParser;
+import com.wavemaker.tools.apidocs.tools.parser.impl.AbstractMethodParser;
+import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -61,13 +62,23 @@ public class SpringMethodParser extends AbstractMethodParser {
     }
 
     @Override
-    public String getPath() {
+    public String[] getPaths() {
         RequestMapping requestMapping = methodToParse.getAnnotation(RequestMapping.class);
-        String[] paths = requestMapping.value();
-        if (ArrayUtils.isNotEmpty(paths)) {
-            return requestMapping.value()[0];
+        return requestMapping.value();
+    }
+
+    @Override
+    public String[] getHttpMethods() {
+        RequestMapping requestMapping = methodToParse.getAnnotation(RequestMapping.class);
+        RequestMethod[] requestMethods = requestMapping.method();
+        if (ArrayUtils.isNotEmpty(requestMethods)) {
+            String[] methods = new String[requestMethods.length];
+            for (int i = 0; i < requestMethods.length; i++) {
+                methods[i] = requestMethods[i].name();
+            }
+            return methods;
         } else {
-            return "";
+            return new String[]{"GET"}; // send default methods
         }
     }
 }

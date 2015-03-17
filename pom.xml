@@ -11,13 +11,14 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>wavemaker-apidocs-tools-core</module>
-		<module>wavemaker-apidocs-tools-spring</module>
-		<module>wavemaker-apidocs-tools-factory</module>
-	</modules>
+        <module>wavemaker-apidocs-tools-parser</module>
+        <module>wavemaker-apidocs-tools-spring</module>
+        <module>wavemaker-apidocs-tools-factory</module>
+    </modules>
 	<properties>
         	<main.basedir>${basedir}/../..</main.basedir>
 		<wavemaker.studio.version>7.1.0</wavemaker.studio.version>
-	</properties>
+    </properties>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

@@ -13,8 +13,8 @@ import java.util.Set;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wavemaker.tools.apidocs.tools.core.parser.EndPointsParser;
-import com.wavemaker.tools.apidocs.tools.core.parsers.impl.AbstractApiParser;
+import com.wavemaker.tools.apidocs.tools.parser.impl.AbstractApiParser;
+import com.wavemaker.tools.apidocs.tools.parser.parser.PathsParser;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -37,13 +37,13 @@ public class SpringApiParser extends AbstractApiParser {
     }
 
     @Override
-    protected String getRelativePath() {
+    protected String getResourcePath() {
         return type.getAnnotation(RequestMapping.class).value()[0];// fix this.
     }
 
     @Override
-    protected EndPointsParser getEndPointParser(final Class<?> typeToParse) {
-        return new SpringEndPointsParser(typeToParse);
+    protected PathsParser getPathParser(final Class<?> typeToParse) {
+        return new SpringPathsParser(typeToParse);
     }
 
     @Override

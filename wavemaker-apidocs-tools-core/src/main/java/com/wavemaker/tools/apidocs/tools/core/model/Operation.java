@@ -10,69 +10,41 @@ package com.wavemaker.tools.apidocs.tools.core.model;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldIndex;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.elasticsearch.annotations.NestedField;
-import org.springframework.data.elasticsearch.annotations.Parent;
-
-import com.wavemaker.tools.apidocs.core.model.DocType;
-import com.wavemaker.tools.elasticsearch.base.BaseDocument;
-import com.wavemaker.tools.elasticsearch.model.DocumentType;
-
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 6/11/14
  */
-@Document(indexName = "apidoc-registry", type = DocType.APIDOCS_OPERATION, indexStoreType = "memory", shards = 1, replicas = 0, refreshInterval = "-1")
-public class Operation extends BaseDocument {
+public class Operation {
 
-	@Field(type = FieldType.String)
-	@Parent(type = DocType.APIDOCS_ENDPOINT)
 	private String parentId;
 
-	@Field(type = FieldType.String)
     private String name;
 
-	@Field(type = FieldType.String, index =FieldIndex.not_analyzed)
     private String description;
 
-	@Field(type = FieldType.String, index =FieldIndex.not_analyzed)
     private String notes;
 
-	@Field(type = FieldType.String, index =FieldIndex.not_analyzed)
     private String docLink;
 
-	@Field(type = FieldType.String, index =FieldIndex.not_analyzed)
     private String completePath;
 
-	@Field(type = FieldType.Boolean)
     private boolean isDeprecated;
 
-	@Field(type = FieldType.String)
 	private HTTPMethod httpMethod;
 
-	@Field(type = FieldType.String)
     private Set<String> produces;
 
-	@Field(type = FieldType.String)
     private Set<String> consumes;
 
-	@NestedField(dotSuffix = "", type = FieldType.Object)
 	private List<Parameter> parameters;
 
-	@Field(type = FieldType.String)
     private String returnType;
 
-	@Field(type = FieldType.Boolean)
     private boolean isReturnTypeArray = false;
 
-	@NestedField(dotSuffix = "", type = FieldType.Object)
     private List<ResponseMessage> responseMessages;
 
-	@NestedField(dotSuffix = "", type = FieldType.Object)
     private OperationPolicy policy;
 
 	
@@ -243,12 +215,6 @@ public class Operation extends BaseDocument {
 	public void setReturnTypeArray(boolean isReturnTypeArray) {
 		this.isReturnTypeArray = isReturnTypeArray;
 	}
-
-	@Override
-	public DocumentType getType() {
-		return DocumentType.APIDOCS_OPERATION;
-	}
-
 
 	public OperationPolicy getPolicy() {
 		return policy;

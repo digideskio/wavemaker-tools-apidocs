@@ -14,7 +14,7 @@ import java.util.List;
 import com.wavemaker.tools.apidocs.tools.core.model.FoundTypesWrapper;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 import com.wavemaker.tools.apidocs.tools.core.model.Parameter;
-import com.wavemaker.tools.apidocs.tools.core.resolver.ParameterResolver;
+import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>

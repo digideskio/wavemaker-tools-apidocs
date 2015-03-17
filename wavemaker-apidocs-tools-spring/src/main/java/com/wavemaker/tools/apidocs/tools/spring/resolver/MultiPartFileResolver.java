@@ -20,13 +20,14 @@ import java.util.List;
 
 import org.springframework.http.MediaType;
 
-import com.wavemaker.tools.apidocs.tools.core.builder.PrimitiveType;
+import com.google.common.collect.Sets;
 import com.wavemaker.tools.apidocs.tools.core.model.FoundTypesWrapper;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 import com.wavemaker.tools.apidocs.tools.core.model.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.model.TypeInformationWrapper;
-import com.wavemaker.tools.apidocs.tools.core.resolver.ParameterResolver;
-import com.wavemaker.tools.apidocs.tools.core.util.CollectionUtil;
+import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
+import com.wavemaker.tools.apidocs.tools.parser.builder.PrimitiveType;
+import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 import com.wavemaker.tools.apidocs.tools.spring.parser.SpringParameterParser;
 
 /**
@@ -58,7 +59,7 @@ public class MultiPartFileResolver implements ParameterResolver {
         parameter.setResolver(type.getName());
 
         // setting consumes to multi part form
-        operation.setConsumes(CollectionUtil.asSet(MediaType.MULTIPART_FORM_DATA_VALUE));
+        operation.setConsumes(Sets.newHashSet(MediaType.MULTIPART_FORM_DATA_VALUE));
 
         return new FoundTypesWrapper<>(CollectionUtil.asList(parameter));
     }

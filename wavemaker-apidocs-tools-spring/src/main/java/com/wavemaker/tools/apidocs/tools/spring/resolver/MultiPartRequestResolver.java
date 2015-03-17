@@ -13,11 +13,11 @@ import java.util.List;
 
 import org.springframework.http.MediaType;
 
+import com.google.common.collect.Sets;
 import com.wavemaker.tools.apidocs.tools.core.model.FoundTypesWrapper;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 import com.wavemaker.tools.apidocs.tools.core.model.Parameter;
-import com.wavemaker.tools.apidocs.tools.core.resolver.ParameterResolver;
-import com.wavemaker.tools.apidocs.tools.core.util.CollectionUtil;
+import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -41,7 +41,7 @@ public class MultiPartRequestResolver implements ParameterResolver {
             final int index, final Class<?> type, final Annotation[] annotations,
             final Operation operation) {
         // setting consumes
-        operation.setConsumes(CollectionUtil.asSet(MediaType.MULTIPART_FORM_DATA_VALUE));
+        operation.setConsumes(Sets.newHashSet(MediaType.MULTIPART_FORM_DATA_VALUE));
         return new FoundTypesWrapper<List<Parameter>>(Collections.EMPTY_LIST);
     }
 }

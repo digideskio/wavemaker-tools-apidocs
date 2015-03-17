@@ -7,29 +7,20 @@
  */
 package com.wavemaker.tools.apidocs.tools.core.model;
 
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldIndex;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 6/11/14
  */
 public class Parameter extends Property {
 	
-	@Field(type = FieldType.Boolean)
     private boolean isArray;
 	
-	@Field(type = FieldType.Integer)
     private int index;
 	
-	@Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private String docLink;
 	
-	@Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private String defaultValue;
 
-	@Field(type = FieldType.Object)
     private ParameterType parameterType;
 	
 	
