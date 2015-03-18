@@ -70,6 +70,10 @@ public class TypesContext {
         }
     }
 
+    public Map<String, Model> getDefinitionsMap() {
+        return definitionsMap;
+    }
+
     /**
      * It will give you a unique name for each type.
      * <p/>

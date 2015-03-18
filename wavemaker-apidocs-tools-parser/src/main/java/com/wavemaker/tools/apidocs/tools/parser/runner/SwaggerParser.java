@@ -130,6 +130,7 @@ public abstract class SwaggerParser {
             LOGGER.error("Error while generating documents", e);
             throw new TimeOutException("Error while generating documents", e);
         }
+        swagger.setDefinitions(SwaggerParserContext.getInstance().getTypesContext().getDefinitionsMap());
         SwaggerParserContext.destroyContext();
         return swagger;
     }

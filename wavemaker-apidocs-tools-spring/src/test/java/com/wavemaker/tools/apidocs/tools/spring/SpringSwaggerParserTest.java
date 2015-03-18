@@ -8,13 +8,11 @@
 package com.wavemaker.tools.apidocs.tools.spring;
 
 import java.io.File;
-import java.nio.charset.Charset;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.google.common.io.Files;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wavemaker.tools.apidocs.tools.core.model.Swagger;
 import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfigurationBuilder;
 import com.wavemaker.tools.apidocs.tools.parser.runner.SwaggerParser;
@@ -37,7 +35,7 @@ public class SpringSwaggerParserTest {
         builder.setClassScanner(new PackageClassScanner(packageName));
         builder.addExcludeModelPackage("java");
         builder.setExcludeSubPackages(true);
-        builder.setDefaultThreadPool();
+//        builder.setDefaultThreadPool();
         SwaggerParser runner = new SpringSwaggerParser(builder.build());
         Swagger swagger = runner.generate();
 
@@ -47,9 +45,11 @@ public class SpringSwaggerParserTest {
         if (!outputDir.exists()) {
             outputDir.mkdir();
         }
-        Files.write(new GsonBuilder().setPrettyPrinting().create().toJson(swagger), new File(outputDir,
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(new File(outputDir, "swagger.json"), swagger);
+       /* Files.write(;, new File(outputDir,
                         "swagger.json"),
-                Charset.defaultCharset());
+                Charset.defaultCharset());*/
     }
 
 }

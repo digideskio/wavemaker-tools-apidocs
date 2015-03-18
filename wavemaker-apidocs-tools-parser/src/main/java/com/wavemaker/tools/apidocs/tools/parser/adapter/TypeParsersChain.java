@@ -10,8 +10,10 @@ package com.wavemaker.tools.apidocs.tools.parser.adapter;
 import java.util.List;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
+import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.exception.ModelParsingException;
+import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -36,8 +38,9 @@ public class TypeParsersChain {
                 if (parserResponse.isAccepted()) {
                     return parserResponse.getModel();
                 }
-
             }
+        } else {
+            return new RefModel(DataTypeUtil.getUniqueClassName(type));
         }
         throw new ModelParsingException("No type adapter found for type:" + type);
     }

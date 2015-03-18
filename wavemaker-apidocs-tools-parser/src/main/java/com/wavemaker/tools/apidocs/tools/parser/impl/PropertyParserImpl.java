@@ -49,8 +49,14 @@ public class PropertyParserImpl implements PropertyParser {
         Property property;
         TypeInformation typeInfo = TypeUtil.extractTypeInformation(type);
 
-        if (isArray(typeInfo)) {
-            property = feedArrayProperty(typeInfo);
+        if (typeInfo.getTypeArguments().isEmpty()) {
+            if (isArray(typeInfo)) {
+                property = feedArrayProperty(typeInfo);
+            } else if (Map.class.isAssignableFrom(typeInfo.getActualType())) {
+                property = feedMapProperty(typeInfo);
+            } else {
+                property = feedObjectProperty(typeInfo.getActualType());
+            }
         } else {
             Class<?> actualType = typeInfo.getActualType();
             if (DataTypeUtil.isEnum(actualType) || String.class.equals(actualType)) {
@@ -63,8 +69,6 @@ public class PropertyParserImpl implements PropertyParser {
                 property = new UUIDProperty();
             } else if (Date.class.equals(actualType)) {
                 property = new DateProperty();
-            } else if (Map.class.isAssignableFrom(actualType)) {
-                property = feedMapProperty(typeInfo);
             } else {
                 property = feedObjectProperty(actualType);
             }

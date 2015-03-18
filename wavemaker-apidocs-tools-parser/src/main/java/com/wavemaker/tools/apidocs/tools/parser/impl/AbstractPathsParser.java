@@ -89,7 +89,7 @@ public abstract class AbstractPathsParser implements PathsParser {
                 }
 
                 for (final String method : methodParser.getHttpMethods()) { // setting operation for each method.
-                    path.set(method, operation);
+                    path.set(method.toLowerCase(), operation);
                 }
             }
         }
