@@ -10,9 +10,9 @@ package com.wavemaker.tools.apidocs.tools.parser.resolver;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
-import com.wavemaker.tools.apidocs.tools.core.model.FoundTypesWrapper;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
-import com.wavemaker.tools.apidocs.tools.core.model.Parameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
+
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -20,6 +20,6 @@ import com.wavemaker.tools.apidocs.tools.core.model.Parameter;
  */
 public interface ParameterResolver {
 
-    FoundTypesWrapper<List<Parameter>> resolveParameter(
+    List<Parameter> resolveParameter(
             int index, Class<?> type, Annotation[] annotations, final Operation operation);
 }

@@ -8,7 +8,7 @@
 package com.wavemaker.tools.apidocs.tools.parser.parser;
 
 
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.properties.Property;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>

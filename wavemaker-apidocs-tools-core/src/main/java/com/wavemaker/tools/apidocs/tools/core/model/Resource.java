@@ -9,9 +9,6 @@ package com.wavemaker.tools.apidocs.tools.core.model;
 
 import java.util.Map;
 
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Path;
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Tag;
-
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>

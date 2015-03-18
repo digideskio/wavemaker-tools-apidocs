@@ -9,7 +9,7 @@ package com.wavemaker.tools.apidocs.tools.parser.adapter;
 
 import java.util.List;
 
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Model;
+import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.exception.ModelParsingException;
 

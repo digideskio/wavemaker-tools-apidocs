@@ -8,15 +8,14 @@
 package com.wavemaker.tools.apidocs.tools.spring.resolver;
 
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import org.springframework.http.MediaType;
 
-import com.google.common.collect.Sets;
-import com.wavemaker.tools.apidocs.tools.core.model.FoundTypesWrapper;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
-import com.wavemaker.tools.apidocs.tools.core.model.Parameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 
 /**
@@ -35,13 +34,13 @@ public class MultiPartRequestResolver implements ParameterResolver {
     public static MultiPartRequestResolver getInstance() {
         return MultiPartRequestResolverHolder.INSTANCE;
     }
-    
+
     @Override
-    public FoundTypesWrapper<List<Parameter>> resolveParameter(
+    public List<Parameter> resolveParameter(
             final int index, final Class<?> type, final Annotation[] annotations,
             final Operation operation) {
         // setting consumes
-        operation.setConsumes(Sets.newHashSet(MediaType.MULTIPART_FORM_DATA_VALUE));
-        return new FoundTypesWrapper<List<Parameter>>(Collections.EMPTY_LIST);
+        operation.setConsumes(Arrays.asList(MediaType.MULTIPART_FORM_DATA_VALUE));
+        return Collections.EMPTY_LIST;
     }
 }

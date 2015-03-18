@@ -20,7 +20,7 @@ import org.apache.commons.lang3.ClassUtils;
 
 import com.google.common.collect.Lists;
 import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.properties.*;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.*;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.exception.PropertyParserException;

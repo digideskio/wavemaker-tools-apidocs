@@ -23,7 +23,7 @@ public class TypeParserChainBuilder {
         parserList.add(new SubstituteTypeParser());
         parserList.add(new ReflectionTypeParser());
 
-        return new TypeParsersChain(parserList, modelMap);
+        return new TypeParsersChain(parserList);
     }
 
     public static TypeParsersChain defaultChain() {

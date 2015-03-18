@@ -10,8 +10,8 @@ package com.wavemaker.tools.apidocs.tools.parser.impl;
 import java.util.Set;
 
 import com.wavemaker.tools.apidocs.tools.core.annotation.WMAccessVisibility;
+import com.wavemaker.tools.apidocs.tools.core.model.Path;
 import com.wavemaker.tools.apidocs.tools.core.model.Resource;
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Path;
 import com.wavemaker.tools.apidocs.tools.parser.context.ApiParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ApiParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PathsParser;

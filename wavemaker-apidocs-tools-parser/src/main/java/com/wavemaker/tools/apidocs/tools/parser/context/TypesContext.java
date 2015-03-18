@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Model;
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.RefModel;
+import com.wavemaker.tools.apidocs.tools.core.model.Model;
+import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.adapter.TypeParsersChain;
 import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;

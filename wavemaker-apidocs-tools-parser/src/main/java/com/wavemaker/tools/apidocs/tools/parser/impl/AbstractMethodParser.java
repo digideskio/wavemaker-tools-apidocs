@@ -19,21 +19,17 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.wavemaker.tools.apidocs.tools.core.annotation.WMAccessVisibility;
-import com.wavemaker.tools.apidocs.tools.core.model.FoundTypesWrapper;
-import com.wavemaker.tools.apidocs.tools.core.model.Parameter;
-import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
-import com.wavemaker.tools.apidocs.tools.core.model.TypeInformationWrapper;
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Operation;
+import com.wavemaker.tools.apidocs.tools.core.model.Operation;
+import com.wavemaker.tools.apidocs.tools.core.model.Response;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
-import com.wavemaker.tools.apidocs.tools.parser.builder.PrimitiveType;
 import com.wavemaker.tools.apidocs.tools.parser.context.ApiParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.MethodParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
+import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
-import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.MethodUtils;
-import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
@@ -100,15 +96,12 @@ public abstract class AbstractMethodParser implements MethodParser {
                         .isResolverExist(actualType)) { // doing with
                     ParameterResolver resolver = SwaggerParserContext.getInstance().getResolversContext()
                             .getResolver(actualType);
-                    final FoundTypesWrapper<List<Parameter>> foundTypesWrapper = resolver
+                    List<Parameter> parameterList = resolver
                             .resolveParameter(i, actualType, annotations[i], operation);
-                    parameters.addAll(foundTypesWrapper.getModel());
-                    addNewTypes(foundTypesWrapper.getFoundTypes());
+                    parameters.addAll(parameterList);
                 } else {
                     ParameterParser parser = getParameterParser(i, types[i], annotations[i]);
-                    TypeInformationWrapper<Parameter> parameterInfo = parser.parse();
-                    parameters.add(parameterInfo.getModel());
-                    addNewTypes(parameterInfo.getTypeInformation().getFoundTypes());
+                    parameters.add(parser.parse());
                 }
             }
         }
@@ -118,18 +111,10 @@ public abstract class AbstractMethodParser implements MethodParser {
     }
 
     protected void parseReturnType(Method method, Operation operation) {
-        Type genericReturnType = method.getGenericReturnType();
-        TypeInformation typeInformation = TypeUtil.extractTypeInformation(genericReturnType);
-
-        if (DataTypeUtil.isPrimitiveType(typeInformation.getActualType())) {
-            operation.response(DataTypeUtil.getPrimitiveType(typeInformation.getActualType()).getType());
-        } else if (typeInformation.isArray()) {
-            operation.setReturnType(PrimitiveType.ARRAY.getType());
-        } else {
-            operation.setReturnType(DataTypeUtil.getUniqueClassName(method.getReturnType()));
-        }
-        operation.setReturnTypeArguments(DataTypeUtil.getUniqueClassNames(typeInformation.getTypeArguments()));
-        addNewTypes(typeInformation.getFoundTypes());
+        Response response = new Response();
+        PropertyParser propertyParser = new PropertyParserImpl(method.getGenericReturnType());
+        response.schema(propertyParser.parse());
+        operation.response(200, response); // TODO add more responses
     }
 
 

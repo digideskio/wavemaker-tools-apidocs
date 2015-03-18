@@ -7,7 +7,7 @@
  */
 package com.wavemaker.tools.apidocs.tools.parser.adapter;
 
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Model;
+import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.impl.SubstituteReflectionModelParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ModelParser;

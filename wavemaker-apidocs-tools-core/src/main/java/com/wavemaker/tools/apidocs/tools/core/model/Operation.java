@@ -1,287 +1,269 @@
-/**
- * Copyright (c) 2013 - 2014 WaveMaker, Inc. All Rights Reserved.
- *
- * This software is the confidential and proprietary information of WaveMaker, Inc.
- * You shall not disclose such Confidential Information and shall use it only in accordance
- * with the terms of the source code license agreement you entered into with WaveMaker, Inc.
- */
 package com.wavemaker.tools.apidocs.tools.core.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
-/**
- * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
- * @since 6/11/14
- */
-public class Operation {
-
-	private String parentId;
-
-    private String name;
-
+public class Operation extends AbstractExtensibleEntity {
+    public static final String METHOD_IDENTIFIER_EXT = "METHOD_IDENTIFIER";
+    public static final String ACCESS_SPECIFIER_EXT = "ACCESS_SPECIFIER";
+    private List<String> tags;
+    private String summary;
     private String description;
+    private String operationId;
+    private List<Scheme> schemes;
+    private List<String> consumes;
+    private List<String> produces;
+    private List<Parameter> parameters = new ArrayList<Parameter>();
+    private Map<String, Response> responses;
+    private List<Map<String, List<String>>> security;
+    private String example;
+    private ExternalDocs externalDocs;
+    private Boolean deprecated;
 
-    private String notes;
-
-    private String docLink;
-
-    private String completePath;
-
-    private boolean isDeprecated;
-
-	private HTTPMethod httpMethod;
-
-    private Set<String> produces;
-
-    private Set<String> consumes;
-
-	private List<Parameter> parameters;
-
-    private String returnType;
-
-    private boolean isReturnTypeArray = false;
-
-    private List<ResponseMessage> responseMessages;
-
-    private OperationPolicy policy;
-
-	
-	// These should be added to OperationView Object
-    private List<String> returnTypeArguments;
-    private String accessSpecifier;
-    private String methodIdentifier;
-
-	
-	
-	public String getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
-
-	/**
-     * @return the method name.
-     * Must not be null
-     */
-    public final String getName() {
-        return name;
+    public Operation summary(String summary) {
+        this.setSummary(summary);
+        return this;
     }
 
-    /**
-     * Sets the Name.
-     */
-    public final void setName(String name) {
-        this.name = name;
+    public Operation description(String description) {
+        this.setDescription(description);
+        return this;
     }
 
-    /**
-     * @return the Description.
-     */
-    public final String getDescription() {
+    public Operation operationId(String operationId) {
+        this.setOperationId(operationId);
+        return this;
+    }
+
+    public Operation schemes(List<Scheme> schemes) {
+        this.setSchemes(schemes);
+        return this;
+    }
+
+    public Operation scheme(Scheme scheme) {
+        this.addScheme(scheme);
+        return this;
+    }
+
+    public Operation consumes(List<String> consumes) {
+        this.setConsumes(consumes);
+        return this;
+    }
+
+    public Operation consumes(String consumes) {
+        this.addConsumes(consumes);
+        return this;
+    }
+
+    public Operation produces(List<String> produces) {
+        this.setProduces(produces);
+        return this;
+    }
+
+    public Operation produces(String produces) {
+        this.addProduces(produces);
+        return this;
+    }
+
+    public Operation security(SecurityRequirement security) {
+        this.addSecurity(security.getName(), security.getScopes());
+        return this;
+    }
+
+    public Operation parameter(Parameter parameter) {
+        this.addParameter(parameter);
+        return this;
+    }
+
+    public Operation response(int key, Response response) {
+        this.addResponse(String.valueOf(key), response);
+        return this;
+    }
+
+    public Operation defaultResponse(Response response) {
+        this.addResponse("default", response);
+        return this;
+    }
+
+    public Operation tags(List<String> tags) {
+        this.setTags(tags);
+        return this;
+    }
+
+    public Operation tag(String tag) {
+        this.addTag(tag);
+        return this;
+    }
+
+    public Operation externalDocs(ExternalDocs externalDocs) {
+        this.setExternalDocs(externalDocs);
+        return this;
+    }
+
+    public Operation deprecated(Boolean deprecated) {
+        this.setDeprecated(deprecated);
+        return this;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public void addTag(String tag) {
+        if (this.tags == null)
+            this.tags = new ArrayList<>();
+        this.tags.add(tag);
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public String getDescription() {
         return description;
     }
 
-    /**
-     * Sets the Description.
-     */
-    public final void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    /**
-     * @return the external documentation link for this method.
-     */
-    public final String getDocLink() {
-        return docLink;
+    public String getOperationId() {
+        return operationId;
     }
 
-    /**
-     * Sets the Doc Link.
-     */
-    public final void setDocLink(String docLink) {
-        this.docLink = docLink;
+    public void setOperationId(String operationId) {
+        this.operationId = operationId;
     }
 
-    /**
-     * @return if this method is deprecated.
-     */
-    public final boolean isDeprecated() {
-        return isDeprecated;
+    public List<Scheme> getSchemes() {
+        return schemes;
     }
 
-    /**
-     * Sets the Is Deprecated.
-     */
-    public void setDeprecated(boolean isDeprecated) {
-		this.isDeprecated = isDeprecated;
-	}
-
-    /**
-     * @return the {@link HTTPMethod} that this method supports.
-     * Must not be null
-     */
-    public final HTTPMethod getHttpMethod() {
-        return httpMethod;
+    public void setSchemes(List<Scheme> schemes) {
+        this.schemes = schemes;
     }
 
-    /**
-     * Sets the HttpMethod.
-     */
-    public final void setHttpMethod(HTTPMethod httpMethod) {
-        this.httpMethod = httpMethod;
+    public void addScheme(Scheme scheme) {
+        if (this.schemes == null)
+            this.schemes = new ArrayList<Scheme>();
+        this.schemes.add(scheme);
     }
 
-    /**
-     * @return the list of {@link String} those this {@link Operation} object produces.
-     * It Must not be null
-     */
-	public Set<String> getProduces() {
-		return produces;
-	}
-
-	public void setProduces(Set<String> produces) {
-		this.produces = produces;
-	}
-
-	/**
-     * @return the list of {@link String} those this {@link Operation} object consumes.
-     * It Must not be null
-     */
-	public Set<String> getConsumes() {
-		return consumes;
-	}
-
-	public void setConsumes(Set<String> consumes) {
-		this.consumes = consumes;
-	}
-
-	/**
-     * @return the list of {@link Parameter} asssociated with this {@link Operation} object.
-     * It Must not be null
-     */
-	public List<Parameter> getParameters() {
-		return parameters;
-	}
-
-	public void setParameters(List<Parameter> parameters) {
-		this.parameters = parameters;
-	}
-
-	/**
-     * @return the type of the method response.
-     * It Must not be null
-     */
-	public String getReturnType() {
-		return returnType;
-	}
-
-	public void setReturnType(String returnType) {
-		this.returnType = returnType;
-	}
-
-	/**
-     * @return the list of {@link ResponseMessage} those this {@link Operation} object associated with.
-     * May be null
-     */
-	public List<ResponseMessage> getResponseMessages() {
-		return responseMessages;
-	}
-
-	public void setResponseMessages(List<ResponseMessage> responseMessages) {
-		this.responseMessages = responseMessages;
-	}
-
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
-	/**
-	 * @return 'true' if the return type of this method object is array.
-	 * Default value is 'false'.
-	 *
-	 */
-	public boolean isReturnTypeArray() {
-		return isReturnTypeArray;
-	}
-
-	public void setReturnTypeArray(boolean isReturnTypeArray) {
-		this.isReturnTypeArray = isReturnTypeArray;
-	}
-
-	public OperationPolicy getPolicy() {
-		return policy;
-	}
-
-	public void setPolicy(OperationPolicy policy) {
-		this.policy = policy;
-	}
-
-	public String getCompletePath() {
-		return completePath;
-	}
-
-	public void setCompletePath(String completePath) {
-		this.completePath = completePath;
-	}
-		
-	public List<String> getReturnTypeArguments() {
-        return returnTypeArguments;
-	}
-
-    public void setReturnTypeArguments(final List<String> returnTypeArguments) {
-        this.returnTypeArguments = returnTypeArguments;
+    public List<String> getConsumes() {
+        return consumes;
     }
 
-    public String getAccessSpecifier() {
-        return accessSpecifier;
+    public void setConsumes(List<String> consumes) {
+        this.consumes = consumes;
     }
 
-    public void setAccessSpecifier(final AccessSpecifier specifier) {
-        this.setAccessSpecifier(specifier.name());
+    public void addConsumes(String consumes) {
+        if (this.consumes == null)
+            this.consumes = new ArrayList<String>();
+        this.consumes.add(consumes);
     }
 
-    public void setAccessSpecifier(final String accessSpecifier) {
-        this.accessSpecifier = accessSpecifier;
-    }
-    
-    public String getMethodIdentifier() {
-        return methodIdentifier;
+    public List<String> getProduces() {
+        return produces;
     }
 
+    public void setProduces(List<String> produces) {
+        this.produces = produces;
+    }
+
+    public void addProduces(String produces) {
+        if (this.produces == null)
+            this.produces = new ArrayList<String>();
+        this.produces.add(produces);
+    }
+
+    public List<Parameter> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(List<Parameter> parameters) {
+        this.parameters = parameters;
+    }
+
+    public void addParameter(Parameter parameter) {
+        if (this.parameters == null) {
+            this.parameters = new ArrayList<Parameter>();
+        }
+        this.parameters.add(parameter);
+    }
+
+    public Map<String, Response> getResponses() {
+        return responses;
+    }
+
+    public void setResponses(Map<String, Response> responses) {
+        this.responses = responses;
+    }
+
+    public void addResponse(String key, Response response) {
+        if (this.responses == null) {
+            this.responses = new HashMap<String, Response>();
+        }
+        this.responses.put(key, response);
+    }
+
+    public List<Map<String, List<String>>> getSecurity() {
+        return security;
+    }
+
+    public void setSecurity(List<Map<String, List<String>>> security) {
+        this.security = security;
+    }
+
+    public void addSecurity(String name, List<String> scopes) {
+        if (this.security == null)
+            this.security = new ArrayList<Map<String, List<String>>>();
+        Map<String, List<String>> req = new HashMap<String, List<String>>();
+        if (scopes == null)
+            scopes = new ArrayList<String>();
+        req.put(name, scopes);
+        this.security.add(req);
+    }
+
+    public ExternalDocs getExternalDocs() {
+        return externalDocs;
+    }
+
+    public void setExternalDocs(ExternalDocs value) {
+        this.externalDocs = value;
+    }
+
+    public Boolean isDeprecated() {
+        return deprecated;
+    }
+
+    public void setDeprecated(Boolean value) {
+        if (value == null || value.equals(Boolean.FALSE))
+            this.deprecated = null;
+        else
+            this.deprecated = value;
+    }
+
+    @JsonIgnore
     public void setMethodIdentifier(final String methodIdentifier) {
-        this.methodIdentifier = methodIdentifier;
+        addExtension(METHOD_IDENTIFIER_EXT, methodIdentifier);
     }
 
-
-	@Override
-	public String toString() {
-		  
-		StringBuilder toStrBuilder = new StringBuilder("Operation { name = '");
-		toStrBuilder.append(name).append('\'');
-		toStrBuilder.append(", description = '").append(description).append('\'');
-		toStrBuilder.append(", notes = '").append(notes).append('\'');
-		toStrBuilder.append(", docLink = '").append(docLink).append('\'');
-		toStrBuilder.append(", isDeprecated = '").append(isDeprecated).append('\'');
-		toStrBuilder.append(", httpMethod = '").append(httpMethod).append('\'');
-		toStrBuilder.append(", produces = '").append(produces).append('\'');
-		toStrBuilder.append(", consumes = '").append(consumes).append('\'');
-		toStrBuilder.append(", parameters = '").append(parameters).append('\'');
-		toStrBuilder.append(", returnType = '").append(returnType).append('\'');
-		toStrBuilder.append(", returnTypeArguments = '").append(returnTypeArguments).append('\'');
-		toStrBuilder.append(", accessSpecifier = '").append(accessSpecifier).append('\'');
-		toStrBuilder.append(", responseMessages = '").append(responseMessages).append('\'');
-		toStrBuilder.append(", policy = '").append(policy).append('\'');
-		toStrBuilder.append(", methodIdentifier = '").append(methodIdentifier).append('\'');
-		
-		return toStrBuilder.toString();
-	}
+    @JsonIgnore
+    public void setAccessSpecifier(final AccessSpecifier accessSpecifier) {
+        addExtension(ACCESS_SPECIFIER_EXT, accessSpecifier.name());
+    }
 }
-

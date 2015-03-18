@@ -10,14 +10,14 @@ package com.wavemaker.tools.apidocs.tools.parser.impl;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.reflections.ReflectionUtils;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
-import com.wavemaker.tools.apidocs.tools.core.model.Property;
-import com.wavemaker.tools.apidocs.tools.core.model.TypeInformationWrapper;
+import com.wavemaker.tools.apidocs.tools.core.model.ModelImpl;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ModelParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
@@ -29,7 +29,7 @@ import com.wordnik.swagger.annotations.ApiModel;
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 10/11/14
  */
-public class ReflectionModelParser extends AbstractFoundTypesParserContainer<Model> implements ModelParser {
+public class ReflectionModelParser implements ModelParser {
 
     protected final Class<?> modelClass;
 
@@ -38,13 +38,12 @@ public class ReflectionModelParser extends AbstractFoundTypesParserContainer<Mod
     }
 
     @Override
-    public Model parseInternal() {
+    public Model parse() {
         assertClass();
 
-        Model model = new Model();
+        ModelImpl model = new ModelImpl();
 
-        model.setId(getModelId());
-        model.setName(DataTypeUtil.getName(modelClass));
+        model.name(DataTypeUtil.getName(modelClass));
         if (modelClass.isAnnotationPresent(ApiModel.class)) {
             model.setDescription(modelClass.getAnnotation(ApiModel.class).description());
         }
@@ -57,42 +56,37 @@ public class ReflectionModelParser extends AbstractFoundTypesParserContainer<Mod
         return DataTypeUtil.getUniqueClassName(modelClass);
     }
 
-    protected List<Property> getModelProperties() {
-        List<Property> properties;
+    protected Map<String, Property> getModelProperties() {
+        Map<String, Property> propertyMap;
 
         if (modelClass.isInterface()) {
-            properties = parsePropertiesUsingGetters(modelClass);
+            propertyMap = parsePropertiesUsingGetters(modelClass);
         } else {
-            properties = parsePropertiesUsingFields(modelClass);
+            propertyMap = parsePropertiesUsingFields(modelClass);
         }
 
-        return properties;
+        return propertyMap;
     }
 
-    protected List<Property> parsePropertiesUsingGetters(Class<?> classToScan) {
-        List<Property> properties = new LinkedList<>();
+    protected Map<String, Property> parsePropertiesUsingGetters(Class<?> classToScan) {
+        Map<String, Property> properties = new LinkedHashMap<>();
 
         Collection<Method> methods = MethodUtils.findGetterMethods(classToScan);
 
         for (final Method method : methods) {
-            ReflectivePropertyParser propertyParser = new ReflectivePropertyParser(method.getGenericReturnType(),
-                    MethodUtils.getPropertyName(method.getName()));
-            TypeInformationWrapper<Property> propertyWrapper = propertyParser.parse();
-            properties.add(propertyWrapper.getModel());
-            addNewTypes(propertyWrapper.getTypeInformation().getFoundTypes());
+            PropertyParser propertyParser = new PropertyParserImpl(method.getGenericReturnType());
+            properties.put(MethodUtils.getPropertyName(method.getName()), propertyParser.parse());
         }
 
         return properties;
     }
 
-    protected List<Property> parsePropertiesUsingFields(Class<?> classToScan) {
-        List<Property> properties = new LinkedList<>();
+    protected Map<String, Property> parsePropertiesUsingFields(Class<?> classToScan) {
+        Map<String, Property> properties = new LinkedHashMap<>();
         Collection<Field> fields = ReflectionUtils.getAllFields(classToScan, NonStaticMemberPredicate.getInstance());
         for (Field field : fields) {
-            PropertyParser parser = new FieldPropertyParser(field);
-            final TypeInformationWrapper<Property> informationWrapper = parser.parse();
-            properties.add(informationWrapper.getModel());
-            addNewTypes(informationWrapper.getTypeInformation().getFoundTypes());
+            PropertyParser parser = new PropertyParserImpl(field.getGenericType());
+            properties.put(field.getName(), parser.parse());
         }
         return properties;
     }
@@ -103,4 +97,5 @@ public class ReflectionModelParser extends AbstractFoundTypesParserContainer<Mod
             throw new IllegalArgumentException("Invalid Model class");
         }
     }
+
 }

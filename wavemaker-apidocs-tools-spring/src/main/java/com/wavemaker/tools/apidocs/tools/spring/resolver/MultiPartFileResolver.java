@@ -20,13 +20,10 @@ import java.util.List;
 
 import org.springframework.http.MediaType;
 
-import com.google.common.collect.Sets;
-import com.wavemaker.tools.apidocs.tools.core.model.FoundTypesWrapper;
+import com.google.common.collect.Lists;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
-import com.wavemaker.tools.apidocs.tools.core.model.Parameter;
-import com.wavemaker.tools.apidocs.tools.core.model.TypeInformationWrapper;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
-import com.wavemaker.tools.apidocs.tools.parser.builder.PrimitiveType;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 import com.wavemaker.tools.apidocs.tools.spring.parser.SpringParameterParser;
 
@@ -45,22 +42,20 @@ public class MultiPartFileResolver implements ParameterResolver {
     }
 
     public static MultiPartFileResolver getInstance() {
-      return MultiPartFileResolverHolder.INSTANCE;
+        return MultiPartFileResolverHolder.INSTANCE;
     }
 
     @Override
-    public FoundTypesWrapper<List<Parameter>> resolveParameter(
+    public List<Parameter> resolveParameter(
             final int index, final Class<?> type, final Annotation[] annotations,
             final Operation operation) {
         SpringParameterParser parameterParser = new SpringParameterParser(index, type, annotations);
-        final TypeInformationWrapper<Parameter> parameterTypeInformationWrapper = parameterParser.parse();
-        Parameter parameter = parameterTypeInformationWrapper.getModel();
-        parameter.setType(PrimitiveType.FILE.getType());
-        parameter.setResolver(type.getName());
+        Parameter parameter = parameterParser.parse();
+        // TODO parameter.type(PrimitiveType.FILE.getType());
 
         // setting consumes to multi part form
-        operation.setConsumes(Sets.newHashSet(MediaType.MULTIPART_FORM_DATA_VALUE));
+        operation.setConsumes(Lists.newArrayList(MediaType.MULTIPART_FORM_DATA_VALUE));
 
-        return new FoundTypesWrapper<>(CollectionUtil.asList(parameter));
+        return CollectionUtil.asList(parameter);
     }
 }

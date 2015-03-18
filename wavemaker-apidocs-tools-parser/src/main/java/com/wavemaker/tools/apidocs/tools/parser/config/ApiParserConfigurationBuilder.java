@@ -40,6 +40,7 @@ public class ApiParserConfigurationBuilder {
     private final Set<ModelFilter> modelFilters = new LinkedHashSet<>();
     private int coreThreadPoolSize = 1; // default thread executor with '1'.
     private int maxThreadPoolSize = 1;
+    private String collectionFormat;
 
     public ApiParserConfigurationBuilder setClassLoader(final ClassLoader classLoader) {
         this.classLoader = classLoader;
@@ -108,6 +109,10 @@ public class ApiParserConfigurationBuilder {
         return this;
     }
 
+    public void setCollectionFormat(final String collectionFormat) {
+        this.collectionFormat = collectionFormat;
+    }
+
     public ApiParserConfiguration build() {
         if (classLoader == null) {
             this.classLoader = this.getClass().getClassLoader();
@@ -121,6 +126,7 @@ public class ApiParserConfigurationBuilder {
         }
         modelFiltersSet.addAll(modelFilters);
         return new ApiParserConfiguration(classLoader, classScanner, baseUrl, resolversContext, typeAdaptersConfig,
-                new ModelFilterConfig(modelFiltersSet), isApisEditable, coreThreadPoolSize, maxThreadPoolSize);
+                new ModelFilterConfig(modelFiltersSet), collectionFormat, isApisEditable, coreThreadPoolSize,
+                maxThreadPoolSize);
     }
 }

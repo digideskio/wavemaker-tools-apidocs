@@ -18,25 +18,29 @@ import com.wavemaker.tools.apidocs.tools.parser.scanner.ClassScanner;
  */
 public class ApiParserConfiguration {
 
-    private final ClassLoader classLoader;
-    private final ClassScanner classScanner;
-    private final String baseUrl;
-    private final ParameterResolvers resolversContext;
-    private final TypeAdaptersConfig typeAdaptersConfig;
-    private final ModelFilterConfig modelFilterConfig;
-    private final boolean isEditable;
-    private final int coreThreadPoolSize;
-    private final int maxThreadPoolSize;
+    ClassLoader classLoader;
+    ClassScanner classScanner;
+    String baseUrl;
+    ParameterResolvers resolversContext;
+    TypeAdaptersConfig typeAdaptersConfig;
+    ModelFilterConfig modelFilterConfig;
+    String collectionFormat;
+    boolean isEditable;
+    int coreThreadPoolSize;
+    int maxThreadPoolSize;
+
 
     public ApiParserConfiguration(
             final ClassLoader classLoader, final ClassScanner classScanner,
             final String baseUrl, final ParameterResolvers resolversContext,
             final TypeAdaptersConfig typeAdaptersConfig, final ModelFilterConfig modelFilterConfig,
-            final boolean isEditable, final int coreThreadPoolSize, final int maxThreadPoolSize) {
+            final String collectionFormat, final boolean isEditable, final int coreThreadPoolSize,
+            final int maxThreadPoolSize) {
         this.baseUrl = baseUrl;
         this.resolversContext = resolversContext;
         this.typeAdaptersConfig = typeAdaptersConfig;
         this.modelFilterConfig = modelFilterConfig;
+        this.collectionFormat = collectionFormat;
         this.isEditable = isEditable;
         this.coreThreadPoolSize = coreThreadPoolSize;
         this.maxThreadPoolSize = maxThreadPoolSize;
@@ -66,6 +70,10 @@ public class ApiParserConfiguration {
 
     public ModelFilterConfig getModelFilterConfig() {
         return modelFilterConfig;
+    }
+
+    public String getCollectionFormat() {
+        return collectionFormat;
     }
 
     public boolean isEditable() {

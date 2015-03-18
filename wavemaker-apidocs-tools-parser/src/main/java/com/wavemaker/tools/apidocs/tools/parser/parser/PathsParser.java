@@ -9,7 +9,7 @@ package com.wavemaker.tools.apidocs.tools.parser.parser;
 
 import java.util.Map;
 
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Path;
+import com.wavemaker.tools.apidocs.tools.core.model.Path;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>

@@ -11,14 +11,12 @@ import java.lang.annotation.Annotation;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.wavemaker.tools.apidocs.tools.core.model.FoundTypesWrapper;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
-import com.wavemaker.tools.apidocs.tools.core.model.Parameter;
-import com.wavemaker.tools.apidocs.tools.core.model.ParameterType;
-import com.wavemaker.tools.apidocs.tools.parser.builder.ParameterBuilder;
-import com.wavemaker.tools.apidocs.tools.parser.builder.PrimitiveType;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.IntegerProperty;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.StringProperty;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
-import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -26,39 +24,38 @@ import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
  */
 public class PageParameterResolver implements ParameterResolver {
     @Override
-    public FoundTypesWrapper<List<Parameter>> resolveParameter(
+    public List<Parameter> resolveParameter(
             final int index, final Class<?> type, final Annotation[] annotations,
             final Operation operation) {
         List<Parameter> parameters = new LinkedList<>();
 
-        ParameterBuilder page = getDefaultParameterBuilder(index, type);
+        QueryParameter page = getDefaultParameterBuilder(index, type);
         page.setName("page");
         page.setDefaultValue("0");
-        parameters.add(page.build());
+        parameters.add(page);
 
-        ParameterBuilder size = getDefaultParameterBuilder(index, type);
+        QueryParameter size = getDefaultParameterBuilder(index, type);
         size.setName("size");
         size.setDefaultValue("20");
-        parameters.add(size.build());
+        parameters.add(size);
 
-        ParameterBuilder sort = getDefaultParameterBuilder(index, type);
+        QueryParameter sort = getDefaultParameterBuilder(index, type);
         sort.setName("sort");
-        sort.setType(PrimitiveType.STRING);
-        parameters.add(sort.build());
+        sort.property(new StringProperty());
+        parameters.add(sort);
 
 
-        return new FoundTypesWrapper<>(parameters);
+        return parameters;
     }
 
-    private ParameterBuilder getDefaultParameterBuilder(int index, Class<?> type) {
-        ParameterBuilder builder = new ParameterBuilder();
-        builder.setResolver(type.getName());
-        builder.setIndex(index);
-        builder.setParameterType(ParameterType.QUERY);
+    private QueryParameter getDefaultParameterBuilder(int index, Class<?> type) {
+        QueryParameter builder = new QueryParameter();
+        // builder.setResolver(type.getName());
+//        builder.setIndex(index);
         builder.setRequired(false);
-        builder.setType(PrimitiveType.INT_64);
+        builder.property(new IntegerProperty());
         builder.setEditable(false);
-        builder.setId(DataTypeUtil.getName(type));
+//        builder.setId(DataTypeUtil.getName(type));
 
         return builder;
     }

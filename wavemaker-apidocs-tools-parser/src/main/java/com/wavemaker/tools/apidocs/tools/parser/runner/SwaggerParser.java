@@ -20,11 +20,10 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wavemaker.tools.apidocs.tools.core.model.ApiDocuments;
+import com.wavemaker.tools.apidocs.tools.core.model.Path;
 import com.wavemaker.tools.apidocs.tools.core.model.Resource;
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Path;
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Swagger;
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Tag;
+import com.wavemaker.tools.apidocs.tools.core.model.Swagger;
+import com.wavemaker.tools.apidocs.tools.core.model.Tag;
 import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfiguration;
 import com.wavemaker.tools.apidocs.tools.parser.context.ApiParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
@@ -52,9 +51,9 @@ public abstract class SwaggerParser {
     }
 
     /**
-     * It will generates {@link ApiDocuments} from given {@link ApiParserConfiguration}.
+     * It will generates {@link Swagger} from given {@link ApiParserConfiguration}.
      *
-     * @return {@link ApiDocuments}
+     * @return {@link Swagger}
      * @throws SwaggerParserException
      */
     public Swagger generate() throws SwaggerParserException {

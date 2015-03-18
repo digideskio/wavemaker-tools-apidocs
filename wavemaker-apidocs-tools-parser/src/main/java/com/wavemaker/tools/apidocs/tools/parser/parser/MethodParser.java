@@ -7,7 +7,7 @@
  */
 package com.wavemaker.tools.apidocs.tools.parser.parser;
 
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Operation;
+import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>

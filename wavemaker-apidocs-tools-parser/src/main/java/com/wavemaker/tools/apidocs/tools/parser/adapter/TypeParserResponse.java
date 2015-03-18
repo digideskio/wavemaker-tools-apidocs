@@ -1,6 +1,6 @@
 package com.wavemaker.tools.apidocs.tools.parser.adapter;
 
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Model;
+import com.wavemaker.tools.apidocs.tools.core.model.Model;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>

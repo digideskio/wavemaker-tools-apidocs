@@ -27,8 +27,8 @@ public class SwaggerParserContext {
 
     private SwaggerParserContext(final ApiParserConfiguration parserConfiguration) {
         this.parserConfiguration = parserConfiguration;
-        typesContext = new TypesContext(parsersChain);
         parsersChain = TypeParserChainBuilder.defaultChain();
+        typesContext = new TypesContext(parsersChain);
     }
 
     public static void initContext(ApiParserConfiguration configuration) {

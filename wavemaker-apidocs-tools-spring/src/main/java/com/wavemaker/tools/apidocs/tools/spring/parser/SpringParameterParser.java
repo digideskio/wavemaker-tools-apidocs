@@ -8,7 +8,6 @@
 package com.wavemaker.tools.apidocs.tools.spring.parser;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ValueConstants;
 
 import com.wavemaker.tools.apidocs.tools.core.model.ParameterType;
-import com.wavemaker.tools.apidocs.tools.parser.builder.ParameterBuilder;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.BodyParameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.HeaderParameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.PathParameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
 import com.wavemaker.tools.apidocs.tools.parser.impl.AbstractParameterParser;
 
 /**
@@ -27,36 +29,68 @@ import com.wavemaker.tools.apidocs.tools.parser.impl.AbstractParameterParser;
  */
 public class SpringParameterParser extends AbstractParameterParser {
     public SpringParameterParser(
-            final int index, final Type type, final Annotation[] annotations) {
+            final int index, final Class<?> type, final Annotation[] annotations) {
         super(index, type, annotations);
     }
 
     @Override
-    protected void handleFrameworkSpecific(
-            final Map<Class<? extends Annotation>, Annotation> annotationMap, final ParameterBuilder builder) {
+    protected ParameterType getParameterType(
+            final Map<Class<? extends Annotation>, Annotation> annotationMap) {
+        ParameterType parameterType = null;
 
-        if (annotationMap.get(PathVariable.class) != null) {
-            PathVariable pathVariable = (PathVariable) annotationMap.get(PathVariable.class);
-            builder.setParameterType(ParameterType.PATH);
-            builder.setName(pathVariable.value());
-        } else if (annotationMap.get(RequestParam.class) != null) {
-            RequestParam requestParam = (RequestParam) annotationMap.get(RequestParam.class);
-            builder.setName(requestParam.value());
-            builder.setDefaultValue(getDefaultValue(requestParam.defaultValue()));
-            builder.setParameterType(ParameterType.QUERY);
-            builder.setRequired(requestParam.required());
-        } else if (annotationMap.get(RequestHeader.class) != null) {
-            RequestHeader requestHeader = (RequestHeader) annotationMap.get(RequestHeader.class);
-            builder.setName(requestHeader.value());
-            builder.setDefaultValue(getDefaultValue(requestHeader.defaultValue()));
-            builder.setParameterType(ParameterType.HEADER);
-            builder.setRequired(requestHeader.required());
-        } else if (annotationMap.get(RequestBody.class) != null) {
-            RequestBody requestParam = (RequestBody) annotationMap.get(RequestBody.class);
-            builder.setParameterType(ParameterType.BODY);
-            builder.setRequired(requestParam.required());
-            builder.setEditable(false);
+        if (annotationMap.containsKey(PathVariable.class)) {
+            parameterType = ParameterType.PATH;
+        } else if (annotationMap.containsKey(RequestParam.class)) {
+            parameterType = ParameterType.QUERY;
+        } else if (annotationMap.containsKey(RequestBody.class)) {
+            parameterType = ParameterType.BODY;
+        } else if (annotationMap.containsKey(RequestHeader.class)) {
+            parameterType = ParameterType.HEADER;
+        } else { // form parameters TODO is there any alternate approach?
+            parameterType = ParameterType.FORM;
         }
+        return parameterType;
+    }
+
+    @Override
+    protected void handlePathParameter(final PathParameter parameter) {
+        super.handlePathParameter(parameter);
+        PathVariable pathVariable = (PathVariable) annotations.get(PathVariable.class);
+        if (pathVariable != null) {
+            parameter.name(pathVariable.value());
+        }
+
+    }
+
+    @Override
+    protected void handleHeaderParameter(
+            final HeaderParameter parameter) {
+        super.handleHeaderParameter(parameter);
+        RequestHeader requestHeader = (RequestHeader) annotations.get(RequestHeader.class);
+        if (requestHeader != null) {
+            parameter.name(requestHeader.value());
+            parameter.setDefaultValue(getDefaultValue(requestHeader.defaultValue()));
+            parameter.setRequired(requestHeader.required());
+        }
+    }
+
+    @Override
+    protected void handleQueryParameter(final QueryParameter parameter) {
+        super.handleQueryParameter(parameter);
+        RequestParam requestParam = (RequestParam) annotations.get(RequestParam.class);
+        if (requestParam != null) {
+            parameter.name(requestParam.value());
+            parameter.setDefaultValue(getDefaultValue(requestParam.defaultValue()));
+            parameter.setRequired(requestParam.required());
+        }
+    }
+
+    @Override
+    protected void handleBodyParameter(final BodyParameter parameter) {
+        super.handleBodyParameter(parameter);
+        RequestBody requestBody = (RequestBody) annotations.get(RequestBody.class);
+        parameter.setRequired(requestBody.required());
+
     }
 
     /**

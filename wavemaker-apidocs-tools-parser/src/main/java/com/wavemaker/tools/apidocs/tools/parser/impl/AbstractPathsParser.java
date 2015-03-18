@@ -19,8 +19,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Operation;
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Path;
+import com.wavemaker.tools.apidocs.tools.core.model.Operation;
+import com.wavemaker.tools.apidocs.tools.core.model.Path;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.context.ApiParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.MethodParser;

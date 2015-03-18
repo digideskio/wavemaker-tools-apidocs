@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import com.google.common.io.Files;
 import com.google.gson.GsonBuilder;
-import com.wavemaker.tools.apidocs.tools.core.model.swagger_2.Swagger;
+import com.wavemaker.tools.apidocs.tools.core.model.Swagger;
 import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfigurationBuilder;
 import com.wavemaker.tools.apidocs.tools.parser.runner.SwaggerParser;
 import com.wavemaker.tools.apidocs.tools.parser.scanner.PackageClassScanner;
