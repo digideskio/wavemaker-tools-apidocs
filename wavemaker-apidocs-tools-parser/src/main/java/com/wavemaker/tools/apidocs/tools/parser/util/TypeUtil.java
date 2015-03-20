@@ -29,8 +29,7 @@ public class TypeUtil {
     /**
      * It will scan for given {@link Type}.
      * <p/>
-     * For eg: Type is <code>List&ltString&gt</code>. It will Returns: Actual Type: List Type Arguments: String Found
-     * Types: List, String
+     * For eg: Type is <code>List&ltString&gt</code>. It will Returns: Actual Type: List Type Arguments: String
      *
      * @param type type to scan
      * @return {@link TypeInformation} of given type.
@@ -40,31 +39,24 @@ public class TypeUtil {
         if (TypeUtils.isArrayType(type)) { // conditions order is important.
             return getArrayTypeInformation(type);
         } else if (type instanceof Class<?>) {
-            actualType = (((Class<?>) type).isEnum()) ? String.class : (Class<?>) type; // enums take strings only.
+            actualType = (Class<?>) type; // enums take strings only.
         } else if (type instanceof ParameterizedType) {
             return getParameterizedTypeTypeInformation((ParameterizedType) type);
         } else { // cases like WildCard Type and TypeVariable
             actualType = Object.class; // sending null doesn't make sense
         }
-        Set<Class<?>> foundTypes = new HashSet<>(1);
-        foundTypes.add(actualType);
-        return new TypeInformation(actualType, Collections.EMPTY_SET, foundTypes, false);
+        return new TypeInformation(actualType, Collections.EMPTY_SET, false);
     }
 
     protected static TypeInformation getParameterizedTypeTypeInformation(ParameterizedType parameterizedType) {
         Set<Class<?>> typeArguments = new LinkedHashSet<>();
-        Set<Class<?>> foundTypes = new HashSet<>();
         Class<?> actualType = (Class<?>) parameterizedType.getRawType();
 
         for (Type type : parameterizedType.getActualTypeArguments()) {
             TypeInformation typeInfo = extractTypeInformation(type);
             typeArguments.add(typeInfo.getActualType());
-            foundTypes.addAll(typeInfo.getTypeArguments());
-            foundTypes.addAll(typeInfo.getFoundTypes());
         }
-        foundTypes.add(actualType);
-        foundTypes.addAll(typeArguments);
-        return new TypeInformation(actualType, typeArguments, foundTypes, false);
+        return new TypeInformation(actualType, typeArguments, false);
     }
 
     protected static TypeInformation getArrayTypeInformation(Type type) {
@@ -79,6 +71,6 @@ public class TypeUtil {
             actualType = TypeUtils.getRawType(type, null);
             typeArguments.add((Class<?>) TypeUtils.getArrayComponentType(type));// check type.
         }
-        return new TypeInformation(actualType, typeArguments, typeArguments, true);
+        return new TypeInformation(actualType, typeArguments, true);
     }
 }

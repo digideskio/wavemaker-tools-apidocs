@@ -29,17 +29,17 @@ public class PageParameterResolver implements ParameterResolver {
             final Operation operation) {
         List<Parameter> parameters = new LinkedList<>();
 
-        QueryParameter page = getDefaultParameterBuilder(index, type);
+        QueryParameter page = getDefaultParameterBuilder();
         page.setName("page");
         page.setDefaultValue("0");
         parameters.add(page);
 
-        QueryParameter size = getDefaultParameterBuilder(index, type);
+        QueryParameter size = getDefaultParameterBuilder();
         size.setName("size");
         size.setDefaultValue("20");
         parameters.add(size);
 
-        QueryParameter sort = getDefaultParameterBuilder(index, type);
+        QueryParameter sort = getDefaultParameterBuilder();
         sort.setName("sort");
         sort.property(new StringProperty());
         parameters.add(sort);
@@ -48,15 +48,15 @@ public class PageParameterResolver implements ParameterResolver {
         return parameters;
     }
 
-    private QueryParameter getDefaultParameterBuilder(int index, Class<?> type) {
-        QueryParameter builder = new QueryParameter();
+    private QueryParameter getDefaultParameterBuilder() {
+        QueryParameter queryParameter = new QueryParameter();
         // builder.setResolver(type.getName());
 //        builder.setIndex(index);
-        builder.setRequired(false);
-        builder.property(new IntegerProperty());
-        builder.setEditable(false);
+        queryParameter.setRequired(false);
+        queryParameter.property(new IntegerProperty());
+        queryParameter.setEditable(false);
 //        builder.setId(DataTypeUtil.getName(type));
 
-        return builder;
+        return queryParameter;
     }
 }

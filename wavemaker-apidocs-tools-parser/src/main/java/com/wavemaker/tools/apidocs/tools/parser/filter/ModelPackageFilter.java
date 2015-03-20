@@ -11,12 +11,15 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 1/12/14
  */
 public class ModelPackageFilter implements ModelFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ModelPackageFilter.class);
 
     private final Pattern excludePackagesPattern;
 
@@ -32,7 +35,12 @@ public class ModelPackageFilter implements ModelFilter {
 
     @Override
     public boolean apply(final Class<?> input) {
-        return excludePackagesPattern.matcher(input.getPackage().getName()).matches();
+        try {
+            return excludePackagesPattern.matcher(input.getPackage().getName()).matches();
+        } catch (NullPointerException e) {
+            LOGGER.error("Error while checking package name for type:{}", input);
+            return true;
+        }
     }
 
 }

@@ -20,20 +20,17 @@ import java.util.Set;
 public class TypeInformation {
     private final Class<?> actualType;
     private final Set<Class<?>> typeArguments;
-    private final Set<Class<?>> foundTypes;
     private final boolean isArray;
 
     public TypeInformation(
-            final Class<?> actualType, final Set<Class<?>> typeArguments, final Set<Class<?>> foundTypes,
-            final boolean isArray) {
+            final Class<?> actualType, final Set<Class<?>> typeArguments, final boolean isArray) {
         this.actualType = actualType;
         this.typeArguments = typeArguments;
-        this.foundTypes = foundTypes;
         this.isArray = isArray;
     }
 
     public TypeInformation(final Class<?> actualType) {
-        this(actualType, new HashSet<Class<?>>(0), new HashSet<Class<?>>(0), actualType.isArray());
+        this(actualType, new HashSet<Class<?>>(0), actualType.isArray());
     }
 
     /**
@@ -56,16 +53,6 @@ public class TypeInformation {
         return typeArguments;
     }
 
-    /**
-     * It should returns the actual type of the given Type. If given type is a {@link ParameterizedType}, it will
-     * returns {@link ParameterizedType#getRawType()}.
-     *
-     * @return Actual {@link Class} type.
-     */
-    public Set<Class<?>> getFoundTypes() {
-        return foundTypes;
-    }
-
     public boolean isArray() {
         return isArray;
     }
@@ -75,7 +62,6 @@ public class TypeInformation {
         return "TypeInformation{" +
                 "actualType=" + actualType +
                 ", typeArguments=" + typeArguments +
-                ", foundTypes=" + foundTypes +
                 ", isArray=" + isArray +
                 '}';
     }

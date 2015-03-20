@@ -49,7 +49,7 @@ public class PropertyParserImpl implements PropertyParser {
         Property property;
         TypeInformation typeInfo = TypeUtil.extractTypeInformation(type);
 
-        if (typeInfo.getTypeArguments().isEmpty()) {
+        if (!typeInfo.getTypeArguments().isEmpty()) {
             if (isArray(typeInfo)) {
                 property = feedArrayProperty(typeInfo);
             } else if (Map.class.isAssignableFrom(typeInfo.getActualType())) {

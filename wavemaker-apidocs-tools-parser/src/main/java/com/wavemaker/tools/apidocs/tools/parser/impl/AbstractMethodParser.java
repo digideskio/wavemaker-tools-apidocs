@@ -92,10 +92,9 @@ public abstract class AbstractMethodParser implements MethodParser {
             for (int i = 0; i < types.length; i++) {
                 Type type = types[i];
                 Class<?> actualType = TypeUtils.getRawType(type, null);
-                if (SwaggerParserContext.getInstance().getResolversContext()
-                        .isResolverExist(actualType)) { // doing with
-                    ParameterResolver resolver = SwaggerParserContext.getInstance().getResolversContext()
-                            .getResolver(actualType);
+                ParameterResolver resolver = SwaggerParserContext.getInstance().getResolversContext()
+                        .getResolver(actualType);
+                if (resolver != null) { // doing with
                     List<Parameter> parameterList = resolver
                             .resolveParameter(i, actualType, annotations[i], operation);
                     parameters.addAll(parameterList);

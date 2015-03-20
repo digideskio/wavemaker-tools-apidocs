@@ -10,10 +10,8 @@ package com.wavemaker.tools.apidocs.tools.parser.util;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -135,13 +133,6 @@ public class DataTypeUtil {
         return SwaggerParserContext.getInstance().getTypesContext().getUniqueTypeName(type);
     }
 
-    public static List<String> getUniqueClassNames(Collection<Class<?>> types) {
-        List<String> classNames = new LinkedList<>();
-        for (Class<?> type : types) {
-            classNames.add(getUniqueClassName(type));
-        }
-        return classNames;
-    }
 
     public static String getName(Class<?> type) {
         return getName(type, 1);

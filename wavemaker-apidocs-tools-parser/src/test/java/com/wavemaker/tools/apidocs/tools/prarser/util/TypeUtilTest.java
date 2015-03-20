@@ -24,7 +24,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInfo);
         Assert.assertSame(List.class, typeInfo.getActualType());
         Assert.assertEquals(0, typeInfo.getTypeArguments().size());
-        Assert.assertEquals(1, typeInfo.getFoundTypes().size());
         Assert.assertFalse(typeInfo.isArray());
     }
 
@@ -34,7 +33,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(int.class, typeInformation.getActualType());
         Assert.assertEquals(0, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(1, typeInformation.getFoundTypes().size());
         Assert.assertFalse(typeInformation.isArray());
     }
 
@@ -44,7 +42,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(String.class, typeInformation.getActualType());
         Assert.assertEquals(0, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(1, typeInformation.getFoundTypes().size());
         Assert.assertFalse(typeInformation.isArray());
     }
 
@@ -54,7 +51,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(char.class, typeInformation.getActualType());
         Assert.assertEquals(0, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(1, typeInformation.getFoundTypes().size());
         Assert.assertFalse(typeInformation.isArray());
     }
 
@@ -64,7 +60,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(int[].class, typeInformation.getActualType());
         Assert.assertEquals(1, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(1, typeInformation.getFoundTypes().size());
         Assert.assertTrue(typeInformation.isArray());
     }
 
@@ -74,7 +69,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(Object[].class, typeInformation.getActualType());
         Assert.assertEquals(1, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(1, typeInformation.getFoundTypes().size());
         Assert.assertTrue(typeInformation.isArray());
     }
 
@@ -84,7 +78,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(String[].class, typeInformation.getActualType());
         Assert.assertEquals(1, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(1, typeInformation.getFoundTypes().size());
         Assert.assertTrue(typeInformation.isArray());
     }
 
@@ -94,7 +87,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(List.class, typeInformation.getActualType());
         Assert.assertEquals(1, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(2, typeInformation.getFoundTypes().size());
         Assert.assertFalse(typeInformation.isArray());
     }
 
@@ -104,7 +96,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(Map.class, typeInformation.getActualType());
         Assert.assertEquals(2, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(3, typeInformation.getFoundTypes().size());
         Assert.assertFalse(typeInformation.isArray());
     }
 
@@ -114,7 +105,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(Map.class, typeInformation.getActualType());
         Assert.assertEquals(2, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(4, typeInformation.getFoundTypes().size());
         Assert.assertFalse(typeInformation.isArray());
     }
 
@@ -124,7 +114,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(List.class, typeInformation.getActualType());
         Assert.assertEquals(1, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(2, typeInformation.getFoundTypes().size());
         Assert.assertTrue(typeInformation.getTypeArguments().remove(Object.class)); // if exists, removes and returns
         // true
         Assert.assertFalse(typeInformation.isArray());
@@ -136,7 +125,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(List.class, typeInformation.getActualType());
         Assert.assertEquals(1, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(2, typeInformation.getFoundTypes().size());
         Assert.assertTrue(typeInformation.getTypeArguments().remove(Object.class)); // if exists, removes and returns
         // true
         Assert.assertFalse(typeInformation.isArray());
@@ -148,7 +136,6 @@ public class TypeUtilTest {
         Assert.assertNotNull(typeInformation);
         Assert.assertSame(List.class, typeInformation.getActualType());
         Assert.assertEquals(1, typeInformation.getTypeArguments().size());
-        Assert.assertEquals(2, typeInformation.getFoundTypes().size());
         Assert.assertTrue(typeInformation.getTypeArguments().remove(Object.class));
 //        Assert.assertTrue(typeInformation.getTypeArguments().remove(String.class)); // if exists, removes and returns
         // true

@@ -7,7 +7,7 @@
  */
 package com.wavemaker.tools.apidocs.tools.parser.filter;
 
-import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
+import org.apache.commons.lang3.ClassUtils;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -18,6 +18,6 @@ public class PrimitiveTypeFilter implements ModelFilter {
     public boolean apply(final Class<?> input) {
 
         // in collection type usually have 'null' entry.
-        return (input == null || DataTypeUtil.isPrimitiveType(input));
+        return (input == null || ClassUtils.isPrimitiveOrWrapper(input));
     }
 }

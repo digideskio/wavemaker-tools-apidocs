@@ -7,7 +7,6 @@
  */
 package com.wavemaker.tools.apidocs.tools.parser.context;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
@@ -15,7 +14,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
-import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.adapter.TypeParsersChain;
 import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 
@@ -48,27 +46,20 @@ public class TypesContext {
     }
 
     public Model parseModel(Class<?> type) {
-        if (pendingModels.contains(type)) {
-            return new RefModel(getUniqueTypeName(type));
-        } else {
-            Model model = definitionsMap.get(getUniqueTypeName(type));
-            if (model == null) {
-                pendingModels.add(type);
-                model = parsersChain.processType(type);
-                definitionsMap.put(getUniqueTypeName(type), model);
-                pendingModels.remove(type);
+
+        if (!pendingModels.contains(type)) { // checking whether it currently parsing, to avoid circular parsing.
+            if (!definitionsMap.containsKey(getUniqueTypeName(type))) { // if model not exists, will parse
+                if (!SwaggerParserContext.getInstance().getModelFilterConfig().applyFilters(type)) {
+                    pendingModels.add(type);
+                    Model model = parsersChain.processType(type);
+                    definitionsMap.put(getUniqueTypeName(type), model);
+                    pendingModels.remove(type);
+                }
             }
-            return model;
         }
+        return new RefModel(getUniqueTypeName(type));
     }
 
-    public void addModelsForParsing(Collection<Class<?>> types) {
-        if (CollectionUtil.isNotBlank(types)) {
-            for (final Class<?> type : types) {
-                parseModel(type);
-            }
-        }
-    }
 
     public Map<String, Model> getDefinitionsMap() {
         return definitionsMap;

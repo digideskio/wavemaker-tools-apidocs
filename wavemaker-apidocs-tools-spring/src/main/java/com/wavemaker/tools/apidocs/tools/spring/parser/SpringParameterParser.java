@@ -10,6 +10,8 @@ package com.wavemaker.tools.apidocs.tools.spring.parser;
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -28,6 +30,8 @@ import com.wavemaker.tools.apidocs.tools.parser.impl.AbstractParameterParser;
  * @since 13/11/14
  */
 public class SpringParameterParser extends AbstractParameterParser {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringParameterParser.class);
+
     public SpringParameterParser(
             final int index, final Class<?> type, final Annotation[] annotations) {
         super(index, type, annotations);
@@ -42,12 +46,12 @@ public class SpringParameterParser extends AbstractParameterParser {
             parameterType = ParameterType.PATH;
         } else if (annotationMap.containsKey(RequestParam.class)) {
             parameterType = ParameterType.QUERY;
-        } else if (annotationMap.containsKey(RequestBody.class)) {
-            parameterType = ParameterType.BODY;
         } else if (annotationMap.containsKey(RequestHeader.class)) {
             parameterType = ParameterType.HEADER;
-        } else { // form parameters TODO is there any alternate approach?
-            parameterType = ParameterType.FORM;
+        } else if (annotationMap.containsKey(RequestBody.class) || annotationMap.isEmpty()) {
+            parameterType = ParameterType.BODY;
+        } else { // TODO alternatives.
+            LOGGER.error("Unknown Parameter type found, Type:{}, annonations:{}", dataType, annotationMap);
         }
         return parameterType;
     }
@@ -89,7 +93,9 @@ public class SpringParameterParser extends AbstractParameterParser {
     protected void handleBodyParameter(final BodyParameter parameter) {
         super.handleBodyParameter(parameter);
         RequestBody requestBody = (RequestBody) annotations.get(RequestBody.class);
-        parameter.setRequired(requestBody.required());
+        if (requestBody != null) {
+            parameter.setRequired(requestBody.required());
+        }
 
     }
 
