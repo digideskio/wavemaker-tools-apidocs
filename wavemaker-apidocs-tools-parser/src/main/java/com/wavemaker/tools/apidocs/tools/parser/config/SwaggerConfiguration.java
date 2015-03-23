@@ -38,6 +38,7 @@ public class SwaggerConfiguration {
     private ModelFilters modelFilters;
     private String collectionFormat;
     private Set<Scheme> schemes;
+    private String serviceName; // for studio
     private boolean editable;
     private int coreThreadPoolSize;
     private int maxThreadPoolSize;
@@ -52,6 +53,7 @@ public class SwaggerConfiguration {
         this.collectionFormat = builder.collectionFormat;
         this.schemes = builder.schemes;
         this.editable = builder.editable;
+        this.serviceName = builder.serviceName;
         this.coreThreadPoolSize = builder.coreThreadPoolSize;
         this.maxThreadPoolSize = builder.maxThreadPoolSize;
         this.timeout = builder.timeout;
@@ -71,6 +73,7 @@ public class SwaggerConfiguration {
         private long timeout = 30 * 1000; // milliseconds
         private String collectionFormat = CollectionFormat.MULTI.name().toLowerCase();
         private Set<Scheme> schemes = Sets.newHashSet(Arrays.asList(Scheme.HTTP, Scheme.HTTPS));
+        private String serviceName;
 
         private ClassScanner classScanner;
         private ClassLoader classLoader;
@@ -80,7 +83,8 @@ public class SwaggerConfiguration {
         private ModelFilters modelFilters;
         private Set<ModelFilter> customModelFilters;
 
-        public Builder(String baseUrl, ClassScanner scanner) {
+        public Builder(String serviceName, String baseUrl, ClassScanner scanner) {
+            this.serviceName = serviceName;
             this.baseUrl = baseUrl;
             this.classScanner = Objects.requireNonNull(scanner, "Scanner should not be null");
 
@@ -90,7 +94,6 @@ public class SwaggerConfiguration {
             this.excludeModelPackages = new HashSet<>();
             this.customModelFilters = new LinkedHashSet<>();
         }
-
 
         public Builder setClassLoader(final ClassLoader classLoader) {
             this.classLoader = classLoader;
@@ -154,6 +157,11 @@ public class SwaggerConfiguration {
             return this;
         }
 
+        public Builder setServiceName(final String serviceName) {
+            this.serviceName = serviceName;
+            return this;
+        }
+
         public Builder setTimeout(final long timeout) {
             this.timeout = timeout;
             return this;
@@ -214,6 +222,10 @@ public class SwaggerConfiguration {
 
     public String getCollectionFormat() {
         return collectionFormat;
+    }
+
+    public String getServiceName() {
+        return serviceName;
     }
 
     public boolean isEditable() {

@@ -32,6 +32,7 @@ import com.wavemaker.tools.apidocs.tools.parser.exception.ClassScannerException;
 import com.wavemaker.tools.apidocs.tools.parser.exception.SwaggerParserException;
 import com.wavemaker.tools.apidocs.tools.parser.exception.TimeOutException;
 import com.wavemaker.tools.apidocs.tools.parser.util.ClassLoaderUtil;
+import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.MethodUtils;
 
 /**
@@ -177,6 +178,7 @@ public abstract class SwaggerParser {
         for (final Map.Entry<Class<?>, Resource> resourceEntry : resourceMap.entrySet()) {
             Resource resource = resourceEntry.getValue();
             Tag tag = resource.asTag();
+            tag.setServiceName(ContextUtil.getConfiguration().getServiceName());
             swagger.tag(tag);
             resource.setTag(tag.getName());
             for (final Map.Entry<String, Path> pathEntry : resource.getPathMap().entrySet()) {

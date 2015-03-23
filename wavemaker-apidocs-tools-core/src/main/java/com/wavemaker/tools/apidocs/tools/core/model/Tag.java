@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Tag extends AbstractExtensibleEntity {
     public static final String FULLY_QUALIFIED_NAME_EXT = "FULLY_QUALIFIED_NAME";
     public static final String VERSION_EXT = "VERSION";
+    public static final String SERVICE_NAME_EXT = "SERVICE_NAME";
 
     private String name;
     private String description;
@@ -57,6 +58,11 @@ public class Tag extends AbstractExtensibleEntity {
     @JsonIgnore
     public void setVersion(String version) {
         addExtension(VERSION_EXT, version);
+    }
+
+    @JsonIgnore
+    public void setServiceName(String serviceName) {
+        addExtension(SERVICE_NAME_EXT, serviceName);
     }
 
 

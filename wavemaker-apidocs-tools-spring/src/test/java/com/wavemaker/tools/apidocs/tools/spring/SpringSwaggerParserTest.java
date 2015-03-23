@@ -30,7 +30,7 @@ public class SpringSwaggerParserTest {
     public void testGenerate() throws Exception {
         FilterableClassScanner classScanner = new FilterableClassScanner();
         classScanner.includePackage("com.wavemaker.tools.apidocs.tools");
-        SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/test", classScanner);
+        SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("Service 1", "/test", classScanner);
         builder.setClassLoader(this.getClass().getClassLoader());
         builder.addExcludeModelPackage("java");
         SwaggerParser runner = new SpringSwaggerParser(builder.build());
@@ -53,7 +53,7 @@ public class SpringSwaggerParserTest {
     public void testGenerateWithResolvers() throws Exception {
         FilterableClassScanner classScanner = new FilterableClassScanner();
         classScanner.includePackage("com.wavemaker.tools.apidocs.tools");
-        SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/test", classScanner);
+        SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("HRDB Service", "/test", classScanner);
         builder.setClassLoader(this.getClass().getClassLoader());
         builder.addExcludeModelPackage("java");
         builder.addParameterResolver(Pageable.class, new PageParameterResolver());
