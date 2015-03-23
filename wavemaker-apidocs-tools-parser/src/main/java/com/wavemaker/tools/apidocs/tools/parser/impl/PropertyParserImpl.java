@@ -18,13 +18,13 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.ClassUtils;
 
-import com.google.common.collect.Lists;
 import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.*;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.exception.PropertyParserException;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
+import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
 
@@ -78,7 +78,7 @@ public class PropertyParserImpl implements PropertyParser {
     }
 
     private Property feedArrayProperty(TypeInformation typeInformation) {
-        List<Class<?>> typeArguments = Lists.newArrayList(typeInformation.getTypeArguments());
+        List<Class<?>> typeArguments = typeInformation.getTypeArguments();
         if (CollectionUtil.isNotBlank(typeArguments) && typeArguments.size() == 1) {
             Class<?> typeArgument = typeArguments.get(0);
             ArrayProperty property = new ArrayProperty(parseType(typeArgument));
@@ -92,7 +92,7 @@ public class PropertyParserImpl implements PropertyParser {
     }
 
     private Property feedMapProperty(TypeInformation typeInfo) {
-        List<Class<?>> typeArguments = Lists.newLinkedList(typeInfo.getTypeArguments());
+        List<Class<?>> typeArguments = typeInfo.getTypeArguments();
         if (CollectionUtil.isNotBlank(typeArguments) && typeArguments.size() == 2) {
             // 0:key, 1:value            Key:String (by default)
             return new MapProperty(parseType(typeArguments.get(1)));
@@ -137,7 +137,7 @@ public class PropertyParserImpl implements PropertyParser {
 
     private Property feedObjectProperty(Class<?> type) {
         SwaggerParserContext.getInstance().getTypesContext().parseModel(type);
-        RefProperty refProperty = new RefProperty(DataTypeUtil.getUniqueClassName(type));
+        RefProperty refProperty = new RefProperty(ContextUtil.getUniqueName(type));
         return refProperty;
     }
 

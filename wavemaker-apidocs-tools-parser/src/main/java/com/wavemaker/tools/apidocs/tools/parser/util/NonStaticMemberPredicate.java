@@ -8,6 +8,7 @@
 package com.wavemaker.tools.apidocs.tools.parser.util;
 
 import java.lang.reflect.Member;
+import java.lang.reflect.Modifier;
 
 import com.google.common.base.Predicate;
 
@@ -16,17 +17,17 @@ import com.google.common.base.Predicate;
  * @since 27/11/14
  */
 public class NonStaticMemberPredicate<T extends Member> implements Predicate<T> {
-    
+
     private static class NonStaticMemberPredicateHolder {
         private static final NonStaticMemberPredicate<?> INSTANCE = new NonStaticMemberPredicate<>();
     }
 
     public static NonStaticMemberPredicate getInstance() {
-      return NonStaticMemberPredicateHolder.INSTANCE;
+        return NonStaticMemberPredicateHolder.INSTANCE;
     }
 
     @Override
     public boolean apply(final T input) {
-        return Utils.validateModifiers(input.getModifiers());
+        return !Modifier.isStatic(input.getModifiers());
     }
 }

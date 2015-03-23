@@ -13,7 +13,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.Resource;
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 6/11/14
  */
-public interface ApiParser extends BaseParser<Resource> {
+public interface ResourceParser extends BaseParser<Resource> {
 
     /**
      * It will check for the required Annotations in controller.

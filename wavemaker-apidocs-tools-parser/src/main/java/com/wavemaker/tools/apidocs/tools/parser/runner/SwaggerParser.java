@@ -20,11 +20,12 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
 import com.wavemaker.tools.apidocs.tools.core.model.Path;
 import com.wavemaker.tools.apidocs.tools.core.model.Resource;
 import com.wavemaker.tools.apidocs.tools.core.model.Swagger;
 import com.wavemaker.tools.apidocs.tools.core.model.Tag;
-import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfiguration;
+import com.wavemaker.tools.apidocs.tools.parser.config.SwaggerConfiguration;
 import com.wavemaker.tools.apidocs.tools.parser.context.ApiParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.exception.ClassScannerException;
@@ -41,17 +42,16 @@ public abstract class SwaggerParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerParser.class);
 
-    private static final long TIME_OUT = 15;
-    private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
+    private static final TimeUnit TIME_UNIT = TimeUnit.MILLISECONDS;
 
-    protected final ApiParserConfiguration parserConfiguration;
+    protected final SwaggerConfiguration configuration;
 
-    public SwaggerParser(final ApiParserConfiguration parserConfiguration) {
-        this.parserConfiguration = parserConfiguration;
+    public SwaggerParser(final SwaggerConfiguration configuration) {
+        this.configuration = configuration;
     }
 
     /**
-     * It will generates {@link Swagger} from given {@link ApiParserConfiguration}.
+     * It will generates {@link Swagger} from given {@link SwaggerConfiguration}.
      *
      * @return {@link Swagger}
      * @throws SwaggerParserException
@@ -99,7 +99,7 @@ public abstract class SwaggerParser {
      * @throws Exception
      */
     protected Swagger doWithParserClassLoader() throws Exception {
-        return ClassLoaderUtil.doWithCustomClassLoader(parserConfiguration.getClassLoader(),
+        return ClassLoaderUtil.doWithCustomClassLoader(configuration.getClassLoader(),
                 new Callable<Swagger>() {
                     @Override
                     public Swagger call() throws Exception {
@@ -114,8 +114,8 @@ public abstract class SwaggerParser {
      * @return {@link Map} of Rest {@link Class} and {@link Resource}.
      */
     protected Swagger startProcessing() throws SwaggerParserException {
-        SwaggerParserContext.initContext(parserConfiguration);
-        Set<Class<?>> classToScan = parserConfiguration.getClassScanner().classesToScan();
+        SwaggerParserContext.initContext(configuration);
+        Set<Class<?>> classToScan = configuration.getClassScanner().classesToScan();
         Set<Class<?>> restClasses;
         try {
             restClasses = filterRestClasses(classToScan);
@@ -146,8 +146,8 @@ public abstract class SwaggerParser {
     protected Swagger generateDocuments(Set<Class<?>> restClasses) throws InterruptedException {
         final Map<Class<?>, Resource> resourceMap = new ConcurrentHashMap<>();
         ExecutorService executorService = new ThreadPoolExecutor(
-                SwaggerParserContext.getInstance().getParserConfiguration().getCoreThreadPoolSize(),
-                SwaggerParserContext.getInstance().getParserConfiguration().getMaxThreadPoolSize(), 0L,
+                SwaggerParserContext.getInstance().getConfiguration().getCoreThreadPoolSize(),
+                SwaggerParserContext.getInstance().getConfiguration().getMaxThreadPoolSize(), 0L,
                 TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
         for (final Class<?> restClass : restClasses) {
             executorService.execute(new Runnable() {
@@ -164,13 +164,16 @@ public abstract class SwaggerParser {
             });
         }
         executorService.shutdown();
-        LOGGER.debug("Waiting to finish parsing documents, max time limit of {} {}.", TIME_OUT, TIME_UNIT);
-        executorService.awaitTermination(TIME_OUT, TIME_UNIT);
+        LOGGER.debug("Waiting to finish parsing documents, max time limit of {} {}.", configuration.getTimeout(),
+                TIME_UNIT);
+        executorService.awaitTermination(configuration.getTimeout(), TIME_UNIT);
         return swaggerFrom(resourceMap);
     }
 
     protected Swagger swaggerFrom(Map<Class<?>, Resource> resourceMap) {
         Swagger swagger = new Swagger();
+        swagger.basePath(configuration.getBaseUrl());
+        swagger.schemes(Lists.newLinkedList(configuration.getSchemes()));
         for (final Map.Entry<Class<?>, Resource> resourceEntry : resourceMap.entrySet()) {
             Resource resource = resourceEntry.getValue();
             Tag tag = resource.asTag();
@@ -180,7 +183,6 @@ public abstract class SwaggerParser {
                 swagger.path(pathEntry.getKey(), pathEntry.getValue());
             }
         }
-
 
         return swagger;
     }

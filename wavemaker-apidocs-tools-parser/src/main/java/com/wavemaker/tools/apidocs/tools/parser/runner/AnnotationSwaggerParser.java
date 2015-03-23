@@ -11,7 +11,7 @@ import java.lang.annotation.Annotation;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfiguration;
+import com.wavemaker.tools.apidocs.tools.parser.config.SwaggerConfiguration;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -19,7 +19,7 @@ import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfiguration;
  */
 public abstract class AnnotationSwaggerParser extends SwaggerParser {
 
-    public AnnotationSwaggerParser(final ApiParserConfiguration parserConfiguration) {
+    public AnnotationSwaggerParser(final SwaggerConfiguration parserConfiguration) {
         super(parserConfiguration);
     }
 

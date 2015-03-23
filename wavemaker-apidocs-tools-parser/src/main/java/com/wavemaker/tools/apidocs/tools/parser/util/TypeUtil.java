@@ -12,9 +12,8 @@ import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.lang3.reflect.TypeUtils;
 
@@ -45,11 +44,11 @@ public class TypeUtil {
         } else { // cases like WildCard Type and TypeVariable
             actualType = Object.class; // sending null doesn't make sense
         }
-        return new TypeInformation(actualType, Collections.EMPTY_SET, false);
+        return new TypeInformation(actualType, Collections.EMPTY_LIST, false);
     }
 
     protected static TypeInformation getParameterizedTypeTypeInformation(ParameterizedType parameterizedType) {
-        Set<Class<?>> typeArguments = new LinkedHashSet<>();
+        List<Class<?>> typeArguments = new LinkedList<>();
         Class<?> actualType = (Class<?>) parameterizedType.getRawType();
 
         for (Type type : parameterizedType.getActualTypeArguments()) {
@@ -61,7 +60,7 @@ public class TypeUtil {
 
     protected static TypeInformation getArrayTypeInformation(Type type) {
         Class<?> actualType;
-        Set<Class<?>> typeArguments = new HashSet<>();
+        List<Class<?>> typeArguments = new LinkedList<>();
         if (type instanceof GenericArrayType) { // for cases like T[]
             Type rawType = ((GenericArrayType) type).getGenericComponentType();
             Class<?> rawComponentType = extractTypeInformation(rawType).getActualType();

@@ -13,16 +13,16 @@ import java.util.Set;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wavemaker.tools.apidocs.tools.parser.impl.AbstractApiParser;
+import com.wavemaker.tools.apidocs.tools.parser.impl.AbstractResourceParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PathsParser;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 13/11/14
  */
-public class SpringApiParser extends AbstractApiParser {
+public class SpringResourceParser extends AbstractResourceParser {
 
-    public SpringApiParser(final Class<?> type) {
+    public SpringResourceParser(final Class<?> type) {
         super(type);
     }
 

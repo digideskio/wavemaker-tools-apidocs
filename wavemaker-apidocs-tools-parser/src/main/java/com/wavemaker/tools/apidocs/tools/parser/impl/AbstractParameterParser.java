@@ -9,11 +9,17 @@ package com.wavemaker.tools.apidocs.tools.parser.impl;
 
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.base.Optional;
+import com.wavemaker.tools.apidocs.tools.core.model.ArrayModel;
+import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.core.model.ParameterType;
+import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
+import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.BodyParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.CookieParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.FormParameter;
@@ -27,7 +33,8 @@ import com.wavemaker.tools.apidocs.tools.core.model.properties.StringProperty;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
-import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
+import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
+import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
 import com.wordnik.swagger.annotations.ApiParam;
 
 /**
@@ -106,7 +113,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter._enum(((StringProperty) property).getEnum());
         }
         parameter
-                .setCollectionFormat(SwaggerParserContext.getInstance().getParserConfiguration().getCollectionFormat());
+                .setCollectionFormat(SwaggerParserContext.getInstance().getConfiguration().getCollectionFormat());
     }
 
     protected void handleHeaderParameter(HeaderParameter parameter) {
@@ -120,7 +127,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter._enum(((StringProperty) property).getEnum());
         }
         parameter
-                .setCollectionFormat(SwaggerParserContext.getInstance().getParserConfiguration().getCollectionFormat());
+                .setCollectionFormat(SwaggerParserContext.getInstance().getConfiguration().getCollectionFormat());
     }
 
     protected void handleQueryParameter(QueryParameter parameter) {
@@ -134,7 +141,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter._enum(((StringProperty) property).getEnum());
         }
         parameter
-                .setCollectionFormat(SwaggerParserContext.getInstance().getParserConfiguration().getCollectionFormat());
+                .setCollectionFormat(SwaggerParserContext.getInstance().getConfiguration().getCollectionFormat());
     }
 
     protected void handleFormParameter(FormParameter parameter) {
@@ -148,12 +155,24 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter._enum(((StringProperty) property).getEnum());
         }
         parameter
-                .setCollectionFormat(SwaggerParserContext.getInstance().getParserConfiguration().getCollectionFormat());
+                .setCollectionFormat(SwaggerParserContext.getInstance().getConfiguration().getCollectionFormat());
     }
 
     protected void handleBodyParameter(BodyParameter parameter) {
-        parameter.schema(SwaggerParserContext.getInstance().getTypesContext().parseModel(dataType));
-        parameter.name(DataTypeUtil.getUniqueClassName(dataType));
+        TypeInformation typeInformation = TypeUtil.extractTypeInformation(dataType);
+        Model schema = null;
+        if (typeInformation.isArray() || List.class.isAssignableFrom(typeInformation.getActualType())) {
+            schema = new ArrayModel();
+            PropertyParser propertyParser = new PropertyParserImpl(typeInformation.getTypeArguments().get(0));
+            ((ArrayModel) schema).items(propertyParser.parse());
+        } else {
+            Optional<RefModel> modelOptional = ContextUtil.parseModel(dataType);
+            if (modelOptional.isPresent()) {
+                schema = modelOptional.get();
+            }
+        }
+        parameter.schema(schema);
+        parameter.name(ContextUtil.getUniqueName(dataType));
     }
 
     protected void handleCookieParameter(CookieParameter parameter) {
@@ -167,7 +186,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter._enum(((StringProperty) property).getEnum());
         }
         parameter
-                .setCollectionFormat(SwaggerParserContext.getInstance().getParserConfiguration().getCollectionFormat());
+                .setCollectionFormat(SwaggerParserContext.getInstance().getConfiguration().getCollectionFormat());
     }
 
 

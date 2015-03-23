@@ -34,13 +34,8 @@ public class ModelPackageFilter implements ModelFilter {
     }
 
     @Override
-    public boolean apply(final Class<?> input) {
-        try {
-            return excludePackagesPattern.matcher(input.getPackage().getName()).matches();
-        } catch (NullPointerException e) {
-            LOGGER.error("Error while checking package name for type:{}", input);
-            return true;
-        }
+    public boolean evaluate(final Class<?> input) {
+        return !(excludePackagesPattern.matcher(input.getPackage().getName()).matches());
     }
 
 }

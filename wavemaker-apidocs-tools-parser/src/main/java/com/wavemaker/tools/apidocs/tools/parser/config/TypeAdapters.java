@@ -16,12 +16,12 @@ import com.wavemaker.tools.apidocs.tools.parser.parser.ModelParser;
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 23/11/14
  */
-public class TypeAdaptersConfig {
+public class TypeAdapters {
 
     private final Map<Class<?>, Class<?>> substituteMap;
     private final Map<Class<?>, ModelParser> typeAdapters;
 
-    public TypeAdaptersConfig() {
+    public TypeAdapters() {
         this.substituteMap = new HashMap<>();
         typeAdapters = new HashMap<>();
     }

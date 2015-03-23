@@ -9,9 +9,9 @@ package com.wavemaker.tools.apidocs.tools.core.model;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -19,18 +19,18 @@ import java.util.Set;
  */
 public class TypeInformation {
     private final Class<?> actualType;
-    private final Set<Class<?>> typeArguments;
+    private final List<Class<?>> typeArguments;
     private final boolean isArray;
 
     public TypeInformation(
-            final Class<?> actualType, final Set<Class<?>> typeArguments, final boolean isArray) {
+            final Class<?> actualType, final List<Class<?>> typeArguments, final boolean isArray) {
         this.actualType = actualType;
         this.typeArguments = typeArguments;
         this.isArray = isArray;
     }
 
     public TypeInformation(final Class<?> actualType) {
-        this(actualType, new HashSet<Class<?>>(0), actualType.isArray());
+        this(actualType, new ArrayList<Class<?>>(0), actualType.isArray());
     }
 
     /**
@@ -47,9 +47,9 @@ public class TypeInformation {
      * It should returns the Actual type arguments for given type. Returns {@link Collections#emptySet()} if given
      * {@link Type} is not an instance of {@link ParameterizedType}.
      *
-     * @return {@link Set} of type arguments.
+     * @return {@link List} of type arguments.
      */
-    public Set<Class<?>> getTypeArguments() {
+    public List<Class<?>> getTypeArguments() {
         return typeArguments;
     }
 

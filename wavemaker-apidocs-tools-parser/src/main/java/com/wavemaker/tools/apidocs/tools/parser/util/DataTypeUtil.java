@@ -18,7 +18,6 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.wavemaker.tools.apidocs.tools.parser.builder.PrimitiveType;
-import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 
 
 /**
@@ -123,14 +122,6 @@ public class DataTypeUtil {
      */
     public static boolean isEnum(Class<?> type) {
         return type.isEnum();
-    }
-
-    /**
-     * @param type data type
-     * @return name of the given {@link Class}.
-     */
-    public static String getUniqueClassName(Class<?> type) {
-        return SwaggerParserContext.getInstance().getTypesContext().getUniqueTypeName(type);
     }
 
 

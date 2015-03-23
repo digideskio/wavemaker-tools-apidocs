@@ -13,7 +13,7 @@ package com.wavemaker.tools.apidocs.tools.parser.filter;
  */
 public class ObjectTypeFilter implements ModelFilter {
     @Override
-    public boolean apply(final Class<?> input) {
-        return input.equals(Object.class);
+    public boolean evaluate(final Class<?> input) {
+        return !(input.equals(Object.class));
     }
 }

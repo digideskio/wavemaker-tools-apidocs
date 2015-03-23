@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfiguration;
-import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfigurationBuilder;
+import com.wavemaker.tools.apidocs.tools.parser.config.SwaggerConfiguration;
 import com.wavemaker.tools.apidocs.tools.parser.runner.SwaggerParser;
 import com.wavemaker.tools.apidocs.tools.spring.SpringSwaggerParser;
 import com.wavemaker.tools.apidocs.tools.spring.resolver.MultiPartFileResolver;
@@ -26,7 +25,7 @@ import com.wavemaker.tools.apidocs.tools.spring.resolver.ServletMetaTypesResolve
  */
 public class ApiParserFactory {
 
-    public static SwaggerParser newSpringApiParserRunner(final ApiParserConfigurationBuilder builder) {
+    public static SwaggerParser newSpringApiParserRunner(final SwaggerConfiguration.Builder builder) {
 
         builder.addParameterResolver(MultipartFile.class, MultiPartFileResolver.getInstance());
         builder.addParameterResolver(MultipartHttpServletRequest.class, MultiPartRequestResolver.getInstance());
@@ -36,12 +35,12 @@ public class ApiParserFactory {
     }
 
     public static SwaggerParser newApiParserRunner(
-            final FrameworkType frameworkType, final ApiParserConfigurationBuilder builder) {
+            final FrameworkType frameworkType, final SwaggerConfiguration.Builder builder) {
         return newApiParserRunner(frameworkType, builder.build());
     }
 
     public static SwaggerParser newApiParserRunner(
-            FrameworkType frameworkType, final ApiParserConfiguration configuration) {
+            FrameworkType frameworkType, final SwaggerConfiguration configuration) {
 
         return new SpringSwaggerParser(configuration);
     }

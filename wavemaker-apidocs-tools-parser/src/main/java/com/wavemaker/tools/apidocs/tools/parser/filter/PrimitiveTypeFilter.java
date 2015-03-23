@@ -15,9 +15,9 @@ import org.apache.commons.lang3.ClassUtils;
  */
 public class PrimitiveTypeFilter implements ModelFilter {
     @Override
-    public boolean apply(final Class<?> input) {
+    public boolean evaluate(final Class<?> input) {
 
         // in collection type usually have 'null' entry.
-        return (input == null || ClassUtils.isPrimitiveOrWrapper(input));
+        return input != null && !ClassUtils.isPrimitiveOrWrapper(input);
     }
 }

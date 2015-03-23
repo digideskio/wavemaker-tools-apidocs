@@ -7,8 +7,6 @@
  */
 package com.wavemaker.tools.apidocs.tools.parser.impl;
 
-import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
-
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 24/11/14
@@ -20,10 +18,5 @@ public class SubstituteReflectionModelParser extends ReflectionModelParser {
     public SubstituteReflectionModelParser(final Class<?> substituteModelType, final Class<?> actualModelType) {
         super(substituteModelType);
         this.actualModelType = actualModelType;
-    }
-
-    @Override
-    protected String getModelId() {
-        return DataTypeUtil.getUniqueClassName(actualModelType);
     }
 }

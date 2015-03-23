@@ -15,9 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Resource;
-import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfiguration;
+import com.wavemaker.tools.apidocs.tools.parser.config.SwaggerConfiguration;
 import com.wavemaker.tools.apidocs.tools.parser.runner.AnnotationSwaggerParser;
-import com.wavemaker.tools.apidocs.tools.spring.parser.SpringApiParser;
+import com.wavemaker.tools.apidocs.tools.spring.parser.SpringResourceParser;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -25,7 +25,7 @@ import com.wavemaker.tools.apidocs.tools.spring.parser.SpringApiParser;
  */
 public class SpringSwaggerParser extends AnnotationSwaggerParser {
 
-    public SpringSwaggerParser(final ApiParserConfiguration parserConfiguration) {
+    public SpringSwaggerParser(final SwaggerConfiguration parserConfiguration) {
         super(parserConfiguration);
     }
 
@@ -41,7 +41,7 @@ public class SpringSwaggerParser extends AnnotationSwaggerParser {
 
     @Override
     protected Resource parseRestClass(final Class<?> restClass) {
-        SpringApiParser parser = new SpringApiParser(restClass);
+        SpringResourceParser parser = new SpringResourceParser(restClass);
         return parser.parse();
     }
 }

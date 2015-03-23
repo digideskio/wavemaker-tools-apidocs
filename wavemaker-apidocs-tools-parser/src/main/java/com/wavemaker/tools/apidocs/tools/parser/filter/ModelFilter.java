@@ -7,12 +7,18 @@
  */
 package com.wavemaker.tools.apidocs.tools.parser.filter;
 
-import com.google.common.base.Predicate;
-
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 1/12/14
  */
-public interface ModelFilter extends Predicate<Class<?>> {
+public interface ModelFilter {
+
+    /**
+     * evaluates the given type, if filtered returns true, else false.
+     *
+     * @param type to filter.
+     * @return true if condition filtered else false.
+     */
+    boolean evaluate(Class<?> type);
 
 }

@@ -11,42 +11,65 @@ import java.io.File;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wavemaker.tools.apidocs.tools.core.model.Swagger;
-import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfigurationBuilder;
+import com.wavemaker.tools.apidocs.tools.parser.config.SwaggerConfiguration;
 import com.wavemaker.tools.apidocs.tools.parser.runner.SwaggerParser;
-import com.wavemaker.tools.apidocs.tools.parser.scanner.PackageClassScanner;
+import com.wavemaker.tools.apidocs.tools.parser.scanner.FilterableClassScanner;
+import com.wavemaker.tools.apidocs.tools.spring.resolver.MultiPartFileResolver;
+import com.wavemaker.tools.apidocs.tools.spring.resolver.MultiPartRequestResolver;
+import com.wavemaker.tools.apidocs.tools.spring.resolver.PageParameterResolver;
 
 public class SpringSwaggerParserTest {
 
     @Test
     public void testGenerate() throws Exception {
-        ApiParserConfigurationBuilder builder = new ApiParserConfigurationBuilder();
-//        testHelper(builder, "com.test1", "apidocs");
-        testHelper(builder, "com.wavemaker.tools.apidocs.tools.spring", "apidocs");
-//        testHelper(builder, "com.wavemaker.test.controllers", "test");
-
-    }
-
-    public void testHelper(
-            ApiParserConfigurationBuilder builder, String packageName,
-            String outDir) throws Exception {
-        builder.setClassScanner(new PackageClassScanner(packageName));
+        FilterableClassScanner classScanner = new FilterableClassScanner();
+        classScanner.includePackage("com.wavemaker.tools.apidocs.tools");
+        SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/test", classScanner);
+        builder.setClassLoader(this.getClass().getClassLoader());
         builder.addExcludeModelPackage("java");
-        builder.setExcludeSubPackages(true);
-//        builder.setDefaultThreadPool();
         SwaggerParser runner = new SpringSwaggerParser(builder.build());
         Swagger swagger = runner.generate();
 
         Assert.assertNotNull(swagger);
         File targetDir = new File("target");
-        File outputDir = new File(targetDir, outDir);
+        File outputDir = new File(targetDir, "apidocs");
         if (!outputDir.exists()) {
             outputDir.mkdir();
         }
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(new File(outputDir, "swagger.json"), swagger);
+       /* Files.write(;, new File(outputDir,
+                        "swagger.json"),
+                Charset.defaultCharset());*/
+    }
+
+    @Test
+    public void testGenerateWithResolvers() throws Exception {
+        FilterableClassScanner classScanner = new FilterableClassScanner();
+        classScanner.includePackage("com.wavemaker.tools.apidocs.tools");
+        SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/test", classScanner);
+        builder.setClassLoader(this.getClass().getClassLoader());
+        builder.addExcludeModelPackage("java");
+        builder.addParameterResolver(Pageable.class, new PageParameterResolver());
+        builder.addParameterResolver(MultipartFile.class, MultiPartFileResolver.getInstance());
+        builder.addParameterResolver(MultipartHttpServletRequest.class, MultiPartRequestResolver.getInstance());
+        SwaggerParser runner = new SpringSwaggerParser(builder.build());
+        Swagger swagger = runner.generate();
+
+        Assert.assertNotNull(swagger);
+        File targetDir = new File("target");
+        File outputDir = new File(targetDir, "apidocs");
+        if (!outputDir.exists()) {
+            outputDir.mkdir();
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(new File(outputDir, "swagger_with_resolvers.json"), swagger);
        /* Files.write(;, new File(outputDir,
                         "swagger.json"),
                 Charset.defaultCharset());*/

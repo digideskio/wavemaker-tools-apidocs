@@ -9,9 +9,9 @@ package com.wavemaker.tools.apidocs.tools.parser.context;
 
 import com.wavemaker.tools.apidocs.tools.parser.adapter.TypeParserChainBuilder;
 import com.wavemaker.tools.apidocs.tools.parser.adapter.TypeParsersChain;
-import com.wavemaker.tools.apidocs.tools.parser.config.ApiParserConfiguration;
-import com.wavemaker.tools.apidocs.tools.parser.config.ModelFilterConfig;
-import com.wavemaker.tools.apidocs.tools.parser.config.TypeAdaptersConfig;
+import com.wavemaker.tools.apidocs.tools.parser.config.ModelFilters;
+import com.wavemaker.tools.apidocs.tools.parser.config.SwaggerConfiguration;
+import com.wavemaker.tools.apidocs.tools.parser.config.TypeAdapters;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -21,17 +21,17 @@ public class SwaggerParserContext {
 
     private static SwaggerParserContext instance;
 
-    private final ApiParserConfiguration parserConfiguration;
+    private final SwaggerConfiguration configuration;
     private TypesContext typesContext;
     private TypeParsersChain parsersChain;
 
-    private SwaggerParserContext(final ApiParserConfiguration parserConfiguration) {
-        this.parserConfiguration = parserConfiguration;
+    private SwaggerParserContext(final SwaggerConfiguration configuration) {
+        this.configuration = configuration;
         parsersChain = TypeParserChainBuilder.defaultChain();
         typesContext = new TypesContext(parsersChain);
     }
 
-    public static void initContext(ApiParserConfiguration configuration) {
+    public static void initContext(SwaggerConfiguration configuration) {
         instance = new SwaggerParserContext(configuration);
     }
 
@@ -47,20 +47,20 @@ public class SwaggerParserContext {
         instance = null;
     }
 
-    public ApiParserConfiguration getParserConfiguration() {
-        return parserConfiguration;
+    public SwaggerConfiguration getConfiguration() {
+        return configuration;
     }
 
     public ParameterResolvers getResolversContext() {
-        return parserConfiguration.getResolversContext();
+        return configuration.getParameterResolvers();
     }
 
-    public TypeAdaptersConfig getTypesAdapters() {
-        return parserConfiguration.getTypeAdaptersConfig();
+    public TypeAdapters getTypesAdapters() {
+        return configuration.getTypeAdapters();
     }
 
-    public ModelFilterConfig getModelFilterConfig() {
-        return parserConfiguration.getModelFilterConfig();
+    public ModelFilters getModelFilters() {
+        return configuration.getModelFilters();
     }
 
     public static SwaggerParserContext getInstance() {

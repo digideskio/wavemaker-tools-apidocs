@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import com.google.common.base.Optional;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
 import com.wavemaker.tools.apidocs.tools.parser.adapter.TypeParsersChain;
@@ -45,19 +46,21 @@ public class TypesContext {
         reverseTypesMap.put(name, type);
     }
 
-    public Model parseModel(Class<?> type) {
+    public Optional<RefModel> parseModel(Class<?> type) {
 
         if (!pendingModels.contains(type)) { // checking whether it currently parsing, to avoid circular parsing.
             if (!definitionsMap.containsKey(getUniqueTypeName(type))) { // if model not exists, will parse
-                if (!SwaggerParserContext.getInstance().getModelFilterConfig().applyFilters(type)) {
+                if (SwaggerParserContext.getInstance().getModelFilters().apply(type)) {
                     pendingModels.add(type);
                     Model model = parsersChain.processType(type);
                     definitionsMap.put(getUniqueTypeName(type), model);
                     pendingModels.remove(type);
+                } else {
+                    return Optional.absent();
                 }
             }
         }
-        return new RefModel(getUniqueTypeName(type));
+        return Optional.of(new RefModel(getUniqueTypeName(type)));
     }
 
 

@@ -7,9 +7,13 @@
  */
 package com.wavemaker.tools.apidocs.tools.parser.util;
 
-import java.lang.reflect.Modifier;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -17,10 +21,6 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Utils {
     private static final String PATH_SEPARATOR = "/";
-
-    public static boolean validateModifiers(int modifiers) {
-        return !Modifier.isStatic(modifiers);
-    }
 
     public static String combinePaths(String path1, String path2) {
         StringBuilder sb = new StringBuilder();
@@ -37,5 +37,20 @@ public class Utils {
 
         return sb.toString();
     }
+
+    public static List<Class<?>> getAllFilteredSuperTypes(Class<?> type) {
+        List<Class<?>> superTypes = new LinkedList<>();
+        if (type.getSuperclass() != null && !type.getSuperclass().equals(Object.class)) {
+            superTypes.add(type.getSuperclass());
+        }
+        if (type.getInterfaces() != null) {
+            for (final Class<?> aInterface : type.getInterfaces()) {
+                superTypes.add(aInterface);
+            }
+        }
+
+        return Lists.newLinkedList(Iterables.filter(superTypes, ContextUtil.getConfiguration().getModelFilters()));
+    }
+
 
 }

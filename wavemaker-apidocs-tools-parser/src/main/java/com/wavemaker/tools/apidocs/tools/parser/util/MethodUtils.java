@@ -114,6 +114,13 @@ public class MethodUtils {
         }
     }
 
+    /**
+     * It will returns all Non static {@link Method}s of given {@link Class}.
+     *
+     * @param type       {@link Class} to be scanned for methods.
+     * @param predicates custom predicates to filter.
+     * @return {@link Set} of filtered {@link Method}s.
+     */
     public static Set<Method> getAllNonStaticMethods(Class<?> type, Predicate<? super Method>... predicates) {
         List<Predicate<? super Method>> predicateList = new LinkedList<>();
 
@@ -123,28 +130,8 @@ public class MethodUtils {
             predicateList.addAll(Arrays.asList(predicates));
         }
 
-        return getAllMethods(type, Predicates.and(predicateList));
+        return ReflectionUtils.getMethods(type, Predicates.and(predicateList));
 
-    }
-
-    /**
-     * It will returns all {@link Method}s of given {@link Class} and its super class. In Over loaded method case, it
-     * will ignores the super methods.
-     *
-     * @param type       {@link Class} to be scanned for methods.
-     * @param predicates custom predicates to filter.
-     * @return {@link Set} of filtered {@link Method}s.
-     */
-    public static Set<Method> getAllMethods(Class<?> type, Predicate<? super Method>... predicates) {
-        List<Predicate<? super Method>> predicateList = new LinkedList<>();
-        predicateList.add(new UniqueMethodPredicate());
-
-        if (ArrayUtils.isNotEmpty(predicates)) {
-            predicateList.addAll(Arrays.asList(predicates));
-        }
-
-
-        return ReflectionUtils.getAllMethods(type, Predicates.and(predicateList));
     }
 
 }
