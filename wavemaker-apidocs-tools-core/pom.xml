@@ -1,21 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<groupId>com.wavemaker</groupId>
-		<artifactId>wavemaker-apidocs-tools</artifactId>
-		<version>1.0.0</version>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>wavemaker-apidocs-tools-core</artifactId>
-	<packaging>jar</packaging>
-	<properties>
-        	<main.basedir>${basedir}/../../..</main.basedir>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>com.wordnik</groupId>
-			<artifactId>swagger-annotations</artifactId>
-		</dependency>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.wavemaker</groupId>
+        <artifactId>wavemaker-apidocs-tools</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>wavemaker-apidocs-tools-core</artifactId>
+    <packaging>jar</packaging>
+    <properties>
+        <main.basedir>${basedir}/../../..</main.basedir>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.wordnik</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -24,5 +28,5 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-	</dependencies>
+    </dependencies>
 </project>
