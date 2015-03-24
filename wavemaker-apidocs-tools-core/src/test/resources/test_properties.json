@@ -9,6 +9,7 @@
     "title": null,
     "readOnly": null,
     "additionalProperties": {
+      "type":"ref",
       "format": null,
       "example": null,
       "xml": null,

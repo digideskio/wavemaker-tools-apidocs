@@ -1,0 +1,12 @@
+{
+  "name": "id",
+  "in": "path",
+  "description": null,
+  "required": true,
+  "type": "integer",
+  "items": null,
+  "collectionFormat": "multi",
+  "default": null,
+  "format": "int32",
+  "enum": null
+}
