@@ -6,8 +6,8 @@ package com.wavemaker.tools.apidocs.tools.core.model;
  */
 public interface ExtensibleEntity {
 
-    Object getExtension(String Key);
+    Object getWMExtension(String Key);
 
-    void addExtension(String key, Object value);
+    void addWMExtension(String key, Object value);
 
 }

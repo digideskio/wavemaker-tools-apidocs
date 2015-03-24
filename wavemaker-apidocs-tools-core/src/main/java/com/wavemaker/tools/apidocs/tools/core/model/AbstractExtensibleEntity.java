@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class AbstractExtensibleEntity implements ExtensibleEntity {
 
     public static final String EXTENSION_PREFIX = "x-";
+    public static final String WM_EXTENSION_PREFIX = EXTENSION_PREFIX + "WM-";
 
     private Map<String, Object> vendorExtensions;
 
@@ -23,14 +24,14 @@ public class AbstractExtensibleEntity implements ExtensibleEntity {
 
     @JsonIgnore
     @Override
-    public Object getExtension(final String key) {
+    public Object getWMExtension(final String key) {
         String extKey = extensionKey(key);
         return vendorExtensions.get(extKey);
     }
 
     @JsonIgnore
     @Override
-    public void addExtension(final String key, final Object value) {
+    public void addWMExtension(final String key, final Object value) {
         String extKey = extensionKey(key);
         vendorExtensions.put(extKey, value);
     }
@@ -48,6 +49,6 @@ public class AbstractExtensibleEntity implements ExtensibleEntity {
     }
 
     private String extensionKey(final String key) {
-        return key.startsWith(EXTENSION_PREFIX) ? key : (EXTENSION_PREFIX + key);
+        return key.startsWith(WM_EXTENSION_PREFIX) ? key : (WM_EXTENSION_PREFIX + key);
     }
 }

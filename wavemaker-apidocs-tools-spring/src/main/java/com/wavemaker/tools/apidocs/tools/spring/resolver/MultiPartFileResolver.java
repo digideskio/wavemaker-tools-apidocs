@@ -22,9 +22,15 @@ import org.springframework.http.MediaType;
 
 import com.google.common.collect.Lists;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.AbstractParameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.BodyParameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.FormParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.FileProperty;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
+import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.spring.parser.SpringParameterParser;
 
 /**
@@ -51,8 +57,18 @@ public class MultiPartFileResolver implements ParameterResolver {
             final Operation operation) {
         SpringParameterParser parameterParser = new SpringParameterParser(index, type, annotations);
         Parameter parameter = parameterParser.parse();
-        // TODO parameter.type(PrimitiveType.FILE.getType());
 
+        if (!(parameter instanceof BodyParameter)) {
+            FileProperty property = new FileProperty();
+            property.setRequired(true);
+            if (parameter instanceof FormParameter) {
+                ((FormParameter) parameter).property(property);
+            } else if (parameter instanceof QueryParameter) {
+                ((QueryParameter) parameter).property(property);
+            }
+        }
+
+        ((AbstractParameter) parameter).setResolver(DataTypeUtil.getName(type));
         // setting consumes to multi part form
         operation.setConsumes(Lists.newArrayList(MediaType.MULTIPART_FORM_DATA_VALUE));
 

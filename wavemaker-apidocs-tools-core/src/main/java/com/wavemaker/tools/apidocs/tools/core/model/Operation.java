@@ -259,11 +259,11 @@ public class Operation extends AbstractExtensibleEntity {
 
     @JsonIgnore
     public void setMethodIdentifier(final String methodIdentifier) {
-        addExtension(METHOD_IDENTIFIER_EXT, methodIdentifier);
+        addWMExtension(METHOD_IDENTIFIER_EXT, methodIdentifier);
     }
 
     @JsonIgnore
     public void setAccessSpecifier(final AccessSpecifier accessSpecifier) {
-        addExtension(ACCESS_SPECIFIER_EXT, accessSpecifier.name());
+        addWMExtension(ACCESS_SPECIFIER_EXT, accessSpecifier.name());
     }
 }

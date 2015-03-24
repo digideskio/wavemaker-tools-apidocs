@@ -38,7 +38,9 @@ public class SwaggerConfiguration {
     private ModelFilters modelFilters;
     private String collectionFormat;
     private Set<Scheme> schemes;
-    private String serviceName; // for studio
+    private String serviceType; // for studio
+    private String serviceId;
+    private String projectId;
     private boolean editable;
     private int coreThreadPoolSize;
     private int maxThreadPoolSize;
@@ -53,7 +55,9 @@ public class SwaggerConfiguration {
         this.collectionFormat = builder.collectionFormat;
         this.schemes = builder.schemes;
         this.editable = builder.editable;
-        this.serviceName = builder.serviceName;
+        this.serviceType = builder.serviceType;
+        this.serviceId = builder.serviceId;
+        this.projectId = builder.projectId;
         this.coreThreadPoolSize = builder.coreThreadPoolSize;
         this.maxThreadPoolSize = builder.maxThreadPoolSize;
         this.timeout = builder.timeout;
@@ -73,7 +77,9 @@ public class SwaggerConfiguration {
         private long timeout = 30 * 1000; // milliseconds
         private String collectionFormat = CollectionFormat.MULTI.name().toLowerCase();
         private Set<Scheme> schemes = Sets.newHashSet(Arrays.asList(Scheme.HTTP, Scheme.HTTPS));
-        private String serviceName;
+        private String serviceType;
+        private String serviceId;
+        private String projectId;
 
         private ClassScanner classScanner;
         private ClassLoader classLoader;
@@ -83,8 +89,7 @@ public class SwaggerConfiguration {
         private ModelFilters modelFilters;
         private Set<ModelFilter> customModelFilters;
 
-        public Builder(String serviceName, String baseUrl, ClassScanner scanner) {
-            this.serviceName = serviceName;
+        public Builder(String baseUrl, ClassScanner scanner) {
             this.baseUrl = baseUrl;
             this.classScanner = Objects.requireNonNull(scanner, "Scanner should not be null");
 
@@ -157,8 +162,18 @@ public class SwaggerConfiguration {
             return this;
         }
 
-        public Builder setServiceName(final String serviceName) {
-            this.serviceName = serviceName;
+        public Builder setServiceType(final String serviceType) {
+            this.serviceType = serviceType;
+            return this;
+        }
+
+        public Builder setServiceId(final String serviceId) {
+            this.serviceId = serviceId;
+            return this;
+        }
+
+        public Builder setProjectId(final String projectId) {
+            this.projectId = projectId;
             return this;
         }
 
@@ -224,8 +239,16 @@ public class SwaggerConfiguration {
         return collectionFormat;
     }
 
-    public String getServiceName() {
-        return serviceName;
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public String getProjectId() {
+        return projectId;
     }
 
     public boolean isEditable() {

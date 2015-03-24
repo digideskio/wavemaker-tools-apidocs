@@ -5,6 +5,8 @@ import com.wavemaker.tools.apidocs.tools.core.model.AbstractExtensibleEntity;
 
 public abstract class AbstractParameter extends AbstractExtensibleEntity implements Parameter {
     public static final String EDITABLE_EXT = "EDITABLE";
+    public static final String RESOLVER_EXT = "RESOLVER";
+    public static final String FULLY_QUALIFIED_TYPE_EXT = "FULLY_QUALIFIED_TYPE";
 
     protected String in;
     protected String name;
@@ -54,7 +56,17 @@ public abstract class AbstractParameter extends AbstractExtensibleEntity impleme
 
     @JsonIgnore
     public void setEditable(boolean editable) {
-        addExtension(EDITABLE_EXT, editable);
+        addWMExtension(EDITABLE_EXT, editable);
+    }
+
+    @JsonIgnore
+    public void setResolver(String resolver) {
+        addWMExtension(RESOLVER_EXT, resolver);
+    }
+
+    @JsonIgnore
+    public void setFullyQualifiedType(String fullyQualifiedType) {
+        addWMExtension(FULLY_QUALIFIED_TYPE_EXT, fullyQualifiedType);
     }
 
 

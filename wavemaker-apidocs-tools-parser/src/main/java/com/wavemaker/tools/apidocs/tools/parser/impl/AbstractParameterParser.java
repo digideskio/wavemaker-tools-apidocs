@@ -20,6 +20,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.core.model.ParameterType;
 import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
 import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.AbstractParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.BodyParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.CookieParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.FormParameter;
@@ -34,6 +35,7 @@ import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
+import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
 import com.wordnik.swagger.annotations.ApiParam;
 
@@ -98,6 +100,8 @@ public abstract class AbstractParameterParser implements ParameterParser {
                 parameter.setName(param.name());
             }
         }
+
+        ((AbstractParameter) parameter).setFullyQualifiedType(DataTypeUtil.getName(dataType));
 
         return parameter;
     }

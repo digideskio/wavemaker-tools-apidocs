@@ -17,6 +17,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.IntegerProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.StringProperty;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
+import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -32,16 +33,19 @@ public class PageParameterResolver implements ParameterResolver {
         QueryParameter page = getDefaultParameterBuilder();
         page.setName("page");
         page.setDefaultValue("0");
+        page.setResolver(DataTypeUtil.getName(type));
         parameters.add(page);
 
         QueryParameter size = getDefaultParameterBuilder();
         size.setName("size");
         size.setDefaultValue("20");
+        page.setResolver(DataTypeUtil.getName(type));
         parameters.add(size);
 
         QueryParameter sort = getDefaultParameterBuilder();
         sort.setName("sort");
         sort.property(new StringProperty());
+        page.setResolver(DataTypeUtil.getName(type));
         parameters.add(sort);
 
 
