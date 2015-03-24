@@ -51,7 +51,8 @@ public class RefModel implements Model {
         else
             return ref;
     }
-
+    
+    @JsonIgnore
     public String get$ref() {
         if (ref.startsWith("http"))
             return ref;
@@ -59,6 +60,7 @@ public class RefModel implements Model {
             return "#/definitions/" + ref;
     }
 
+    @JsonIgnore
     public void set$ref(String ref) {
         if (ref.indexOf("#/definitions/") == 0)
             this.ref = ref.substring("#/definitions/".length());

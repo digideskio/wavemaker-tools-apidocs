@@ -4,7 +4,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.AbstractExtensibleEntity;
 
 public class BasicAuthDefinition extends AbstractExtensibleEntity implements SecuritySchemeDefinition {
     private String type = "basic";
-
+    
     public BasicAuthDefinition() {
     }
 

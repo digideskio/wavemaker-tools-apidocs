@@ -6,7 +6,7 @@ public class ApiKeyAuthDefinition extends AbstractExtensibleEntity implements Se
     private String type = "apiKey";
     private String name;
     private In in;
-
+    
     public ApiKeyAuthDefinition() {
     }
 

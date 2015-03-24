@@ -15,6 +15,7 @@ public class PathParameter extends AbstractParameter implements SerializablePara
     protected Property items;
     protected List<String> _enum;
 
+    
     @JsonProperty("default")
     protected String defaultValue;
 
