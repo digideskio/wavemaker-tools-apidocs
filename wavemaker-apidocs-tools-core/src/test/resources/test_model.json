@@ -1,0 +1,26 @@
+{
+  "yo": {
+    "properties": {
+      "code": {
+        "type": "integer",
+        "type": "integer",
+        "format": "int32"
+      },
+      "type": {
+        "type": "string",
+        "type": "string"
+      },
+      "message": {
+        "type": "string",
+        "type": "string"
+      }
+    },
+    "xml": {
+      "name": "##default"
+    }
+  },
+  "schema": {
+    "$ref": "#/definitions/User"
+  }
+  
+}

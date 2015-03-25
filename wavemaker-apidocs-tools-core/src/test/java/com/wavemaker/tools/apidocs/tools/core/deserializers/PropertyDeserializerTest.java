@@ -12,6 +12,7 @@ import org.junit.Test;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.ArrayProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.BooleanProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
@@ -21,13 +22,11 @@ import com.wavemaker.tools.apidocs.tools.core.model.properties.StringProperty;
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 24/3/15
  */
-public class PropertyDeserializerTest {
+public class PropertyDeserializerTest extends BaseDeserializerTest {
     private static final String TEST_JSON_FILE = "/test_properties.json";
 
-    private ObjectMapper objectMapper;
-
     public PropertyDeserializerTest() {
-        objectMapper = new ObjectMapper();
+        super();
     }
 
     @Test
@@ -37,6 +36,7 @@ public class PropertyDeserializerTest {
         InputStream inputStream = this.getClass().getResourceAsStream(TEST_JSON_FILE);
         if (inputStream != null) {
             Map<String, Property> propertyMap= objectMapper.readValue(inputStream, propertyTypeReference);
+            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
             Assert.assertNotNull(propertyMap);
             objectMapper.writeValue(new File("/home/nishanth/Desktop", "test_propert.json"), propertyMap);
             System.out.println(propertyMap);
@@ -52,12 +52,12 @@ public class PropertyDeserializerTest {
         arrayProperty.setDescription("desc");
         arrayProperty.setExample("exam");
         arrayProperty.setName("arrayprop");
-        
+
         StringProperty items = new StringProperty();
         items.setName("stringprop");
         items.setExample("stringexamp");
         items.setDescription("stirng edsc");
-        
+
         arrayProperty.setItems(items);
 
         JsonNode jsonNode = objectMapper.valueToTree(arrayProperty);

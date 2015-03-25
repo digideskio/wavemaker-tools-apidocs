@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wavemaker.tools.apidocs.tools.core.model.ExtensibleEntity;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property="in")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property="in", defaultImpl = RefParameter.class)
 @JsonSubTypes({	@Type(value = BodyParameter.class, name = "body"),
 				@Type(value = CookieParameter.class, name = "cookie"),
 				@Type(value = PathParameter.class, name = "path"),

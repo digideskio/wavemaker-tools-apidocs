@@ -13,18 +13,22 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.wavemaker.tools.apidocs.tools.core.deserializers.PropertyDeserializer;
 import com.wavemaker.tools.apidocs.tools.core.model.*;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 
 /**
  * @author <a href="mailto:nishanth.modhugu@wavemaker.com">Nishanth Reddy</a>
  * @since : 24/3/15 9:03 PM $
  */
-public class ModelDeserializer extends JsonDeserializer<Model> {
+public class ModelDeserializer extends StdDeserializer<Model> {
     
     private static final String ARRAY_TYPE = "array";
     private static final String OBJECT_TYPE = "object";
-    private static final String REF_TYPE = "$ref";
+    private static final String REF_TYPE = "ref";
     private static final String COMPOSED_TYPE = "allOf"; //Not sure which field is mandatory. If required we need to check
                                                     //for all the fields.
     
@@ -38,28 +42,43 @@ public class ModelDeserializer extends JsonDeserializer<Model> {
                                                     //for all the fields.
     }
     
+    public ModelDeserializer() {
+        super(Model.class);
+    }
+
     @Override
     public Model deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-        JsonNode node1 = node.get("type");
-        ObjectMapper objectMapper = new ObjectMapper();
-//        if (node.has(ARRAY_TYPE)) {
-            return getModel(jsonParser, node, objectMapper, ARRAY_TYPE);
-//        } else if (node.has(OBJECT_TYPE)) {
-//            return getModel(node, objectMapper, OBJECT_TYPE);
-//        } else if (node.has(REF_TYPE)) {
-//            return getModel(node, objectMapper, REF_TYPE);
-//        } else if (node.has(COMPOSED_TYPE)) {
-//            return getModel(node, objectMapper, COMPOSED_TYPE);
-        }
+        JsonNode subType = node.get("type");
         
-//        return null;
-//    }
+        ObjectMapper objectMapper = getObjectMapper();
 
-    private Model getModel(JsonParser jsonParser, JsonNode node, ObjectMapper objectMapper, String modelType) throws IOException {
-        Iterator<ArrayModel> arrayModelIterator = jsonParser.readValuesAs(ArrayModel.class);
-        String json = node.get(modelType).asText();
+        String subTypeValue;
+        if (subType == null) {
+            if (node.get("$ref") != null) {
+                subTypeValue = REF_TYPE;
+            } else {
+                subTypeValue = OBJECT_TYPE;
+            }
+        } else {
+            subTypeValue = subType.textValue();
+        }
+        return getModel(node, objectMapper, subTypeValue);
+    }
+
+    private Model getModel(JsonNode node, ObjectMapper objectMapper, String modelType) throws IOException {
         return objectMapper.readValue(node.toString(), MODEL_MAPPING.get(modelType));
+    }
+
+    private ObjectMapper getObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        PropertyDeserializer propertyDeserializer = new PropertyDeserializer();
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addDeserializer(Property.class, propertyDeserializer);
+        objectMapper.registerModule(simpleModule);
+
+        return objectMapper;
     }
 
     public static void main(String[] args) throws IOException {
@@ -80,7 +99,14 @@ public class ModelDeserializer extends JsonDeserializer<Model> {
                 "              },\n" +
                 "              \"example\": null\n" +
                 "            }";
-        Model model = new ObjectMapper().readValue(jsonStr, Model.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        ModelDeserializer modelDeserializer = new ModelDeserializer();
+        PropertyDeserializer propertyDeserializer = new PropertyDeserializer();
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addDeserializer(Model.class, modelDeserializer);
+        simpleModule.addDeserializer(Property.class, propertyDeserializer);
+        objectMapper.registerModule(simpleModule);
+        Model model = objectMapper.readValue(jsonStr, Model.class);
         System.out.println(model);
 //        ArrayModel arrayModel = new ArrayModel();
 //        arrayModel.setDescription("desc");

@@ -9,17 +9,22 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.*;
+import com.wavemaker.tools.apidocs.tools.core.model.serializers.ModelDeserializer;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 24/3/15
  */
-public class PropertyDeserializer extends JsonDeserializer<Property> {
+public class PropertyDeserializer extends StdDeserializer<Property> {
     private static final Map<String, Class<? extends Property>> subTypesMap = new HashMap<>();
 
     static {
-//        subTypesMap.put("object", ObjectProperty.class);
+        subTypesMap.put("object", ObjectProperty.class);
         subTypesMap.put("array", ArrayProperty.class);
         subTypesMap.put("boolean", BooleanProperty.class);
         subTypesMap.put("date", DateProperty.class);
@@ -31,8 +36,12 @@ public class PropertyDeserializer extends JsonDeserializer<Property> {
         subTypesMap.put("int64", LongProperty.class);
         subTypesMap.put("file", FileProperty.class);
         subTypesMap.put("ref", RefProperty.class);
-        subTypesMap.put("String", StringProperty.class);
+        subTypesMap.put("string", StringProperty.class);
         subTypesMap.put("uuid", UUIDProperty.class);
+    }
+
+    public PropertyDeserializer() {
+        super(Property.class);
     }
 
 
@@ -63,10 +72,34 @@ public class PropertyDeserializer extends JsonDeserializer<Property> {
 
         if (subType == null) {
             if (jsonNode.asText().isEmpty()) {
-                return null;
+                subType = RefProperty.class;
+            } else {
+                subType = ObjectProperty.class; // default one
             }
-            subType = ObjectProperty.class; // default one
         }
-        return jp.readValueAs(subType);
+        ObjectMapper objectMapper;
+        if (subType == MapProperty.class || subType == ArrayProperty.class) {
+            objectMapper = new ObjectMapper();
+            ModelDeserializer modelDeserializer = new ModelDeserializer();
+            PropertyDeserializer propertyDeserializer = new PropertyDeserializer();
+            SimpleModule simpleModule = new SimpleModule();
+            simpleModule.addDeserializer(Model.class, modelDeserializer);
+            simpleModule.addDeserializer(Property.class, propertyDeserializer);
+            objectMapper.registerModule(simpleModule);
+        } else {
+            objectMapper = getObjectMapper();
+        }
+        return objectMapper.readValue(jsonNode.toString(), subType);
+    }
+    
+    private ObjectMapper getObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+        ModelDeserializer modelDeserializer = new ModelDeserializer();
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addDeserializer(Model.class, modelDeserializer);
+        objectMapper.registerModule(simpleModule);
+        
+        return objectMapper;
     }
 }

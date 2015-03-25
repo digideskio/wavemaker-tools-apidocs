@@ -64,7 +64,6 @@
             "description": "Pet object that needs to be added to the store",
             "required": false,
             "schema": {
-              "type":"ref",
               "$ref": "#/definitions/Pet"
             }
           }
@@ -105,7 +104,6 @@
             "description": "Pet object that needs to be added to the store",
             "required": false,
             "schema": {
-              "type":"ref",
               "$ref": "#/definitions/Pet"
             }
           }
@@ -173,7 +171,6 @@
             "schema": {
               "type": "array",
               "items": {
-                "type":"ref",
                 "$ref": "#/definitions/Pet"
               }
             }
@@ -228,7 +225,6 @@
             "schema": {
               "type": "array",
               "items": {
-                "type":"ref",
                 "$ref": "#/definitions/Pet"
               }
             }
@@ -273,7 +269,6 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type":"ref",
               "$ref": "#/definitions/Pet"
             }
           },
@@ -435,7 +430,6 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type":"ref",
               "$ref": "#/definitions/ApiResponse"
             }
           }
@@ -501,7 +495,6 @@
             "description": "order placed for purchasing the pet",
             "required": false,
             "schema": {
-              "type":"ref",
               "$ref": "#/definitions/Order"
             }
           }
@@ -510,7 +503,6 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type":"ref",
               "$ref": "#/definitions/Order"
             }
           },
@@ -545,7 +537,6 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type":"ref",
               "$ref": "#/definitions/Order"
             }
           },
@@ -606,7 +597,6 @@
             "description": "Created user object",
             "required": false,
             "schema": {
-              "type":"ref",
               "$ref": "#/definitions/User"
             }
           }
@@ -639,7 +629,6 @@
             "schema": {
               "type": "array",
               "items": {
-                "type":"ref",
                 "$ref": "#/definitions/User"
               }
             }
@@ -673,7 +662,6 @@
             "schema": {
               "type": "array",
               "items": {
-                "type":"ref",
                 "$ref": "#/definitions/User"
               }
             }
@@ -784,7 +772,6 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type":"ref",
               "$ref": "#/definitions/User"
             }
           },
@@ -821,7 +808,6 @@
             "description": "Updated user object",
             "required": false,
             "schema": {
-              "type":"ref",
               "$ref": "#/definitions/User"
             }
           }
@@ -884,7 +870,6 @@
   },
   "definitions": {
     "Order": {
-      "type":"object",
       "properties": {
         "id": {
           "type": "integer",
@@ -920,7 +905,6 @@
       }
     },
     "Category": {
-      "type":"object",
       "properties": {
         "id": {
           "type": "integer",
@@ -935,7 +919,6 @@
       }
     },
     "User": {
-      "type":"object",
       "properties": {
         "id": {
           "type": "integer",
@@ -970,7 +953,6 @@
       }
     },
     "Tag": {
-      "type":"object",
       "properties": {
         "id": {
           "type": "integer",
@@ -985,7 +967,6 @@
       }
     },
     "Pet": {
-      "type":"object",
       "required": [
         "name",
         "photoUrls"
@@ -996,7 +977,6 @@
           "format": "int64"
         },
         "category": {
-          "type":"ref",
           "$ref": "#/definitions/Category"
         },
         "name": {
@@ -1020,7 +1000,6 @@
             "wrapped": true
           },
           "items": {
-            "type":"ref",
             "$ref": "#/definitions/Tag"
           }
         },
@@ -1039,7 +1018,6 @@
       }
     },
     "ApiResponse": {
-      "type":"object",
       "properties": {
         "code": {
           "type": "integer",

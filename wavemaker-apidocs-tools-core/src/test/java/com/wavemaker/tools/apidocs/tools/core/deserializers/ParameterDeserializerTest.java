@@ -15,13 +15,17 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.PathParameter;
  * @author <a href="mailto:nishanth.modhugu@wavemaker.com">Nishanth Reddy</a>
  * @since : 24/3/15 11:30 PM $
  */
-public class ParameterDeserializerTest {
+public class ParameterDeserializerTest extends BaseDeserializerTest {
 
     private static final String TEST_JSON_FILE = "/test_parameter.json";
 
+    public ParameterDeserializerTest() {
+        super();
+    }
+    
     @Test
     public void deserializerTest() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper = new ObjectMapper();
         InputStream inputStream = this.getClass().getResourceAsStream(TEST_JSON_FILE);
         Parameter parameter = objectMapper.readValue(inputStream, Parameter.class);
         System.out.println("->" + parameter);
