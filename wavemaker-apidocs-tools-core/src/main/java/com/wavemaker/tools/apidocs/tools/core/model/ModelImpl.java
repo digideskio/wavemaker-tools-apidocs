@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.xml.bind.annotation.XmlType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -137,7 +138,8 @@ public class ModelImpl extends AbstractModel {
         else
             return null;
     }
-
+    
+    @JsonIgnore
     public void setRequired(List<String> required) {
         this.required = required;
         for (String s : required) {
