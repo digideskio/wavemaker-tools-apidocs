@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -44,7 +45,6 @@ public class PropertyDeserializer extends StdDeserializer<Property> {
         super(Property.class);
     }
 
-
     @Override
     public Property deserialize(
             final JsonParser jp, final DeserializationContext ctxt) throws IOException, JsonProcessingException {
@@ -80,6 +80,8 @@ public class PropertyDeserializer extends StdDeserializer<Property> {
         ObjectMapper objectMapper;
         if (subType == MapProperty.class || subType == ArrayProperty.class) {
             objectMapper = new ObjectMapper();
+            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            
             ModelDeserializer modelDeserializer = new ModelDeserializer();
             PropertyDeserializer propertyDeserializer = new PropertyDeserializer();
             SimpleModule simpleModule = new SimpleModule();
@@ -94,6 +96,7 @@ public class PropertyDeserializer extends StdDeserializer<Property> {
     
     private ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         
         ModelDeserializer modelDeserializer = new ModelDeserializer();
         SimpleModule simpleModule = new SimpleModule();

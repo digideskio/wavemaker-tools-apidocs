@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.node.NullNode;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.wavemaker.tools.apidocs.tools.core.deserializers.PropertyDeserializer;
 import com.wavemaker.tools.apidocs.tools.core.model.*;
@@ -54,7 +56,7 @@ public class ModelDeserializer extends StdDeserializer<Model> {
         ObjectMapper objectMapper = getObjectMapper();
 
         String subTypeValue;
-        if (subType == null) {
+        if (subType == null || subType instanceof NullNode) {
             if (node.get("$ref") != null) {
                 subTypeValue = REF_TYPE;
             } else {
@@ -72,7 +74,8 @@ public class ModelDeserializer extends StdDeserializer<Model> {
 
     private ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        
         PropertyDeserializer propertyDeserializer = new PropertyDeserializer();
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addDeserializer(Property.class, propertyDeserializer);
