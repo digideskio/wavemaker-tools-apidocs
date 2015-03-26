@@ -9,9 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
-import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 
 /**
  * @author <a href="mailto:nishanth.modhugu@wavemaker.com">Nishanth Reddy</a>
@@ -32,7 +30,7 @@ public class ModelDeserializerTest extends BaseDeserializerTest {
         if (inputStream != null) {
             Map<String, Model> modelMap= objectMapper.readValue(inputStream, propertyTypeReference);
             Assert.assertNotNull(modelMap);
-            objectMapper.writeValue(new File("/home/nishanth/Desktop", "test_model.json"), modelMap);
+            objectMapper.writeValue(new File("target", "test_model.json"), modelMap);
             System.out.println(modelMap);
         } else {
             System.err.println("File not found");

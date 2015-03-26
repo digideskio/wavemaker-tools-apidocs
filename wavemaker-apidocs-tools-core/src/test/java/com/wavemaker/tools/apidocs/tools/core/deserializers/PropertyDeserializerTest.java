@@ -4,17 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.ArrayProperty;
-import com.wavemaker.tools.apidocs.tools.core.model.properties.BooleanProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.StringProperty;
 
@@ -38,7 +35,7 @@ public class PropertyDeserializerTest extends BaseDeserializerTest {
             Map<String, Property> propertyMap= objectMapper.readValue(inputStream, propertyTypeReference);
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
             Assert.assertNotNull(propertyMap);
-            objectMapper.writeValue(new File("/home/nishanth/Desktop", "test_propert.json"), propertyMap);
+            objectMapper.writeValue(new File("target", "test_propert.json"), propertyMap);
             System.out.println(propertyMap);
 //            objectMapper.writeValue(new File("target", "test_properties.json"), property);
         } else {
