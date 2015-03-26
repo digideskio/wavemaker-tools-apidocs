@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wavemaker.tools.apidocs.tools.core.model.Info;
 import com.wavemaker.tools.apidocs.tools.core.model.Swagger;
 import com.wavemaker.tools.apidocs.tools.parser.config.SwaggerConfiguration;
 import com.wavemaker.tools.apidocs.tools.parser.runner.SwaggerParser;
@@ -30,10 +31,11 @@ public class SpringSwaggerParserTest {
     public void testGenerate() throws Exception {
         FilterableClassScanner classScanner = new FilterableClassScanner();
         classScanner.includePackage("com.wavemaker.tools.apidocs.tools");
+        Info info = new Info();
+        info.description("hrdb database service apis");
+        info.setTitle("HRDB service");
         SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/test", classScanner);
-        builder.setServiceId("hrdb");
-        builder.setServiceType("Data Service");
-        builder.setProjectId("proj-234-234242");
+        builder.setInfo(info);
         builder.setClassLoader(this.getClass().getClassLoader());
         builder.addExcludeModelPackage("java");
         SwaggerParser runner = new SpringSwaggerParser(builder.build());
@@ -57,9 +59,6 @@ public class SpringSwaggerParserTest {
         FilterableClassScanner classScanner = new FilterableClassScanner();
         classScanner.includePackage("com.wavemaker.tools.apidocs.tools");
         SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/test", classScanner);
-        builder.setServiceId("hrdb");
-        builder.setServiceType("Data Service");
-        builder.setProjectId("proj-234-234242");
         builder.setClassLoader(this.getClass().getClassLoader());
         builder.addExcludeModelPackage("java");
         builder.addParameterResolver(Pageable.class, new PageParameterResolver());

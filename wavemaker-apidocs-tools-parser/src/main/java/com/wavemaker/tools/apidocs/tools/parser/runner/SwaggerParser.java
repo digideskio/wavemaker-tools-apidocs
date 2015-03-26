@@ -183,10 +183,7 @@ public abstract class SwaggerParser {
                 swagger.path(pathEntry.getKey(), pathEntry.getValue());
             }
         }
-
-        swagger.setProjectId(configuration.getProjectId());
-        swagger.setServiceId(configuration.getServiceId());
-        swagger.setServiceType(configuration.getServiceType());
+        swagger.setInfo(configuration.getInfo());
 
         return swagger;
     }

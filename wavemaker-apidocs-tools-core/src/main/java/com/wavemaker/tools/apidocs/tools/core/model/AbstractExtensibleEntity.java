@@ -16,7 +16,7 @@ public class AbstractExtensibleEntity implements ExtensibleEntity {
     public static final String EXTENSION_PREFIX = "x-";
     public static final String WM_EXTENSION_PREFIX = EXTENSION_PREFIX + "WM-";
 
-    private Map<String, Object> vendorExtensions;
+    protected Map<String, Object> vendorExtensions;
 
     public AbstractExtensibleEntity() {
         this.vendorExtensions = new HashMap<>();

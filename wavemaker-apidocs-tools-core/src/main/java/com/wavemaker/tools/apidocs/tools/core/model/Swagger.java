@@ -7,17 +7,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wavemaker.tools.apidocs.tools.core.model.auth.SecuritySchemeDefinition;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
-public class Swagger extends AbstractExtensibleEntity {
-    private static final String API_ID_EXT = "API_ID";
-    private static final String ENTERPRISE_ID_EXT = "ENTERPRISE_ID";
-    private static final String PROJECT_ID_EXT = "PROJECT_ID";
-    private static final String SERVICE_TYPE_EXT = "SERVICE_TYPE";
-    private static final String SERVICE_ID_EXT = "SERVICE_ID";
-
+public class Swagger {
     protected String swagger = "2.0";
     protected Info info;
     protected String host;
@@ -304,48 +297,4 @@ public class Swagger extends AbstractExtensibleEntity {
         externalDocs = value;
     }
 
-    @JsonIgnore
-    public void setApiId(String apiId) {
-        addWMExtension(API_ID_EXT, apiId);
-    }
-
-    public String getApiId() {
-        return (String) getWMExtension(API_ID_EXT);
-    }
-
-    @JsonIgnore
-    public void setEnterpriseId(String enterpriseId) {
-        addWMExtension(ENTERPRISE_ID_EXT, enterpriseId);
-    }
-
-    public String getEnterpriseId() {
-        return (String) getWMExtension(ENTERPRISE_ID_EXT);
-    }
-
-    @JsonIgnore
-    public void setProjectId(String projectId) {
-        addWMExtension(PROJECT_ID_EXT, projectId);
-    }
-
-    public String getProjectId() {
-        return (String) getWMExtension(PROJECT_ID_EXT);
-    }
-
-    @JsonIgnore
-    public void setServiceType(String serviceType) {
-        addWMExtension(SERVICE_TYPE_EXT, serviceType);
-    }
-
-    public String getServiceType() {
-        return (String) getWMExtension(SERVICE_TYPE_EXT);
-    }
-
-    @JsonIgnore
-    public void setServiceId(String serviceId) {
-        addWMExtension(SERVICE_ID_EXT, serviceId);
-    }
-
-    public String getServiceId() {
-        return (String) getWMExtension(SERVICE_ID_EXT);
-    }
 }

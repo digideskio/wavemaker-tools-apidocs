@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
+import com.wavemaker.tools.apidocs.tools.core.model.Info;
 import com.wavemaker.tools.apidocs.tools.core.model.Scheme;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.context.ParameterResolvers;
@@ -38,9 +39,7 @@ public class SwaggerConfiguration {
     private ModelFilters modelFilters;
     private String collectionFormat;
     private Set<Scheme> schemes;
-    private String serviceType; // for studio
-    private String serviceId;
-    private String projectId;
+    private Info info;
     private boolean editable;
     private int coreThreadPoolSize;
     private int maxThreadPoolSize;
@@ -55,9 +54,7 @@ public class SwaggerConfiguration {
         this.collectionFormat = builder.collectionFormat;
         this.schemes = builder.schemes;
         this.editable = builder.editable;
-        this.serviceType = builder.serviceType;
-        this.serviceId = builder.serviceId;
-        this.projectId = builder.projectId;
+        this.info = builder.info;
         this.coreThreadPoolSize = builder.coreThreadPoolSize;
         this.maxThreadPoolSize = builder.maxThreadPoolSize;
         this.timeout = builder.timeout;
@@ -77,9 +74,7 @@ public class SwaggerConfiguration {
         private long timeout = 30 * 1000; // milliseconds
         private String collectionFormat = CollectionFormat.MULTI.name().toLowerCase();
         private Set<Scheme> schemes = Sets.newHashSet(Arrays.asList(Scheme.HTTP, Scheme.HTTPS));
-        private String serviceType;
-        private String serviceId;
-        private String projectId;
+        private Info info;
 
         private ClassScanner classScanner;
         private ClassLoader classLoader;
@@ -140,6 +135,11 @@ public class SwaggerConfiguration {
             return this;
         }
 
+        public Builder setInfo(final Info info) {
+            this.info = info;
+            return this;
+        }
+
         public Builder setDefaultThreadPool() {
             this.setCoreThreadPoolSize(CORE_THREAD_POOL_SIZE);
             this.setMaxThreadPoolSize(MAX_THREAD_POOL_SIZE);
@@ -159,21 +159,6 @@ public class SwaggerConfiguration {
                 throw new IllegalArgumentException("Thread pool size cannot be less than 1");
             }
             this.maxThreadPoolSize = maxThreadPoolSize;
-            return this;
-        }
-
-        public Builder setServiceType(final String serviceType) {
-            this.serviceType = serviceType;
-            return this;
-        }
-
-        public Builder setServiceId(final String serviceId) {
-            this.serviceId = serviceId;
-            return this;
-        }
-
-        public Builder setProjectId(final String projectId) {
-            this.projectId = projectId;
             return this;
         }
 
@@ -239,16 +224,8 @@ public class SwaggerConfiguration {
         return collectionFormat;
     }
 
-    public String getServiceType() {
-        return serviceType;
-    }
-
-    public String getServiceId() {
-        return serviceId;
-    }
-
-    public String getProjectId() {
-        return projectId;
+    public Info getInfo() {
+        return info;
     }
 
     public boolean isEditable() {

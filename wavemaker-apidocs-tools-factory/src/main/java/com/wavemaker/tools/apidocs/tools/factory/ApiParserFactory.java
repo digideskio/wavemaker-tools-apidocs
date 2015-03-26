@@ -25,21 +25,21 @@ import com.wavemaker.tools.apidocs.tools.spring.resolver.ServletMetaTypesResolve
  */
 public class ApiParserFactory {
 
-    public static SwaggerParser newSpringApiParserRunner(final SwaggerConfiguration.Builder builder) {
+    public static SwaggerParser newSpringParser(final SwaggerConfiguration.Builder builder) {
 
         builder.addParameterResolver(MultipartFile.class, MultiPartFileResolver.getInstance());
         builder.addParameterResolver(MultipartHttpServletRequest.class, MultiPartRequestResolver.getInstance());
         builder.addParameterResolver(HttpServletRequest.class, ServletMetaTypesResolver.getInstance());
 
-        return newApiParserRunner(FrameworkType.SPRING, builder);
+        return newSwaggerParser(FrameworkType.SPRING, builder);
     }
 
-    public static SwaggerParser newApiParserRunner(
+    public static SwaggerParser newSwaggerParser(
             final FrameworkType frameworkType, final SwaggerConfiguration.Builder builder) {
-        return newApiParserRunner(frameworkType, builder.build());
+        return newSwaggerParser(frameworkType, builder.build());
     }
 
-    public static SwaggerParser newApiParserRunner(
+    public static SwaggerParser newSwaggerParser(
             FrameworkType frameworkType, final SwaggerConfiguration configuration) {
 
         return new SpringSwaggerParser(configuration);
