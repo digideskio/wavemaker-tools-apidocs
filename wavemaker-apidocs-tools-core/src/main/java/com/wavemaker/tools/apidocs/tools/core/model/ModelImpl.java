@@ -138,8 +138,7 @@ public class ModelImpl extends AbstractModel {
         else
             return null;
     }
-    
-    @JsonIgnore
+
     public void setRequired(List<String> required) {
         this.required = required;
         for (String s : required) {
