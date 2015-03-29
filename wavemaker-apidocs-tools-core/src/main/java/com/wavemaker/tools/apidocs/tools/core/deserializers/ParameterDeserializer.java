@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
@@ -55,17 +56,8 @@ public class ParameterDeserializer extends StdDeserializer<Parameter> {
 
     private ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
-        ModelDeserializer modelDeserializer = new ModelDeserializer();
-        PropertyDeserializer propertyDeserializer = new PropertyDeserializer();
-        
-        SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addDeserializer(Model.class, modelDeserializer);
-        simpleModule.addDeserializer(Property.class, propertyDeserializer);
-        
-        objectMapper.registerModule(simpleModule);
-
         return objectMapper;
     }
 }

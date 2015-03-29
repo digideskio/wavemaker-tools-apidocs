@@ -11,10 +11,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
+
+import static junit.framework.TestCase.assertNotNull;
 
 /**
  * @author <a href="mailto:nishanth.modhugu@wavemaker.com">Nishanth Reddy</a>
@@ -22,23 +23,19 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
  */
 public class ParameterDeserializerTest extends BaseDeserializerTest {
 
-	private static final String TEST_JSON_FILE = "/test_parameter.json";
+    private static final String TEST_JSON_FILE = "/test_parameter.json";
 
-	public ParameterDeserializerTest() {
-		super();
-	}
+    public ParameterDeserializerTest() {
+        super();
+    }
 
-	@Test
-	public void deserializerTest() throws IOException {
-		InputStream inputStream = this.getClass().getResourceAsStream(
-				TEST_JSON_FILE);
-		Parameter parameter = objectMapper.readValue(inputStream,
-				Parameter.class);
-		File outputFile = new File("test_parameters.json");
-		Assert.assertFalse(outputFile.exists());
-		objectMapper.writeValue(outputFile, parameter);
-		Assert.assertTrue(outputFile.exists());
-		Assert.assertTrue(outputFile.length() > 0);
-		outputFile.delete();
-	}
+    @Test
+    public void deserializerTest() throws IOException {
+        InputStream inputStream = this.getClass().getResourceAsStream(
+                TEST_JSON_FILE);
+        Parameter parameter = objectMapper.readValue(inputStream,
+                Parameter.class);
+	    assertNotNull(parameter);
+        objectMapper.writeValue(new File("target", "test_parameters.json"), parameter);
+    }
 }

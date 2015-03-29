@@ -26,16 +26,10 @@ public class SwaggerDeserializerTest extends BaseDeserializerTest {
     @Test
     public void deserializerTest() throws IOException {
         InputStream inputStream = this.getClass().getResourceAsStream(TEST_JSON_FILE);
-        if (inputStream != null) {
-            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-            Swagger swagger= objectMapper.readValue(inputStream, Swagger.class);
-            Assert.assertNotNull(swagger);
-            objectMapper.writeValue(new File("target", "test_swwagger.json"), swagger);
-            System.out.println(swagger);
-//            objectMapper.writeValue(new File("target", "test_properties.json"), property);
-        } else {
-            System.err.println("File not found");
-        }
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        Swagger swagger = objectMapper.readValue(inputStream, Swagger.class);
+        Assert.assertNotNull(swagger);
+        objectMapper.writeValue(new File("target", "test_swagger.json"), swagger);
     }
 }

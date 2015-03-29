@@ -3,17 +3,14 @@ package com.wavemaker.tools.apidocs.tools.core.model;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonTypeResolver;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
+import com.wavemaker.tools.apidocs.tools.core.resolvers.model.ModelTypeResolver;
 
-//@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property="type", defaultImpl = RefModel.class)
-//@JsonSubTypes({	@Type(value = ArrayModel.class, name = "array"),
-//				@Type(value = ComposedModel.class, name = "allOf"),
-//				@Type(value = ModelImpl.class, name = "object"),
-//				@Type(value = RefModel.class, name = "ref")
-//			})
-//@JsonTypeIdResolver(CustomModelTypeIdResolver.class)
-//@JsonDeserialize(using = ModelDeserializer.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
+@JsonTypeResolver(ModelTypeResolver.class)
 public interface Model {
     String getDescription();
 

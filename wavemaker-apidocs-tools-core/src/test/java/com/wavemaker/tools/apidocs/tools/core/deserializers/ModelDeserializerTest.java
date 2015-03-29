@@ -27,14 +27,9 @@ public class ModelDeserializerTest extends BaseDeserializerTest {
         TypeReference<Map<String, Model>> propertyTypeReference = new TypeReference<Map<String, Model>>() {
         };
         InputStream inputStream = this.getClass().getResourceAsStream(TEST_JSON_FILE);
-        if (inputStream != null) {
-            Map<String, Model> modelMap= objectMapper.readValue(inputStream, propertyTypeReference);
-            Assert.assertNotNull(modelMap);
-            objectMapper.writeValue(new File("target", "test_model.json"), modelMap);
-            System.out.println(modelMap);
-        } else {
-            System.err.println("File not found");
-        }
+        Map<String, Model> modelMap = objectMapper.readValue(inputStream, propertyTypeReference);
+        Assert.assertNotNull(modelMap);
+        objectMapper.writeValue(new File("target", "test_model.json"), modelMap);
     }
 
 }
