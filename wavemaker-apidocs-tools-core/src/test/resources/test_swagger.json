@@ -139,8 +139,7 @@
         "operationId": "findPetsByStatus",
         "consumes": [
           "application/xml",
-          "application/json",
-          "multipart/form-data"
+          "application/json"
         ],
         "produces": [
           "application/xml",
@@ -199,8 +198,7 @@
         "operationId": "findPetsByTags",
         "consumes": [
           "application/xml",
-          "application/json",
-          "multipart/form-data"
+          "application/json"
         ],
         "produces": [
           "application/xml",
@@ -251,6 +249,11 @@
         "summary": "Find pet by ID",
         "description": "Returns a single pet",
         "operationId": "getPetById",
+        "consumes": [
+          "application/xml",
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
         "produces": [
           "application/xml",
           "application/json"
@@ -349,9 +352,6 @@
         "summary": "Deletes a pet",
         "description": "",
         "operationId": "deletePet",
-        "consumes": [
-          "multipart/form-data"
-        ],
         "produces": [
           "application/xml",
           "application/json"
@@ -904,20 +904,6 @@
         "name": "Order"
       }
     },
-    "Category": {
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "Category"
-      }
-    },
     "User": {
       "properties": {
         "id": {
@@ -950,6 +936,20 @@
       },
       "xml": {
         "name": "User"
+      }
+    },
+    "Category": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Category"
       }
     },
     "Tag": {

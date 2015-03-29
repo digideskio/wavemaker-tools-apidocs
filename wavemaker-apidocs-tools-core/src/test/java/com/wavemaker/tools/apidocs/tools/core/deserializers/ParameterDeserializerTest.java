@@ -1,5 +1,6 @@
 package com.wavemaker.tools.apidocs.tools.core.deserializers;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,9 +26,9 @@ public class ParameterDeserializerTest extends BaseDeserializerTest {
     
     @Test
     public void deserializerTest() throws IOException {
-        objectMapper = new ObjectMapper();
         InputStream inputStream = this.getClass().getResourceAsStream(TEST_JSON_FILE);
         Parameter parameter = objectMapper.readValue(inputStream, Parameter.class);
         System.out.println("->" + parameter);
+        objectMapper.writeValue(new File("/home/nishanth/Desktop", "test_parameters.json"), parameter);
     }
 }

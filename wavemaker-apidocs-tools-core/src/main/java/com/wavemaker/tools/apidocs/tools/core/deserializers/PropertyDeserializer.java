@@ -14,8 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.*;
-import com.wavemaker.tools.apidocs.tools.core.model.serializers.ModelDeserializer;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -84,9 +84,13 @@ public class PropertyDeserializer extends StdDeserializer<Property> {
             
             ModelDeserializer modelDeserializer = new ModelDeserializer();
             PropertyDeserializer propertyDeserializer = new PropertyDeserializer();
+            ParameterDeserializer parameterDeserializer = new ParameterDeserializer();
+            
             SimpleModule simpleModule = new SimpleModule();
             simpleModule.addDeserializer(Model.class, modelDeserializer);
             simpleModule.addDeserializer(Property.class, propertyDeserializer);
+            simpleModule.addDeserializer(Parameter.class, parameterDeserializer);
+            
             objectMapper.registerModule(simpleModule);
         } else {
             objectMapper = getObjectMapper();
@@ -99,8 +103,12 @@ public class PropertyDeserializer extends StdDeserializer<Property> {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         
         ModelDeserializer modelDeserializer = new ModelDeserializer();
+        ParameterDeserializer parameterDeserializer = new ParameterDeserializer();
+
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addDeserializer(Model.class, modelDeserializer);
+        simpleModule.addDeserializer(Parameter.class, parameterDeserializer);
+        
         objectMapper.registerModule(simpleModule);
         
         return objectMapper;

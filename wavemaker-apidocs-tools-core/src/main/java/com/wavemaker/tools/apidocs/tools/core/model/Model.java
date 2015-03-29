@@ -2,14 +2,7 @@ package com.wavemaker.tools.apidocs.tools.core.model;
 
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
-import com.wavemaker.tools.apidocs.tools.core.deserializers.resolvers.CustomModelTypeIdResolver;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
-import com.wavemaker.tools.apidocs.tools.core.model.serializers.ModelDeserializer;
 
 //@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property="type", defaultImpl = RefModel.class)
 //@JsonSubTypes({	@Type(value = ArrayModel.class, name = "array"),

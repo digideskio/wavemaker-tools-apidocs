@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
-import com.wavemaker.tools.apidocs.tools.core.model.serializers.ModelDeserializer;
 
 /**
  * @author <a href="mailto:nishanth.modhugu@wavemaker.com">Nishanth Reddy</a>
@@ -19,11 +19,15 @@ public class BaseDeserializerTest {
     
     public BaseDeserializerTest() {
         objectMapper = new ObjectMapper();
+        
         ModelDeserializer modelDeserializer = new ModelDeserializer();
         PropertyDeserializer propertyDeserializer = new PropertyDeserializer();
+        ParameterDeserializer parameterDeserializer = new ParameterDeserializer();
+        
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addDeserializer(Model.class, modelDeserializer);
         simpleModule.addDeserializer(Property.class, propertyDeserializer);
+//        simpleModule.addDeserializer(Parameter.class, parameterDeserializer);
         
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);

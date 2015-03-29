@@ -1,5 +1,6 @@
 package com.wavemaker.tools.apidocs.tools.core.model.auth;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -10,6 +11,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.ExtensibleEntity;
 				@Type(value = BasicAuthDefinition.class, name = "basic"),
 				@Type(value = OAuth2Definition.class, name = "oauth2")
 			})
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public interface SecuritySchemeDefinition extends ExtensibleEntity {
     String getType();
 

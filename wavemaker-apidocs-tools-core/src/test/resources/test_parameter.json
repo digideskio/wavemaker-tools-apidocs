@@ -1,12 +1,17 @@
 {
-  "name": "id",
-  "in": "path",
-  "description": null,
-  "required": true,
-  "type": "integer",
-  "items": null,
+  "name": "status",
+  "in": "query",
+  "description": "Status values that need to be considered for filter",
+  "required": false,
+  "type": "array",
+  "items": {
+    "type": "string"
+  },
   "collectionFormat": "multi",
-  "default": null,
-  "format": "int32",
-  "enum": null
+  "default": "available",
+  "enum": [
+    "available",
+    "pending",
+    "sold"
+  ]
 }

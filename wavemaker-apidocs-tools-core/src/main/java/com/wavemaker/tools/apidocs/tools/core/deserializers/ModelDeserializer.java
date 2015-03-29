@@ -1,4 +1,4 @@
-package com.wavemaker.tools.apidocs.tools.core.model.serializers;
+package com.wavemaker.tools.apidocs.tools.core.deserializers;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.node.NullNode;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.wavemaker.tools.apidocs.tools.core.deserializers.PropertyDeserializer;
 import com.wavemaker.tools.apidocs.tools.core.model.*;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 
 /**
@@ -77,8 +78,10 @@ public class ModelDeserializer extends StdDeserializer<Model> {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         
         PropertyDeserializer propertyDeserializer = new PropertyDeserializer();
+        ParameterDeserializer parameterDeserializer = new ParameterDeserializer();
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addDeserializer(Property.class, propertyDeserializer);
+        simpleModule.addDeserializer(Parameter.class, parameterDeserializer);
         objectMapper.registerModule(simpleModule);
 
         return objectMapper;
