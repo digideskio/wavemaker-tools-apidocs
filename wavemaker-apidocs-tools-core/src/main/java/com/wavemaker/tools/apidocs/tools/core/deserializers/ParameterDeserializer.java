@@ -23,17 +23,6 @@ import com.wavemaker.tools.apidocs.tools.core.model.properties.*;
 public class ParameterDeserializer extends StdDeserializer<Parameter> {
     private static final Map<String, Class<? extends Parameter>> subTypesMap = new HashMap<>();
 
-    /*
-    @JsonSubTypes({	@Type(value = BodyParameter.class, name = "body"),
-//				@Type(value = CookieParameter.class, name = "cookie"),
-//				@Type(value = PathParameter.class, name = "path"),
-//				@Type(value = FormParameter.class, name = "formData"),
-//				@Type(value = HeaderParameter.class, name = "header"),
-//				@Type(value = QueryParameter.class, name = "query"),
-//				@Type(value = RefParameter.class, name = "ref")
-//			})
-     */
-
     static {
         subTypesMap.put("body", BodyParameter.class);
         subTypesMap.put("cookie", CookieParameter.class);

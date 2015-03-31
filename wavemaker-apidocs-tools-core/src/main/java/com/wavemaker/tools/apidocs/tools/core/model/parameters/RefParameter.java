@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class RefParameter extends AbstractParameter implements Parameter {
     String ref;
 
-    public RefParameter() {
-    }
-    
     public RefParameter(String ref) {
         set$ref(ref);
     }

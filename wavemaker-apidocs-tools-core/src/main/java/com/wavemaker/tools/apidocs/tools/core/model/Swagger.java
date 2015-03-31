@@ -7,9 +7,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.wavemaker.tools.apidocs.tools.core.model.auth.SecuritySchemeDefinition;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
+@JsonInclude(Include.NON_NULL)
 public class Swagger {
     protected String swagger = "2.0";
     protected Info info;

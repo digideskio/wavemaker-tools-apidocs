@@ -1,5 +1,9 @@
 package com.wavemaker.tools.apidocs.tools.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Contact {
     private String name;
     private String url;
