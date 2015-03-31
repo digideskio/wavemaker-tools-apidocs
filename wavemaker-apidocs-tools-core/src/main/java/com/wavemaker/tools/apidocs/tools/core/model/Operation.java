@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Operation extends AbstractExtensibleEntity {
     public static final String METHOD_IDENTIFIER_EXT = "METHOD_IDENTIFIER";
     public static final String ACCESS_SPECIFIER_EXT = "ACCESS_SPECIFIER";
