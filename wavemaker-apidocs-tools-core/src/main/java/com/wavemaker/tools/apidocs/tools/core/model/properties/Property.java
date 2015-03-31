@@ -1,6 +1,7 @@
 package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -29,6 +30,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 //})
 //@JsonTypeIdResolver(CustomPropertyTypeIdResolver.class)
 //@JsonDeserialize(using = PropertyDeserializer.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public interface Property {
     Property title(String title);
 

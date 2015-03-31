@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
 @JsonPropertyOrder({"get", "post", "put", "delete", "options", "patch"})
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Path extends AbstractExtensibleEntity {
 
     private Operation get;

@@ -2,6 +2,7 @@ package com.wavemaker.tools.apidocs.tools.core.model;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 
 //@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property="type", defaultImpl = RefModel.class)
@@ -12,6 +13,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 //			})
 //@JsonTypeIdResolver(CustomModelTypeIdResolver.class)
 //@JsonDeserialize(using = ModelDeserializer.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public interface Model {
     String getDescription();
 

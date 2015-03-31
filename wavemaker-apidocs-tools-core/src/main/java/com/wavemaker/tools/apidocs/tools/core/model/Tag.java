@@ -1,7 +1,9 @@
 package com.wavemaker.tools.apidocs.tools.core.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Tag extends AbstractExtensibleEntity {
     public static final String FULLY_QUALIFIED_NAME_EXT = "FULLY_QUALIFIED_NAME";
     public static final String VERSION_EXT = "VERSION";

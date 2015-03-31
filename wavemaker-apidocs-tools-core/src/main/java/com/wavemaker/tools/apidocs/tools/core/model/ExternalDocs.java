@@ -1,9 +1,12 @@
 package com.wavemaker.tools.apidocs.tools.core.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * Container for a <a href="https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md#externalDocumentationObject">External
  * Documentation Object</a>.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExternalDocs {
     /**
      * A short description of the target documentation. GFM syntax can be used for rich text representation.

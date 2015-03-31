@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.wavemaker.tools.apidocs.tools.core.model.auth.SecuritySchemeDefinition;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
-@JsonInclude(Include.NON_NULL)
+@JsonInclude(Include.NON_DEFAULT)
 public class Swagger {
     protected String swagger = "2.0";
     protected Info info;

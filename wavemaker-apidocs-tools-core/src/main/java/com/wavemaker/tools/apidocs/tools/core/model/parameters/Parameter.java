@@ -17,6 +17,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.ExtensibleEntity;
 //				@Type(value = RefParameter.class, name = "ref")
 //			})
 //@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public interface Parameter extends ExtensibleEntity {
     String getIn();
 

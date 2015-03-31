@@ -1,5 +1,8 @@
 package com.wavemaker.tools.apidocs.tools.core.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Xml {
     /*
       "name": { "type": "string"},

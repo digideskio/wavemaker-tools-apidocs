@@ -1,7 +1,9 @@
 package com.wavemaker.tools.apidocs.tools.core.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Info extends AbstractExtensibleEntity {
     private static final String API_ID_EXT = "API_ID";
     private static final String ENTERPRISE_ID_EXT = "ENTERPRISE_ID";

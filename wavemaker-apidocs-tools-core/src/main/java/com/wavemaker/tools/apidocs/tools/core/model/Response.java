@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Response {
     private String description;
     private Property schema;
