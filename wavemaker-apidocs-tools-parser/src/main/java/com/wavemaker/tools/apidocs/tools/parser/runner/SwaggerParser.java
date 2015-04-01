@@ -26,7 +26,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.Resource;
 import com.wavemaker.tools.apidocs.tools.core.model.Swagger;
 import com.wavemaker.tools.apidocs.tools.core.model.Tag;
 import com.wavemaker.tools.apidocs.tools.parser.config.SwaggerConfiguration;
-import com.wavemaker.tools.apidocs.tools.parser.context.ApiParserContext;
+import com.wavemaker.tools.apidocs.tools.parser.context.ResourceParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.exception.ClassScannerException;
 import com.wavemaker.tools.apidocs.tools.parser.exception.SwaggerParserException;
@@ -154,11 +154,11 @@ public abstract class SwaggerParser {
                 @Override
                 public void run() {
                     LOGGER.debug("Started parsing {} controller", restClass);
-                    ApiParserContext.initContext();// creating parser context for each class.
+                    ResourceParserContext.initContext();// creating parser context for each class.
                     try {
                         resourceMap.put(restClass, parseRestClass(restClass));
                     } finally {
-                        ApiParserContext.destroyContext(); // destroying parser context after parsing.
+                        ResourceParserContext.destroyContext(); // destroying parser context after parsing.
                     }
                 }
             });

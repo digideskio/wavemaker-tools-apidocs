@@ -12,9 +12,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 24/11/14
@@ -40,16 +37,20 @@ public class Utils {
 
     public static List<Class<?>> getAllFilteredSuperTypes(Class<?> type) {
         List<Class<?>> superTypes = new LinkedList<>();
-        if (type.getSuperclass() != null && !type.getSuperclass().equals(Object.class)) {
-            superTypes.add(type.getSuperclass());
+        if (type.getSuperclass() != null) {
+            if (ContextUtil.getConfiguration().getModelScanner().filter(type.getSuperclass())) {
+                superTypes.add(type.getSuperclass());
+            }
         }
         if (type.getInterfaces() != null) {
             for (final Class<?> aInterface : type.getInterfaces()) {
-                superTypes.add(aInterface);
+                if (ContextUtil.getConfiguration().getModelScanner().filter(aInterface)) {
+                    superTypes.add(aInterface);
+                }
             }
         }
 
-        return Lists.newLinkedList(Iterables.filter(superTypes, ContextUtil.getConfiguration().getModelFilters()));
+        return superTypes;
     }
 
 

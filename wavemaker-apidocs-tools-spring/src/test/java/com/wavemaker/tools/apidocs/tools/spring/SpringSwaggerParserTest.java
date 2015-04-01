@@ -16,11 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wavemaker.tools.apidocs.tools.core.model.Info;
 import com.wavemaker.tools.apidocs.tools.core.model.Swagger;
 import com.wavemaker.tools.apidocs.tools.parser.config.SwaggerConfiguration;
 import com.wavemaker.tools.apidocs.tools.parser.runner.SwaggerParser;
 import com.wavemaker.tools.apidocs.tools.parser.scanner.FilterableClassScanner;
+import com.wavemaker.tools.apidocs.tools.parser.scanner.FilterableModelScanner;
 import com.wavemaker.tools.apidocs.tools.spring.resolver.MultiPartFileResolver;
 import com.wavemaker.tools.apidocs.tools.spring.resolver.MultiPartRequestResolver;
 import com.wavemaker.tools.apidocs.tools.spring.resolver.PageParameterResolver;
@@ -37,7 +39,6 @@ public class SpringSwaggerParserTest {
         SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/test", classScanner);
         builder.setInfo(info);
         builder.setClassLoader(this.getClass().getClassLoader());
-        builder.addExcludeModelPackage("java");
         SwaggerParser runner = new SpringSwaggerParser(builder.build());
         Swagger swagger = runner.generate();
 
@@ -48,6 +49,7 @@ public class SpringSwaggerParserTest {
             outputDir.mkdir();
         }
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         objectMapper.writeValue(new File(outputDir, "swagger.json"), swagger);
        /* Files.write(;, new File(outputDir,
                         "swagger.json"),
@@ -60,7 +62,6 @@ public class SpringSwaggerParserTest {
         classScanner.includePackage("com.wavemaker.tools.apidocs.tools");
         SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/test", classScanner);
         builder.setClassLoader(this.getClass().getClassLoader());
-        builder.addExcludeModelPackage("java");
         builder.addParameterResolver(Pageable.class, new PageParameterResolver());
         builder.addParameterResolver(MultipartFile.class, MultiPartFileResolver.getInstance());
         builder.addParameterResolver(MultipartHttpServletRequest.class, MultiPartRequestResolver.getInstance());
@@ -74,7 +75,37 @@ public class SpringSwaggerParserTest {
             outputDir.mkdir();
         }
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         objectMapper.writeValue(new File(outputDir, "swagger_with_resolvers.json"), swagger);
+       /* Files.write(;, new File(outputDir,
+                        "swagger.json"),
+                Charset.defaultCharset());*/
+    }
+
+    @Test
+    public void testModelScanner() throws Exception {
+        FilterableModelScanner modelScanner = new FilterableModelScanner();
+        modelScanner.excludePackage("java");
+        FilterableClassScanner classScanner = new FilterableClassScanner();
+        classScanner.includePackage("com.wavemaker.tools.apidocs.tools");
+        SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/test", classScanner);
+        builder.setClassLoader(this.getClass().getClassLoader());
+        builder.setModelScanner(modelScanner);
+        builder.addParameterResolver(Pageable.class, new PageParameterResolver());
+        builder.addParameterResolver(MultipartFile.class, MultiPartFileResolver.getInstance());
+        builder.addParameterResolver(MultipartHttpServletRequest.class, MultiPartRequestResolver.getInstance());
+        SwaggerParser runner = new SpringSwaggerParser(builder.build());
+        Swagger swagger = runner.generate();
+
+        Assert.assertNotNull(swagger);
+        File targetDir = new File("target");
+        File outputDir = new File(targetDir, "apidocs");
+        if (!outputDir.exists()) {
+            outputDir.mkdir();
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.writeValue(new File(outputDir, "swagger_with_model_scanner.json"), swagger);
        /* Files.write(;, new File(outputDir,
                         "swagger.json"),
                 Charset.defaultCharset());*/

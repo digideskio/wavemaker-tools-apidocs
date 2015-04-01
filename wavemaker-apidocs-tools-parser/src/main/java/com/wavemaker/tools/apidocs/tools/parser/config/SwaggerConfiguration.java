@@ -8,22 +8,17 @@
 package com.wavemaker.tools.apidocs.tools.parser.config;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
 import com.wavemaker.tools.apidocs.tools.core.model.Info;
 import com.wavemaker.tools.apidocs.tools.core.model.Scheme;
-import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.context.ParameterResolvers;
-import com.wavemaker.tools.apidocs.tools.parser.filter.ModelFilter;
-import com.wavemaker.tools.apidocs.tools.parser.filter.ModelPackageFilter;
-import com.wavemaker.tools.apidocs.tools.parser.filter.ObjectTypeFilter;
-import com.wavemaker.tools.apidocs.tools.parser.filter.PrimitiveTypeFilter;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 import com.wavemaker.tools.apidocs.tools.parser.scanner.ClassScanner;
+import com.wavemaker.tools.apidocs.tools.parser.scanner.FilterableModelScanner;
+import com.wavemaker.tools.apidocs.tools.parser.scanner.ModelScanner;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -35,8 +30,7 @@ public class SwaggerConfiguration {
     private ClassScanner classScanner;
     private String baseUrl;
     private ParameterResolvers parameterResolvers;
-    private TypeAdapters typeAdapters;
-    private ModelFilters modelFilters;
+    private ModelScanner modelScanner;
     private String collectionFormat;
     private Set<Scheme> schemes;
     private Info info;
@@ -49,8 +43,7 @@ public class SwaggerConfiguration {
     private SwaggerConfiguration(Builder builder) {
         this.baseUrl = builder.baseUrl;
         this.parameterResolvers = builder.parameterResolvers;
-        this.typeAdapters = builder.typeAdapters;
-        this.modelFilters = builder.modelFilters;
+        this.modelScanner = builder.modelScanner;
         this.collectionFormat = builder.collectionFormat;
         this.schemes = builder.schemes;
         this.editable = builder.editable;
@@ -68,7 +61,6 @@ public class SwaggerConfiguration {
 
         private String baseUrl = "";
         private boolean editable = true;
-        private boolean excludeSubPackages = true;
         private int coreThreadPoolSize = 1; // default thread executor with '1'.
         private int maxThreadPoolSize = 1;
         private long timeout = 30 * 1000; // milliseconds
@@ -79,20 +71,13 @@ public class SwaggerConfiguration {
         private ClassScanner classScanner;
         private ClassLoader classLoader;
         private ParameterResolvers parameterResolvers;
-        private TypeAdapters typeAdapters;
-        private Set<String> excludeModelPackages;
-        private ModelFilters modelFilters;
-        private Set<ModelFilter> customModelFilters;
+        private ModelScanner modelScanner;
 
         public Builder(String baseUrl, ClassScanner scanner) {
             this.baseUrl = baseUrl;
             this.classScanner = Objects.requireNonNull(scanner, "Scanner should not be null");
 
             this.parameterResolvers = new ParameterResolvers();
-            this.typeAdapters = new TypeAdapters();
-            this.modelFilters = new ModelFilters();
-            this.excludeModelPackages = new HashSet<>();
-            this.customModelFilters = new LinkedHashSet<>();
         }
 
         public Builder setClassLoader(final ClassLoader classLoader) {
@@ -105,23 +90,8 @@ public class SwaggerConfiguration {
             return this;
         }
 
-        public Builder addTypeSubstitute(final Class<?> actualType, final Class<?> substituteType) {
-            this.typeAdapters.addSubstitute(actualType, substituteType);
-            return this;
-        }
-
-        public Builder addModelValidator(final ModelFilter modelFilter) {
-            customModelFilters.add(modelFilter);
-            return this;
-        }
-
-        public Builder addExcludeModelPackage(final String packageName) {
-            this.excludeModelPackages.add(packageName);
-            return this;
-        }
-
-        public Builder setExcludeSubPackages(final boolean excludeSubPackages) {
-            this.excludeSubPackages = excludeSubPackages;
+        public Builder setModelScanner(final ModelScanner modelScanner) {
+            this.modelScanner = modelScanner;
             return this;
         }
 
@@ -183,15 +153,10 @@ public class SwaggerConfiguration {
             if (classLoader == null) {
                 this.classLoader = this.getClass().getClassLoader();
             }
-
-            Set<ModelFilter> modelFiltersSet = new LinkedHashSet<>();
-            modelFiltersSet.add(new PrimitiveTypeFilter());
-            modelFiltersSet.add(new ObjectTypeFilter());
-            if (CollectionUtil.isNotBlank(excludeModelPackages)) {
-                modelFiltersSet.add(new ModelPackageFilter(excludeModelPackages, excludeSubPackages));
+            if (modelScanner == null) {
+                modelScanner = new FilterableModelScanner();
             }
-            modelFiltersSet.addAll(customModelFilters);
-            this.modelFilters = new ModelFilters(modelFiltersSet);
+
             return new SwaggerConfiguration(this);
         }
     }
@@ -212,12 +177,8 @@ public class SwaggerConfiguration {
         return parameterResolvers;
     }
 
-    public TypeAdapters getTypeAdapters() {
-        return typeAdapters;
-    }
-
-    public ModelFilters getModelFilters() {
-        return modelFilters;
+    public ModelScanner getModelScanner() {
+        return modelScanner;
     }
 
     public String getCollectionFormat() {

@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import com.google.common.base.Optional;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
-import com.wavemaker.tools.apidocs.tools.parser.adapter.TypeParsersChain;
+import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 
 /**
@@ -31,10 +31,7 @@ public class TypesContext {
 
     private Queue<Class<?>> pendingModels;
 
-    private final TypeParsersChain parsersChain;
-
-    TypesContext(final TypeParsersChain parsersChain) {
-        this.parsersChain = parsersChain;
+    TypesContext() {
         definitionsMap = new HashMap<>();
         reverseTypesMap = new HashMap<>();
         typesMap = new HashMap<>();
@@ -50,14 +47,12 @@ public class TypesContext {
 
         if (!pendingModels.contains(type)) { // checking whether it currently parsing, to avoid circular parsing.
             if (!definitionsMap.containsKey(getUniqueTypeName(type))) { // if model not exists, will parse
-                if (SwaggerParserContext.getInstance().getModelFilters().apply(type)) {
-                    pendingModels.add(type);
-                    Model model = parsersChain.processType(type);
-                    definitionsMap.put(getUniqueTypeName(type), model);
-                    pendingModels.remove(type);
-                } else {
-                    return Optional.absent();
+                pendingModels.add(type);
+                Optional<Model> modelOptional = ContextUtil.getConfiguration().getModelScanner().scanModel(type);
+                if (modelOptional.isPresent()) {
+                    definitionsMap.put(getUniqueTypeName(type), modelOptional.get());
                 }
+                pendingModels.remove(type);
             }
         }
         return Optional.of(new RefModel(getUniqueTypeName(type)));

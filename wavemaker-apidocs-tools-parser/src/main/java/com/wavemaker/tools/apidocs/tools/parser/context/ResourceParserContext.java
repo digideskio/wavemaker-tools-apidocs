@@ -16,15 +16,15 @@ import com.wavemaker.tools.apidocs.tools.core.model.AccessSpecifier;
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 13/11/14
  */
-public class ApiParserContext {
-    private static final ThreadLocal<ApiParserContext> parserContextTL = new ThreadLocal<>();
+public class ResourceParserContext {
+    private static final ThreadLocal<ResourceParserContext> parserContextTL = new ThreadLocal<>();
 
     private AccessSpecifier specifier;
     private String resourcePath;
     private Set<String> produces;
     private Set<String> consumes;
 
-    private ApiParserContext() {
+    private ResourceParserContext() {
         produces = Collections.emptySet();
         consumes = Collections.emptySet();
         resourcePath = null;
@@ -66,14 +66,14 @@ public class ApiParserContext {
 
 
     public static void initContext() {
-        parserContextTL.set(new ApiParserContext());
+        parserContextTL.set(new ResourceParserContext());
     }
 
     public static void destroyContext() {
         parserContextTL.set(null);
     }
 
-    public static ApiParserContext getContext() {
+    public static ResourceParserContext getContext() {
         return parserContextTL.get();
     }
 }

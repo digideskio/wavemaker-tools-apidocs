@@ -23,7 +23,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 import com.wavemaker.tools.apidocs.tools.core.model.Response;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
-import com.wavemaker.tools.apidocs.tools.parser.context.ApiParserContext;
+import com.wavemaker.tools.apidocs.tools.parser.context.ResourceParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.MethodParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
@@ -62,7 +62,7 @@ public abstract class AbstractMethodParser implements MethodParser {
         if (methodToParse.isAnnotationPresent(WMAccessVisibility.class)) {
             operation.setAccessSpecifier(methodToParse.getAnnotation(WMAccessVisibility.class).value());
         } else {
-            operation.setAccessSpecifier(ApiParserContext.getContext().getSpecifier());
+            operation.setAccessSpecifier(ResourceParserContext.getContext().getSpecifier());
         }
         operation.deprecated(methodToParse.isAnnotationPresent(Deprecated.class));
 
@@ -70,10 +70,10 @@ public abstract class AbstractMethodParser implements MethodParser {
 
         // adding api produces, consumes
         if (CollectionUtil.isBlank(operation.getConsumes())) {
-            operation.setConsumes(Lists.newArrayList(ApiParserContext.getContext().getConsumes()));
+            operation.setConsumes(Lists.newArrayList(ResourceParserContext.getContext().getConsumes()));
         }
         if (CollectionUtil.isBlank(operation.getProduces())) {
-            operation.setProduces(Lists.newArrayList(ApiParserContext.getContext().getProduces()));
+            operation.setProduces(Lists.newArrayList(ResourceParserContext.getContext().getProduces()));
         }
 
         parseReturnType(methodToParse, operation);
@@ -92,7 +92,7 @@ public abstract class AbstractMethodParser implements MethodParser {
             for (int i = 0; i < types.length; i++) {
                 Type type = types[i];
                 Class<?> actualType = TypeUtils.getRawType(type, null);
-                ParameterResolver resolver = SwaggerParserContext.getInstance().getResolversContext()
+                ParameterResolver resolver = SwaggerParserContext.getInstance().getParameterResolvers()
                         .getResolver(actualType);
                 if (resolver != null) { // doing with
                     List<Parameter> parameterList = resolver

@@ -12,7 +12,7 @@ import java.util.Set;
 import com.wavemaker.tools.apidocs.tools.core.annotation.WMAccessVisibility;
 import com.wavemaker.tools.apidocs.tools.core.model.Path;
 import com.wavemaker.tools.apidocs.tools.core.model.Resource;
-import com.wavemaker.tools.apidocs.tools.parser.context.ApiParserContext;
+import com.wavemaker.tools.apidocs.tools.parser.context.ResourceParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PathsParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ResourceParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
@@ -40,7 +40,7 @@ public abstract class AbstractResourceParser implements ResourceParser {
         resource.setName(ContextUtil.getUniqueName(type));
         resource.setFullyQualifiedName(type.getName());
 
-        ApiParserContext.getContext().setResourcePath(getResourcePath());
+        ResourceParserContext.getContext().setResourcePath(getResourcePath());
         resource.setVersion(""); // XXX think it later?
 
         // For now it is commented, because we dropped BaseModel dependency while refactoring.
@@ -48,10 +48,10 @@ public abstract class AbstractResourceParser implements ResourceParser {
 
         //for end points use
         if (type.isAnnotationPresent(WMAccessVisibility.class)) {
-            ApiParserContext.getContext().setSpecifier(type.getAnnotation(WMAccessVisibility.class).value());
+            ResourceParserContext.getContext().setSpecifier(type.getAnnotation(WMAccessVisibility.class).value());
         }
-        ApiParserContext.getContext().setConsumes(getConsumes());
-        ApiParserContext.getContext().setProduces(getProduces());
+        ResourceParserContext.getContext().setConsumes(getConsumes());
+        ResourceParserContext.getContext().setProduces(getProduces());
 
         resource.setPathMap(getPathParser(type).parse());
         return resource;

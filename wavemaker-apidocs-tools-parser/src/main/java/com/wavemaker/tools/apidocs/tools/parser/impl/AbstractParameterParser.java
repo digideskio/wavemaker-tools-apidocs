@@ -35,7 +35,6 @@ import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
-import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
 import com.wordnik.swagger.annotations.ApiParam;
 
@@ -101,7 +100,8 @@ public abstract class AbstractParameterParser implements ParameterParser {
             }
         }
 
-        ((AbstractParameter) parameter).setFullyQualifiedType(DataTypeUtil.getName(dataType));
+        ((AbstractParameter) parameter).setFullyQualifiedType(dataType.getName());
+        ((AbstractParameter) parameter).setEditable(ContextUtil.getConfiguration().isEditable());
 
         return parameter;
     }

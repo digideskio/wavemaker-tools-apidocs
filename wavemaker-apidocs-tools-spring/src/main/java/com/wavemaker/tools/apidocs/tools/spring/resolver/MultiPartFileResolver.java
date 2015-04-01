@@ -30,7 +30,6 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.FileProperty;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
-import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.spring.parser.SpringParameterParser;
 
 /**
@@ -68,7 +67,7 @@ public class MultiPartFileResolver implements ParameterResolver {
             }
         }
 
-        ((AbstractParameter) parameter).setResolver(DataTypeUtil.getName(type));
+        ((AbstractParameter) parameter).setResolver(type.getName());
         // setting consumes to multi part form
         operation.setConsumes(Lists.newArrayList(MediaType.MULTIPART_FORM_DATA_VALUE));
 

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 import com.wavemaker.tools.apidocs.tools.core.model.Path;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
-import com.wavemaker.tools.apidocs.tools.parser.context.ApiParserContext;
+import com.wavemaker.tools.apidocs.tools.parser.context.ResourceParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.MethodParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PathsParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.MethodUtils;
@@ -80,7 +80,8 @@ public abstract class AbstractPathsParser implements PathsParser {
             Operation operation = methodParser.parse();
 
             for (final String relativePath : methodParser.getPaths()) {
-                String completePath = Utils.combinePaths(ApiParserContext.getContext().getResourcePath(), relativePath);
+                String completePath = Utils
+                        .combinePaths(ResourceParserContext.getContext().getResourcePath(), relativePath);
                 Path path = pathMap.get(completePath);
                 if (path == null) {
                     LOGGER.debug("found new path:{}", completePath);
