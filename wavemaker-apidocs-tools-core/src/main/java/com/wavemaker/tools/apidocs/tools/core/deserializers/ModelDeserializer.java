@@ -60,6 +60,9 @@ public class ModelDeserializer extends StdDeserializer<Model> {
         if (subType == null || subType instanceof NullNode) {
             if (node.get("$ref") != null) {
                 subTypeValue = REF_TYPE;
+            } else if (node.get("allOf") != null) {
+                subTypeValue = COMPOSED_TYPE;
+                objectMapper = getCompleteObjectMapper();
             } else {
                 subTypeValue = OBJECT_TYPE;
             }
@@ -82,6 +85,22 @@ public class ModelDeserializer extends StdDeserializer<Model> {
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addDeserializer(Property.class, propertyDeserializer);
         simpleModule.addDeserializer(Parameter.class, parameterDeserializer);
+        objectMapper.registerModule(simpleModule);
+
+        return objectMapper;
+    }
+
+    private ObjectMapper getCompleteObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+        PropertyDeserializer propertyDeserializer = new PropertyDeserializer();
+        ParameterDeserializer parameterDeserializer = new ParameterDeserializer();
+        ModelDeserializer modelDeserializer = new ModelDeserializer();
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addDeserializer(Property.class, propertyDeserializer);
+        simpleModule.addDeserializer(Parameter.class, parameterDeserializer);
+        simpleModule.addDeserializer(Model.class, modelDeserializer);
         objectMapper.registerModule(simpleModule);
 
         return objectMapper;
