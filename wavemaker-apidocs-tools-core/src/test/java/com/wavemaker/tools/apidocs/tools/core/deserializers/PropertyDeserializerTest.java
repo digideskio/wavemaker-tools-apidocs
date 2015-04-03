@@ -42,7 +42,7 @@ public class PropertyDeserializerTest extends BaseDeserializerTest {
             System.err.println("File not found");
         }
     }
-    
+
     @Test
     public void serializationTest() {
         ArrayProperty arrayProperty = new ArrayProperty();

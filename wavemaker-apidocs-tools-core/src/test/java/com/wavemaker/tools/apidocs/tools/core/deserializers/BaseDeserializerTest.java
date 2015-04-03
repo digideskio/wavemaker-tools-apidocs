@@ -27,7 +27,7 @@ public class BaseDeserializerTest {
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addDeserializer(Model.class, modelDeserializer);
         simpleModule.addDeserializer(Property.class, propertyDeserializer);
-//        simpleModule.addDeserializer(Parameter.class, parameterDeserializer);
+        simpleModule.addDeserializer(Parameter.class, parameterDeserializer);
         
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);

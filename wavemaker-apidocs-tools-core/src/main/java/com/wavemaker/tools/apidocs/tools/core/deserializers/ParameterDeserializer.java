@@ -17,8 +17,8 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.*;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.*;
 
 /**
- * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
- * @since 24/3/15
+ * @author <a href="mailto:nishanth.modhugu@wavemaker.com">Nishanth Reddy</a>
+ * @since : 25/3/15 8:13 PM $
  */
 public class ParameterDeserializer extends StdDeserializer<Parameter> {
     private static final Map<String, Class<? extends Parameter>> subTypesMap = new HashMap<>();
@@ -59,9 +59,11 @@ public class ParameterDeserializer extends StdDeserializer<Parameter> {
 
         ModelDeserializer modelDeserializer = new ModelDeserializer();
         PropertyDeserializer propertyDeserializer = new PropertyDeserializer();
+        
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addDeserializer(Model.class, modelDeserializer);
         simpleModule.addDeserializer(Property.class, propertyDeserializer);
+        
         objectMapper.registerModule(simpleModule);
 
         return objectMapper;
