@@ -1,16 +1,20 @@
+/**
+ * Copyright (c) 2013 - 2014 WaveMaker, Inc. All Rights Reserved.
+ *
+ * This software is the confidential and proprietary information of WaveMaker, Inc.
+ * You shall not disclose such Confidential Information and shall use it only in accordance
+ * with the terms of the source code license agreement you entered into with WaveMaker, Inc.
+ */
 package com.wavemaker.tools.apidocs.tools.core.deserializers;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wavemaker.tools.apidocs.tools.core.model.parameters.BodyParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
-import com.wavemaker.tools.apidocs.tools.core.model.parameters.PathParameter;
 
 /**
  * @author <a href="mailto:nishanth.modhugu@wavemaker.com">Nishanth Reddy</a>
@@ -18,17 +22,23 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.PathParameter;
  */
 public class ParameterDeserializerTest extends BaseDeserializerTest {
 
-    private static final String TEST_JSON_FILE = "/test_parameter.json";
+	private static final String TEST_JSON_FILE = "/test_parameter.json";
 
-    public ParameterDeserializerTest() {
-        super();
-    }
-    
-    @Test
-    public void deserializerTest() throws IOException {
-        InputStream inputStream = this.getClass().getResourceAsStream(TEST_JSON_FILE);
-        Parameter parameter = objectMapper.readValue(inputStream, Parameter.class);
-        System.out.println("->" + parameter);
-        objectMapper.writeValue(new File("/home/nishanth/Desktop", "test_parameters.json"), parameter);
-    }
+	public ParameterDeserializerTest() {
+		super();
+	}
+
+	@Test
+	public void deserializerTest() throws IOException {
+		InputStream inputStream = this.getClass().getResourceAsStream(
+				TEST_JSON_FILE);
+		Parameter parameter = objectMapper.readValue(inputStream,
+				Parameter.class);
+		File outputFile = new File("test_parameters.json");
+		Assert.assertFalse(outputFile.exists());
+		objectMapper.writeValue(outputFile, parameter);
+		Assert.assertTrue(outputFile.exists());
+		Assert.assertTrue(outputFile.length() > 0);
+		outputFile.delete();
+	}
 }
