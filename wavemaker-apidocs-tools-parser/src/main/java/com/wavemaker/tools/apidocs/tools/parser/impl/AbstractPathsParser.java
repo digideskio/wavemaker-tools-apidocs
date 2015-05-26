@@ -89,6 +89,9 @@ public abstract class AbstractPathsParser implements PathsParser {
                     pathMap.put(completePath, path);
                 }
 
+                path.setBasePath(ResourceParserContext.getContext().getResourcePath());
+                path.setRelativePath(relativePath);
+
                 for (final String method : methodParser.getHttpMethods()) { // setting operation for each method.
                     path.set(method.toLowerCase(), operation);
                 }

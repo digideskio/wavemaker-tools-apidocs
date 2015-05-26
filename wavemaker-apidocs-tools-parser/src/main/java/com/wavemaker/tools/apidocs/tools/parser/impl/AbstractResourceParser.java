@@ -40,6 +40,7 @@ public abstract class AbstractResourceParser implements ResourceParser {
         resource.setName(ContextUtil.getUniqueName(type));
         resource.setFullyQualifiedName(type.getName());
 
+        ResourceParserContext.getContext().setTag(resource.asTag().getName());
         ResourceParserContext.getContext().setResourcePath(getResourcePath());
         resource.setVersion(""); // XXX think it later?
 

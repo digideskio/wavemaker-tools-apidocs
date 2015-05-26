@@ -21,6 +21,7 @@ public class ResourceParserContext {
 
     private AccessSpecifier specifier;
     private String resourcePath;
+    private String tag;
     private Set<String> produces;
     private Set<String> consumes;
 
@@ -28,6 +29,7 @@ public class ResourceParserContext {
         produces = Collections.emptySet();
         consumes = Collections.emptySet();
         resourcePath = null;
+        tag = null;
         specifier = AccessSpecifier.APP_ONLY; // setting default one.
     }
 
@@ -64,6 +66,13 @@ public class ResourceParserContext {
         this.resourcePath = resourcePath;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(final String tag) {
+        this.tag = tag;
+    }
 
     public static void initContext() {
         parserContextTL.set(new ResourceParserContext());

@@ -13,6 +13,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.google.common.base.Optional;
+import com.wavemaker.tools.apidocs.tools.core.model.AbstractModel;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
@@ -54,6 +55,11 @@ public class TypesContext {
                 }
                 pendingModels.remove(type);
             }
+        }
+        // adding tag reference
+        Model model = definitionsMap.get(getUniqueTypeName(type));
+        if (model != null) {
+            ((AbstractModel) model).addTag(ResourceParserContext.getContext().getTag());
         }
         return Optional.of(new RefModel(getUniqueTypeName(type)));
     }

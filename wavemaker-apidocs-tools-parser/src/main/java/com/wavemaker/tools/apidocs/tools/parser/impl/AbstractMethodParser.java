@@ -12,6 +12,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang3.reflect.TypeUtils;
 import org.slf4j.Logger;
@@ -51,6 +52,7 @@ public abstract class AbstractMethodParser implements MethodParser {
     public Operation parse() {
         Operation operation = new Operation();
 
+        operation.setOperationUid(UUID.randomUUID().toString());
         operation.operationId(methodToParse.getName());
         operation.setMethodIdentifier(MethodUtils.getMethodUniqueIdentifierId(methodToParse));
 

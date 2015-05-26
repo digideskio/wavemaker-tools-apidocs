@@ -13,6 +13,8 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 public class Operation extends AbstractExtensibleEntity {
     public static final String METHOD_IDENTIFIER_EXT = "METHOD_IDENTIFIER";
     public static final String ACCESS_SPECIFIER_EXT = "ACCESS_SPECIFIER";
+    public static final String OPERATION_UID_EXT = "OPERATION_UID";
+
     private List<String> tags;
     private String summary;
     private String description;
@@ -267,5 +269,15 @@ public class Operation extends AbstractExtensibleEntity {
     @JsonIgnore
     public void setAccessSpecifier(final AccessSpecifier accessSpecifier) {
         addWMExtension(ACCESS_SPECIFIER_EXT, accessSpecifier.name());
+    }
+
+    @JsonIgnore
+    public void setOperationUid(String uid) {
+        addWMExtension(OPERATION_UID_EXT, uid);
+    }
+
+    @JsonIgnore
+    public String getOperationUid() {
+        return (String) getWMExtension(OPERATION_UID_EXT);
     }
 }

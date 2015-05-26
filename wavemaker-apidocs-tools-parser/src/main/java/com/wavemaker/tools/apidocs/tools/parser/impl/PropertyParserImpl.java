@@ -82,6 +82,11 @@ public class PropertyParserImpl implements PropertyParser {
         if (CollectionUtil.isNotBlank(typeArguments) && typeArguments.size() == 1) {
             Class<?> typeArgument = typeArguments.get(0);
             ArrayProperty property = new ArrayProperty(parseType(typeArgument));
+
+            if (Collection.class.isAssignableFrom(typeInformation.getActualType())) {
+                property.setIsList(true);
+            }
+
             if (Set.class.isAssignableFrom(typeInformation.getActualType())) {
                 property.uniqueItems();
             } // XXX think about remaining properties

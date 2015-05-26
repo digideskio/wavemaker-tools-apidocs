@@ -11,6 +11,9 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 @JsonPropertyOrder({"get", "post", "put", "delete", "options", "patch"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Path extends AbstractExtensibleEntity {
+    private static final String TAG_EXT = "TAG";
+    private static final String BASE_PATH_EXT = "BASE_PATH";
+    private static final String RELATIVE_PATH_EXT = "RELATIVE_PATH";
 
     private Operation get;
     private Operation put;
@@ -168,6 +171,7 @@ public class Path extends AbstractExtensibleEntity {
         if (patch != null) {
             patch.tag(tag);
         }
+        this.setTagExt(tag);
     }
 
     @JsonIgnore
@@ -176,6 +180,34 @@ public class Path extends AbstractExtensibleEntity {
             return true;
         else
             return false;
+    }
+
+    @JsonIgnore
+    public void setTagExt(String tag) {
+        addWMExtension(TAG_EXT, tag);
+    }
+
+    @JsonIgnore
+    public String getTag() {
+        return (String) getWMExtension(TAG_EXT);
+    }
+
+    @JsonIgnore
+    public void setBasePath(String basePath) {
+        addWMExtension(BASE_PATH_EXT, basePath);
+    }
+
+    public String getBasePath() {
+        return (String) getWMExtension(BASE_PATH_EXT);
+    }
+
+    @JsonIgnore
+    public void setRelativePath(String relativePath) {
+        addWMExtension(RELATIVE_PATH_EXT, relativePath);
+    }
+
+    public String getRelativePath() {
+        return (String) getWMExtension(RELATIVE_PATH_EXT);
     }
 
 }

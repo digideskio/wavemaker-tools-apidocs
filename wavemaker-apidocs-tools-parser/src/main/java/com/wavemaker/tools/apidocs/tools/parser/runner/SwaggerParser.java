@@ -61,7 +61,7 @@ public abstract class SwaggerParser {
             long startTime = System.currentTimeMillis();
             Swagger swagger = doWithParserClassLoader();
             long endTime = System.currentTimeMillis();
-            LOGGER.info("Api Parser Runner took {} milli seconds to generate documents", (endTime - startTime));
+            LOGGER.info("Swagger Parser Runner took {} milli seconds to generate documents", (endTime - startTime));
             return swagger;
         } catch (Exception e) {
             if (e instanceof SwaggerParserException) {

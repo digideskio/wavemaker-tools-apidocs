@@ -1,8 +1,9 @@
 package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
+import com.wavemaker.tools.apidocs.tools.core.model.AbstractExtensibleEntity;
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public abstract class AbstractProperty implements Property {
+public abstract class AbstractProperty extends AbstractExtensibleEntity implements Property {
     String name;
     String type;
     String format;
