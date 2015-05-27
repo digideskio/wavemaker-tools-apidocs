@@ -18,6 +18,7 @@ import java.util.Map;
 import org.reflections.ReflectionUtils;
 
 import com.google.common.base.Optional;
+import com.wavemaker.tools.apidocs.tools.core.model.AbstractModel;
 import com.wavemaker.tools.apidocs.tools.core.model.ComposedModel;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.core.model.ModelImpl;
@@ -54,6 +55,7 @@ public class ReflectionModelParser implements ModelParser {
         } else {
             model = parseClass(modelClass);
         }
+        ((AbstractModel) model).setFullyQualifiedName(DataTypeUtil.getFullyQualifiedName(modelClass));
 
         return model;
     }

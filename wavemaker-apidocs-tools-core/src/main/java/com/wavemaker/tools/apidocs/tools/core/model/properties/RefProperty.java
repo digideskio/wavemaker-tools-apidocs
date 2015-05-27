@@ -1,8 +1,13 @@
 package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class RefProperty extends AbstractProperty implements Property {
+    private static final String TYPE_ARGUMENTS_EXT = "TYPE_ARGUMENTS";
+
     String ref;
 
     public RefProperty() {
@@ -62,5 +67,16 @@ public class RefProperty extends AbstractProperty implements Property {
         if ("$ref".equals(type))
             return true;
         else return false;
+    }
+
+    @JsonIgnore
+    public void setTypeArguments(List<Property> properties) {
+        addWMExtension(TYPE_ARGUMENTS_EXT, properties);
+    }
+
+    @JsonIgnore
+    public List<Property> getTypeArguments() {
+        Object typeArguments = getWMExtension(TYPE_ARGUMENTS_EXT);
+        return (typeArguments == null) ? Collections.<Property>emptyList() : (List<Property>) typeArguments;
     }
 }

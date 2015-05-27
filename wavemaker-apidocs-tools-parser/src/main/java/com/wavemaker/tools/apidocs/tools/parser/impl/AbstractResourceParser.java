@@ -16,6 +16,7 @@ import com.wavemaker.tools.apidocs.tools.parser.context.ResourceParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PathsParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ResourceParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
+import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wordnik.swagger.annotations.Api;
 
 /**
@@ -38,7 +39,7 @@ public abstract class AbstractResourceParser implements ResourceParser {
             resource.setDescription(type.getAnnotation(Api.class).description());
         }
         resource.setName(ContextUtil.getUniqueName(type));
-        resource.setFullyQualifiedName(type.getName());
+        resource.setFullyQualifiedName(DataTypeUtil.getFullyQualifiedName(type));
 
         ResourceParserContext.getContext().setTag(resource.asTag().getName());
         ResourceParserContext.getContext().setResourcePath(getResourcePath());

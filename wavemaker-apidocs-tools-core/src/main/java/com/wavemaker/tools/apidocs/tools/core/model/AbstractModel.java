@@ -1,5 +1,6 @@
 package com.wavemaker.tools.apidocs.tools.core.model;
 
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public abstract class AbstractModel extends AbstractExtensibleEntity implements Model {
     private static final String TAG_EXT = "TAGS";
+    private static final String FULLY_QUALIFIED_NAME_EXT = "FULLY_QUALIFIED_NAME";
 
     private ExternalDocs externalDocs;
 
@@ -41,6 +43,17 @@ public abstract class AbstractModel extends AbstractExtensibleEntity implements 
 
     @JsonIgnore
     public Set<String> getTags() {
-        return (Set<String>) getWMExtension(TAG_EXT);
+        Object tags = getWMExtension(TAG_EXT);
+        return (tags == null) ? Collections.<String>emptySet() : (Set<String>) tags;
+    }
+
+    @JsonIgnore
+    public void setFullyQualifiedName(String fullyQualifiedName) {
+        addWMExtension(FULLY_QUALIFIED_NAME_EXT, fullyQualifiedName);
+    }
+
+    @JsonIgnore
+    public String getFullyQualifiedName() {
+        return (String) getWMExtension(FULLY_QUALIFIED_NAME_EXT);
     }
 }

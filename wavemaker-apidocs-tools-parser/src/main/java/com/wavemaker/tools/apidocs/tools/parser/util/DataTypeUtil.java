@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.wavemaker.tools.apidocs.tools.parser.builder.PrimitiveType;
@@ -114,6 +115,12 @@ public class DataTypeUtil {
         } else {
             throw new IllegalArgumentException("Given type is not a Enum");
         }
+    }
+
+    public static String getFullyQualifiedName(Class<?> type) {
+        String packageName = ClassUtils.getPackageCanonicalName(type);
+        String prefix = StringUtils.isNotBlank(packageName) ? packageName + ClassUtils.PACKAGE_SEPARATOR : "";
+        return prefix + ClassUtils.getShortCanonicalName(type);
     }
 
     /**
