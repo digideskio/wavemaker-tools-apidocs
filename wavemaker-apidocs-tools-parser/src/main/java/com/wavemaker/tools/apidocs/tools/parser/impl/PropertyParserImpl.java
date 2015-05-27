@@ -11,6 +11,7 @@ import java.io.File;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -55,7 +56,7 @@ public class PropertyParserImpl implements PropertyParser {
             } else if (Map.class.isAssignableFrom(typeInfo.getActualType())) {
                 property = feedMapProperty(typeInfo);
             } else {
-                property = feedObjectProperty(typeInfo.getActualType());
+                property = feedObjectProperty(typeInfo);
             }
         } else {
             Class<?> actualType = typeInfo.getActualType();
@@ -70,7 +71,7 @@ public class PropertyParserImpl implements PropertyParser {
             } else if (Date.class.equals(actualType)) {
                 property = new DateProperty();
             } else {
-                property = feedObjectProperty(actualType);
+                property = feedObjectProperty(typeInfo);
             }
         }
 
@@ -140,9 +141,16 @@ public class PropertyParserImpl implements PropertyParser {
         return property;
     }
 
-    private Property feedObjectProperty(Class<?> type) {
-        SwaggerParserContext.getInstance().getTypesContext().parseModel(type);
-        RefProperty refProperty = new RefProperty(ContextUtil.getUniqueName(type));
+    private Property feedObjectProperty(TypeInformation typeInfo) {
+        SwaggerParserContext.getInstance().getTypesContext().parseModel(typeInfo.getActualType());
+        RefProperty refProperty = new RefProperty(ContextUtil.getUniqueName(typeInfo.getActualType()));
+
+        List<Property> typeArgProps = new LinkedList<>(); // adding type arguments
+        for (final Class<?> type : typeInfo.getTypeArguments()) {
+            typeArgProps.add(parseType(type));
+        }
+
+        refProperty.setTypeArguments(typeArgProps);
         return refProperty;
     }
 

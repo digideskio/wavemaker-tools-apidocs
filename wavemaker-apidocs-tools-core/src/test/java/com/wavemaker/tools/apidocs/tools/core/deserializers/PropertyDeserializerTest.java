@@ -37,6 +37,15 @@ public class PropertyDeserializerTest extends BaseDeserializerTest {
     }
 
     @Test
+    public void deserializerTypeArgsTest() throws IOException {
+
+        InputStream inputStream = this.getClass().getResourceAsStream("/test_properties_type_args.json");
+        Property property = objectMapper.readValue(inputStream, Property.class);
+        assertNotNull(property);
+        objectMapper.writeValue(new File("target", "test_properties_type_args.json"), property);
+    }
+
+    @Test
     public void serializationTest() {
         ArrayProperty arrayProperty = new ArrayProperty();
         arrayProperty.setDescription("desc");

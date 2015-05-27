@@ -1,0 +1,9 @@
+{
+  "$ref": "#/definitions/Page",
+  "x-WM-TYPE_ARGUMENTS": [
+    {
+      "$ref": "#/definitions/Department",
+      "x-WM-TYPE_ARGUMENTS": []
+    }
+  ]
+}

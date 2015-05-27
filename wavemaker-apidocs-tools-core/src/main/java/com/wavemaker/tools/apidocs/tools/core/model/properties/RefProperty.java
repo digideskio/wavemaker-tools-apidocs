@@ -1,12 +1,38 @@
 package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RefProperty extends AbstractProperty implements Property {
     private static final String TYPE_ARGUMENTS_EXT = "TYPE_ARGUMENTS";
+
+    private static final ObjectMapper objectMapper = new ObjectMapper(); // configuration shared across objects.
+    private static final TypeReference<List<Property>> propertyListTypeRef = new TypeReference<List<Property>>() {
+        public Type getType() {
+            return new ParameterizedType() {
+                @Override
+                public Type[] getActualTypeArguments() {
+                    return new Type[]{Property.class};
+                }
+
+                @Override
+                public Type getRawType() {
+                    return List.class;
+                }
+
+                @Override
+                public Type getOwnerType() {
+                    return null;
+                }
+            };
+        }
+    };
 
     String ref;
 
@@ -77,6 +103,10 @@ public class RefProperty extends AbstractProperty implements Property {
     @JsonIgnore
     public List<Property> getTypeArguments() {
         Object typeArguments = getWMExtension(TYPE_ARGUMENTS_EXT);
-        return (typeArguments == null) ? Collections.<Property>emptyList() : (List<Property>) typeArguments;
+        if (typeArguments == null) {
+            return Collections.<Property>emptyList();
+        } else {
+            return objectMapper.convertValue(typeArguments, propertyListTypeRef);
+        }
     }
 }
