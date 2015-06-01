@@ -1,11 +1,40 @@
 package com.wavemaker.tools.apidocs.tools.core.model;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.RefProperty;
 
-public class RefModel implements Model {
+public class RefModel extends AbstractExtensibleEntity implements Model {
+
+    private static final ObjectMapper objectMapper = new ObjectMapper(); // configuration shared across objects.
+    private static final TypeReference<List<Property>> propertyListTypeRef = new TypeReference<List<Property>>() {
+        public Type getType() {
+            return new ParameterizedType() {
+                @Override
+                public Type[] getActualTypeArguments() {
+                    return new Type[]{Model.class};
+                }
+
+                @Override
+                public Type getRawType() {
+                    return List.class;
+                }
+
+                @Override
+                public Type getOwnerType() {
+                    return null;
+                }
+            };
+        }
+    };
     // internally, the ref value is never fully qualified
     private String ref;
     private String description;
@@ -51,7 +80,7 @@ public class RefModel implements Model {
         else
             return ref;
     }
-    
+
     public String get$ref() {
         if (ref.startsWith("http"))
             return ref;
@@ -84,12 +113,28 @@ public class RefModel implements Model {
         externalDocs = value;
     }
 
+    @JsonIgnore
+    public void setTypeArguments(List<Model> properties) {
+        addWMExtension(RefProperty.TYPE_ARGUMENTS_EXT, properties);
+    }
+
+    @JsonIgnore
+    public List<Model> getTypeArguments() {
+        Object typeArguments = getWMExtension(RefProperty.TYPE_ARGUMENTS_EXT);
+        if (typeArguments == null) {
+            return Collections.<Model>emptyList();
+        } else {
+            return objectMapper.convertValue(typeArguments, propertyListTypeRef);
+        }
+    }
+
     public Object clone() {
         RefModel cloned = new RefModel();
         cloned.ref = this.ref;
         cloned.description = this.description;
         cloned.properties = this.properties;
         cloned.example = this.example;
+        cloned.vendorExtensions = this.vendorExtensions;
 
         return cloned;
     }

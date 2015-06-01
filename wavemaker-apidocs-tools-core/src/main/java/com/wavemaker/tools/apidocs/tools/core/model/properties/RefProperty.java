@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RefProperty extends AbstractProperty implements Property {
-    private static final String TYPE_ARGUMENTS_EXT = "TYPE_ARGUMENTS";
+    public static final String TYPE_ARGUMENTS_EXT = "TYPE_ARGUMENTS";
 
     private static final ObjectMapper objectMapper = new ObjectMapper(); // configuration shared across objects.
     private static final TypeReference<List<Property>> propertyListTypeRef = new TypeReference<List<Property>>() {

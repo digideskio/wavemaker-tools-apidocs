@@ -10,6 +10,8 @@ package com.wavemaker.tools.apidocs.tools.spring.controller;
 // Generated 19 Nov, 2014 12:15:13 PM
 
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +120,15 @@ public class EmployeeController {
 		LOGGER.debug("Created Employee with information: {}" , instance);
 	    return instance;
 	}
+
+    @RequestMapping(value = "/multi", method = RequestMethod.POST)
+    @ApiOperation(value = "Creates a new Employee instance.")
+    public List<Employee> createEmployees(@RequestBody List<Employee> instance) {
+        LOGGER.debug("Create Employees with information: {}", instance);
+//        instance = service.create(instance);
+        LOGGER.debug("Created Employees with information: {}", instance);
+        return instance;
+    }
 
 	@RequestMapping(value = "/", method = RequestMethod.POST, consumes = {"multipart/form-data"})
 	@ApiOperation(value = "Creates a new Employee instance.This API should be used when the Employee instance has fields that requires multipart data.")

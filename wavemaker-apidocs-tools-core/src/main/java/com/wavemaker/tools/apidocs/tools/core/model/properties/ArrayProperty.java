@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
 public class ArrayProperty extends AbstractProperty implements Property {
-    private static final String IS_LIST_EXT = "IS_LIST";
+    public static final String IS_LIST_EXT = "IS_LIST";
 
     protected Boolean uniqueItems;
     protected Property items;

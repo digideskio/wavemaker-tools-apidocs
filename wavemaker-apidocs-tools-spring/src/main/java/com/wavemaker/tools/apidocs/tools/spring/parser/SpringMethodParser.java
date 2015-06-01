@@ -13,7 +13,6 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.reflect.TypeUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -46,8 +45,7 @@ public class SpringMethodParser extends AbstractMethodParser {
     @Override
     protected ParameterParser getParameterParser(
             final int index, final Type type, final Annotation[] annotations) {
-        // TODO model should parse Type instead of Class<?>
-        return new SpringParameterParser(index, TypeUtils.getRawType(type, null), annotations);
+        return new SpringParameterParser(index, type, annotations);
     }
 
     @Override

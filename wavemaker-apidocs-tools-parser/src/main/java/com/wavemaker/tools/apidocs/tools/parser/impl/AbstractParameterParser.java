@@ -8,7 +8,10 @@
 package com.wavemaker.tools.apidocs.tools.parser.impl;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +38,7 @@ import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
+import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
 import com.wordnik.swagger.annotations.ApiParam;
 
@@ -44,11 +48,11 @@ import com.wordnik.swagger.annotations.ApiParam;
  */
 public abstract class AbstractParameterParser implements ParameterParser {
 
-    protected final Class<?> dataType;
+    protected final Type dataType;
     protected final int index;
     protected final Map<Class<? extends Annotation>, Annotation> annotations;
 
-    public AbstractParameterParser(final int index, final Class<?> type, final Annotation[] annotations) {
+    public AbstractParameterParser(final int index, final Type type, final Annotation[] annotations) {
         this.index = index;
         this.dataType = type;
         this.annotations = new HashMap<>();
@@ -100,7 +104,8 @@ public abstract class AbstractParameterParser implements ParameterParser {
             }
         }
 
-        ((AbstractParameter) parameter).setFullyQualifiedType(dataType.getName());
+        ((AbstractParameter) parameter).setFullyQualifiedType(DataTypeUtil.getFullyQualifiedName(TypeUtil
+                .extractTypeInformation(dataType).getActualType()));
         ((AbstractParameter) parameter).setEditable(ContextUtil.getConfiguration().isEditable());
 
         return parameter;
@@ -163,20 +168,29 @@ public abstract class AbstractParameterParser implements ParameterParser {
     }
 
     protected void handleBodyParameter(BodyParameter parameter) {
-        TypeInformation typeInformation = TypeUtil.extractTypeInformation(dataType);
+        TypeInformation typeInfo = TypeUtil.extractTypeInformation(dataType);
         Model schema = null;
-        if (typeInformation.isArray() || List.class.isAssignableFrom(typeInformation.getActualType())) {
+        if (typeInfo.isArray() || Collection.class.isAssignableFrom(typeInfo.getActualType())) {
             schema = new ArrayModel();
-            PropertyParser propertyParser = new PropertyParserImpl(typeInformation.getTypeArguments().get(0));
+            PropertyParser propertyParser = new PropertyParserImpl(typeInfo.getTypeArguments().get(0));
             ((ArrayModel) schema).items(propertyParser.parse());
+            ((ArrayModel) schema).setIsList(!typeInfo.isArray());
         } else {
-            Optional<RefModel> modelOptional = ContextUtil.parseModel(dataType);
+            Optional<RefModel> modelOptional = ContextUtil.parseModel(typeInfo.getActualType());
             if (modelOptional.isPresent()) {
                 schema = modelOptional.get();
+                List<Model> models = new LinkedList<>();
+                for (final Class<?> type : typeInfo.getTypeArguments()) {
+                    Optional<RefModel> typeOptional = ContextUtil.parseModel(type);
+                    if (typeOptional.isPresent()) {
+                        models.add(typeOptional.get());
+                    }
+                }
+                ((RefModel) schema).setTypeArguments(models);
             }
         }
         parameter.schema(schema);
-        parameter.name(ContextUtil.getUniqueName(dataType));
+        parameter.name(ContextUtil.getUniqueName(typeInfo.getActualType()));
     }
 
     protected void handleCookieParameter(CookieParameter parameter) {

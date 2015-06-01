@@ -59,14 +59,26 @@ public abstract class AbstractParameter extends AbstractExtensibleEntity impleme
         addWMExtension(EDITABLE_EXT, editable);
     }
 
+    public boolean isEditable() {
+        return (boolean) getWMExtension(EDITABLE_EXT);
+    }
+
     @JsonIgnore
     public void setResolver(String resolver) {
         addWMExtension(RESOLVER_EXT, resolver);
     }
 
+    public String getResolver() {
+        return (String) getWMExtension(RESOLVER_EXT);
+    }
+
     @JsonIgnore
     public void setFullyQualifiedType(String fullyQualifiedType) {
         addWMExtension(FULLY_QUALIFIED_TYPE_EXT, fullyQualifiedType);
+    }
+
+    public String getFullyQualifiedType() {
+        return (String) (FULLY_QUALIFIED_TYPE_EXT);
     }
 
 

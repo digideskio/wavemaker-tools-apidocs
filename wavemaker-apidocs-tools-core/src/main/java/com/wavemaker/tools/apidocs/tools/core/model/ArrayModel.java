@@ -2,6 +2,8 @@ package com.wavemaker.tools.apidocs.tools.core.model;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.ArrayProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 
 public class ArrayModel extends AbstractModel {
@@ -74,7 +76,19 @@ public class ArrayModel extends AbstractModel {
         cloned.description = this.description;
         cloned.items = this.items;
         cloned.example = this.example;
+        cloned.vendorExtensions = this.vendorExtensions;
 
         return cloned;
+    }
+
+    @JsonIgnore
+    public void setIsList(boolean list) {
+        addWMExtension(ArrayProperty.IS_LIST_EXT, list);
+    }
+
+    @JsonIgnore
+    public boolean isList() {
+        Object list = getWMExtension(ArrayProperty.IS_LIST_EXT);
+        return (list != null) && (boolean) list;
     }
 }

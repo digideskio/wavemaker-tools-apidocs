@@ -8,6 +8,7 @@
 package com.wavemaker.tools.apidocs.tools.spring.parser;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ public class SpringParameterParser extends AbstractParameterParser {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringParameterParser.class);
 
     public SpringParameterParser(
-            final int index, final Class<?> type, final Annotation[] annotations) {
+            final int index, final Type type, final Annotation[] annotations) {
         super(index, type, annotations);
     }
 
