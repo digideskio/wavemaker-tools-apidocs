@@ -78,9 +78,11 @@ public abstract class AbstractPathsParser implements PathsParser {
             LOGGER.debug("Parsing method:{}", restMethod);
             MethodParser methodParser = getMethodParser(restMethod);
             Operation operation = methodParser.parse();
-
-            for (final String relativePath : methodParser.getPaths()) {
-                String completePath = Utils
+            
+            String[] paths = methodParser.getPaths();
+            String[] relativePaths = (paths.length > 0) ? paths : new String[] { "" };
+            for (final String relativePath : relativePaths) {
+            	String completePath = Utils
                         .combinePaths(ResourceParserContext.getContext().getResourcePath(), relativePath);
                 Path path = pathMap.get(completePath);
                 if (path == null) {
