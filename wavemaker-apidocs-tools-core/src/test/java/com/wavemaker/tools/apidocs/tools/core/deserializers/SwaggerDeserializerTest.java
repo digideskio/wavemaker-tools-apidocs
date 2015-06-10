@@ -48,7 +48,15 @@ public class SwaggerDeserializerTest extends BaseDeserializerTest {
         Property schema = swagger.getPath("/hrdb/Department/").getGet().getResponses().get("200").getSchema();
         Assert.assertNotNull(schema);
         Assert.assertNotNull(((RefProperty) schema).getTypeArguments());
+    }
 
-
+    @Test
+    public void deserializerWeatherApiTest() throws IOException {
+        InputStream inputStream = this.getClass().getResourceAsStream("/weather_api.json");
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        Swagger swagger = objectMapper.readValue(inputStream, Swagger.class);
+        Assert.assertNotNull(swagger);
+        objectMapper.writeValue(new File("target", "weather_api.json"), swagger);
     }
 }

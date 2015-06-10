@@ -1,0 +1,271 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Swagger API documentation for Weather",
+    "version": "2.0",
+    "title": "WeatherService Swagger Documentation",
+    "x-WM-SERVICE_TYPE": "SoapService",
+    "x-WM-PROJECT_ID": "default@javaTest1",
+    "x-WM-SERVICE_ID": "Weather"
+  },
+  "basePath": "",
+  "tags": [
+    {
+      "name": "WeatherController",
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.controller.WeatherController",
+      "x-WM-VERSION": ""
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/weather/cityForecastByZIP": {
+      "get": {
+        "tags": ["WeatherController"],
+        "operationId": "getCityForecastByZIP",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "ZIP",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.String",
+            "x-WM-EDITABLE": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GetCityForecastByZIPResponse",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-OPERATION_UID": "1aff57fd-7951-484c-b1e9-41bc2e3b1139",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY",
+        "x-WM-METHOD_IDENTIFIER": "getCityForecastByZIP-1-1195260122"
+      },
+      "x-WM-TAG": "WeatherController",
+      "x-WM-BASE_PATH": "/weather",
+      "x-WM-RELATIVE_PATH": "/cityForecastByZIP"
+    },
+    "/weather/cityWeatherByZIP": {
+      "get": {
+        "tags": ["WeatherController"],
+        "operationId": "getCityWeatherByZIP",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "ZIP",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "collectionFormat": "multi",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.String",
+            "x-WM-EDITABLE": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GetCityWeatherByZIPResponse",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-OPERATION_UID": "77136ded-b97e-48bb-b5e6-4f82b59547a1",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY",
+        "x-WM-METHOD_IDENTIFIER": "getCityWeatherByZIP-1-1195260122"
+      },
+      "x-WM-TAG": "WeatherController",
+      "x-WM-BASE_PATH": "/weather",
+      "x-WM-RELATIVE_PATH": "/cityWeatherByZIP"
+    },
+    "/weather/weatherInformation": {
+      "get": {
+        "tags": ["WeatherController"],
+        "operationId": "getWeatherInformation",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/GetWeatherInformationResponse",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-OPERATION_UID": "5a7fae32-bf5e-47b8-9643-b5e330b915c3",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY",
+        "x-WM-METHOD_IDENTIFIER": "getWeatherInformation-0-17"
+      },
+      "x-WM-TAG": "WeatherController",
+      "x-WM-BASE_PATH": "/weather",
+      "x-WM-RELATIVE_PATH": "/weatherInformation"
+    }
+  },
+  "definitions": {
+    "GetCityForecastByZIPResponse": {
+      "properties": {
+        "getCityForecastByZIPResult": {
+          "$ref": "#/definitions/ForecastReturn",
+          "x-WM-TYPE_ARGUMENTS": []
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.GetCityForecastByZIPResponse",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "ForecastReturn": {
+      "properties": {
+        "state": {"type": "string"},
+        "responseText": {"type": "string"},
+        "success": {"type": "boolean"},
+        "city": {"type": "string"},
+        "weatherStationCity": {"type": "string"},
+        "forecastResult": {
+          "$ref": "#/definitions/ArrayOfForecast",
+          "x-WM-TYPE_ARGUMENTS": []
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.ForecastReturn",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "XMLGregorianCalendar": {
+      "allOf": [
+        {"$ref": "#/definitions/Cloneable"},
+        {}
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.xml.datatype.XMLGregorianCalendar",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "Cloneable": {
+      "x-WM-FULLY_QUALIFIED_NAME": "java.lang.Cloneable",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "GetWeatherInformationResponse": {
+      "properties": {
+        "getWeatherInformationResult": {
+          "$ref": "#/definitions/ArrayOfWeatherDescription",
+          "x-WM-TYPE_ARGUMENTS": []
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.GetWeatherInformationResponse",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "ArrayOfWeatherDescription": {
+      "properties": {
+        "weatherDescription": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WeatherDescription",
+            "x-WM-TYPE_ARGUMENTS": []
+          },
+          "x-WM-IS_LIST": true
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.ArrayOfWeatherDescription",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "WeatherReturn": {
+      "properties": {
+        "city": {"type": "string"},
+        "temperature": {"type": "string"},
+        "weatherID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "remarks": {"type": "string"},
+        "responseText": {"type": "string"},
+        "state": {"type": "string"},
+        "relativeHumidity": {"type": "string"},
+        "pressure": {"type": "string"},
+        "visibility": {"type": "string"},
+        "weatherStationCity": {"type": "string"},
+        "wind": {"type": "string"},
+        "success": {"type": "boolean"},
+        "windChill": {"type": "string"},
+        "description": {"type": "string"}
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.WeatherReturn",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "Forecast": {
+      "properties": {
+        "temperatures": {
+          "$ref": "#/definitions/Temp",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "date": {
+          "$ref": "#/definitions/XMLGregorianCalendar",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "weatherID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "probabilityOfPrecipiation": {
+          "$ref": "#/definitions/POP",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "desciption": {"type": "string"}
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.Forecast",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "POP": {
+      "properties": {
+        "daytime": {"type": "string"},
+        "nighttime": {"type": "string"}
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.POP",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "WeatherDescription": {
+      "properties": {
+        "pictureURL": {"type": "string"},
+        "weatherID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "description": {"type": "string"}
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.WeatherDescription",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "GetCityWeatherByZIPResponse": {
+      "properties": {
+        "getCityWeatherByZIPResult": {
+          "$ref": "#/definitions/WeatherReturn",
+          "x-WM-TYPE_ARGUMENTS": []
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.GetCityWeatherByZIPResponse",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "Temp": {
+      "properties": {
+        "morningLow": {"type": "string"},
+        "daytimeHigh": {"type": "string"}
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.Temp",
+      "x-WM-TAGS": ["WeatherController"]
+    },
+    "ArrayOfForecast": {
+      "properties": {
+        "forecast": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Forecast",
+            "x-WM-TYPE_ARGUMENTS": []
+          },
+          "x-WM-IS_LIST": true
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.javatest1.services.weather.ArrayOfForecast",
+      "x-WM-TAGS": ["WeatherController"]
+    }
+  }
+}

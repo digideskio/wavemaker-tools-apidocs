@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -107,6 +108,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
         ((AbstractParameter) parameter).setFullyQualifiedType(DataTypeUtil.getFullyQualifiedName(TypeUtil
                 .extractTypeInformation(dataType).getActualType()));
         ((AbstractParameter) parameter).setEditable(ContextUtil.getConfiguration().isEditable());
+        ((AbstractParameter) parameter).setUuid(UUID.randomUUID().toString());
 
         return parameter;
     }

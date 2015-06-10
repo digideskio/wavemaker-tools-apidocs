@@ -7,6 +7,7 @@ public abstract class AbstractParameter extends AbstractExtensibleEntity impleme
     public static final String EDITABLE_EXT = "EDITABLE";
     public static final String RESOLVER_EXT = "RESOLVER";
     public static final String FULLY_QUALIFIED_TYPE_EXT = "FULLY_QUALIFIED_TYPE";
+    public static final String UUID_EXT = "UUID";
 
     protected String in;
     protected String name;
@@ -81,5 +82,13 @@ public abstract class AbstractParameter extends AbstractExtensibleEntity impleme
         return (String) (FULLY_QUALIFIED_TYPE_EXT);
     }
 
+    @JsonIgnore
+    public void setUuid(String uuid) {
+        addWMExtension(UUID_EXT, uuid);
+    }
+
+    public String getUuid() {
+        return (String) getWMExtension(UUID_EXT);
+    }
 
 }
