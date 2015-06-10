@@ -6,7 +6,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 public class ArrayProperty extends AbstractProperty implements Property {
     public static final String IS_LIST_EXT = "IS_LIST";
 
-    protected Boolean uniqueItems;
+    protected Boolean uniqueItems = false;
     protected Property items;
 
     public ArrayProperty() {
