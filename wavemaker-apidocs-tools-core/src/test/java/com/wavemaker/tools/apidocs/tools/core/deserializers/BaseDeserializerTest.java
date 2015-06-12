@@ -2,8 +2,6 @@ package com.wavemaker.tools.apidocs.tools.core.deserializers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
 /**
  * @author <a href="mailto:nishanth.modhugu@wavemaker.com">Nishanth Reddy</a>
@@ -15,12 +13,6 @@ public class BaseDeserializerTest {
 
     public BaseDeserializerTest() {
         objectMapper = new ObjectMapper();
-        ParameterDeserializer parameterDeserializer = new ParameterDeserializer();
-        
-        SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addDeserializer(Parameter.class, parameterDeserializer);
-        objectMapper.registerModule(simpleModule);
-        
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 }
