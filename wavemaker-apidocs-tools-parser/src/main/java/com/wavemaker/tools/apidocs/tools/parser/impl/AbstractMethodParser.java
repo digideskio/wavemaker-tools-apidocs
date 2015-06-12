@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.wavemaker.tools.apidocs.tools.core.annotation.WMAccessVisibility;
+import com.wavemaker.tools.api.core.annotations.WMAccessVisibility;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 import com.wavemaker.tools.apidocs.tools.core.model.Response;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;

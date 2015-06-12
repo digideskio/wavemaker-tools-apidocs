@@ -10,7 +10,7 @@ package com.wavemaker.tools.apidocs.tools.parser.context;
 import java.util.Collections;
 import java.util.Set;
 
-import com.wavemaker.tools.apidocs.tools.core.model.AccessSpecifier;
+import com.wavemaker.tools.api.core.models.AccessSpecifier;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>

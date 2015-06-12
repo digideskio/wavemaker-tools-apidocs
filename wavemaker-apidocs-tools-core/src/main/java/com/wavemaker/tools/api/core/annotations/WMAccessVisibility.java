@@ -5,7 +5,7 @@
  * You shall not disclose such Confidential Information and shall use it only in accordance
  * with the terms of the source code license agreement you entered into with WaveMaker, Inc.
  */
-package com.wavemaker.tools.apidocs.tools.core.annotation;
+package com.wavemaker.tools.api.core.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,7 +13,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 
-import com.wavemaker.tools.apidocs.tools.core.model.AccessSpecifier;
+import com.wavemaker.tools.api.core.models.AccessSpecifier;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>

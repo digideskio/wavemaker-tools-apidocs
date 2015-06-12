@@ -5,7 +5,7 @@
  * You shall not disclose such Confidential Information and shall use it only in accordance
  * with the terms of the source code license agreement you entered into with WaveMaker, Inc.
  */
-package com.wavemaker.tools.apidocs.tools.core.model;
+package com.wavemaker.tools.api.core.models;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
