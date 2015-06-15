@@ -71,10 +71,10 @@ public abstract class AbstractMethodParser implements MethodParser {
         handleFrameWorkSpecific(methodToParse, operation);
 
         // adding api produces, consumes
-        if (CollectionUtil.isBlank(operation.getConsumes())) {
+        if (CollectionUtil.isEmpty(operation.getConsumes())) {
             operation.setConsumes(Lists.newArrayList(ResourceParserContext.getContext().getConsumes()));
         }
-        if (CollectionUtil.isBlank(operation.getProduces())) {
+        if (CollectionUtil.isEmpty(operation.getProduces())) {
             operation.setProduces(Lists.newArrayList(ResourceParserContext.getContext().getProduces()));
         }
 

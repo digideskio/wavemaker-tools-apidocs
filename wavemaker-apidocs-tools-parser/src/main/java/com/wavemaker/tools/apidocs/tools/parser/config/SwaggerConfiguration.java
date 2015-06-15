@@ -8,6 +8,7 @@
 package com.wavemaker.tools.apidocs.tools.parser.config;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
@@ -146,6 +147,11 @@ public class SwaggerConfiguration {
 
         public Builder setSchemes(final Scheme... schemes) {
             this.schemes = Sets.newHashSet(Arrays.asList(schemes));
+            return this;
+        }
+
+        public Builder setSchemes(final Collection<Scheme> schemes) {
+            this.schemes = Sets.newHashSet(schemes);
             return this;
         }
 

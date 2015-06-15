@@ -59,7 +59,7 @@ public abstract class AbstractPathsParser implements PathsParser {
         Set<Method> methods = MethodUtils.getAllNonStaticMethods(controllerClass);
         LOGGER.debug("Methods found in {}:{}", controllerClass.getSimpleName(), methods.size());
         Collection<Method> restMethods = filterRestMethods(methods);
-        if (CollectionUtil.isNotBlank(restMethods)) {
+        if (CollectionUtil.isNotEmpty(restMethods)) {
             return restMethods;
         }
         return Collections.emptyList();

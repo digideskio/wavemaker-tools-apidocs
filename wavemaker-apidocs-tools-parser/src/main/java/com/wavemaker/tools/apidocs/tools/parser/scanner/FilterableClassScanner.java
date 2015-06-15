@@ -14,7 +14,6 @@ import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 
 /**
  * It will returns the classes from the given packages.
@@ -22,7 +21,7 @@ import org.reflections.util.FilterBuilder;
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 12/11/14
  */
-public class FilterableClassScanner extends FilterBuilder implements ClassScanner {
+public class FilterableClassScanner extends FilterableScanner implements ClassScanner {
 
     @Override
     public Set<Class<?>> classesToScan() {

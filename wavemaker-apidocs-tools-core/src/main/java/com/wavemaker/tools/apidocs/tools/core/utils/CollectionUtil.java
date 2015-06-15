@@ -25,11 +25,11 @@ public class CollectionUtil {
     }
 
 
-    public static <T> boolean isBlank(Collection<T> collection) {
+    public static <T> boolean isEmpty(Collection<T> collection) {
         return collection == null || collection.isEmpty();
     }
 
-    public static <T> boolean isNotBlank(Collection<T> collection) {
-        return !isBlank(collection);
+    public static <T> boolean isNotEmpty(Collection<T> collection) {
+        return !isEmpty(collection);
     }
 }

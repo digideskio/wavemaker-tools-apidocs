@@ -5,10 +5,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.lang3.ClassUtils;
-import org.reflections.util.FilterBuilder;
 
 import com.google.common.base.Optional;
-import com.google.common.base.Predicates;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.parser.impl.ReflectionModelParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ModelParser;
@@ -17,7 +15,7 @@ import com.wavemaker.tools.apidocs.tools.parser.parser.ModelParser;
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 31/3/15
  */
-public class FilterableModelScanner extends FilterBuilder implements ModelScanner {
+public class FilterableModelScanner extends FilterableScanner implements ModelScanner {
 
     private Set<AdapterInfo> adapters;
     private Set<SubstituteInfo> substitutes;
@@ -36,12 +34,6 @@ public class FilterableModelScanner extends FilterBuilder implements ModelScanne
     @Override
     public void addSubstitute(final Class<?> baseType, final Class<?> substituteType, final boolean includeSubTypes) {
         substitutes.add(new SubstituteInfo(baseType, substituteType, includeSubTypes));
-    }
-
-    public FilterableModelScanner excludeType(Class type) {
-        Objects.requireNonNull(type, "Exclude type cannot be null");
-        add(Predicates.not(Predicates.equalTo(type.getName())));
-        return this;
     }
 
     @Override

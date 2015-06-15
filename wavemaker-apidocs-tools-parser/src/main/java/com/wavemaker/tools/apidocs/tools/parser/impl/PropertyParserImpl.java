@@ -80,7 +80,7 @@ public class PropertyParserImpl implements PropertyParser {
 
     private Property feedArrayProperty(TypeInformation typeInformation) {
         List<Class<?>> typeArguments = typeInformation.getTypeArguments();
-        if (CollectionUtil.isNotBlank(typeArguments) && typeArguments.size() == 1) {
+        if (CollectionUtil.isNotEmpty(typeArguments) && typeArguments.size() == 1) {
             Class<?> typeArgument = typeArguments.get(0);
             ArrayProperty property = new ArrayProperty(parseType(typeArgument));
 
@@ -99,7 +99,7 @@ public class PropertyParserImpl implements PropertyParser {
 
     private Property feedMapProperty(TypeInformation typeInfo) {
         List<Class<?>> typeArguments = typeInfo.getTypeArguments();
-        if (CollectionUtil.isNotBlank(typeArguments) && typeArguments.size() == 2) {
+        if (CollectionUtil.isNotEmpty(typeArguments) && typeArguments.size() == 2) {
             // 0:key, 1:value            Key:String (by default)
             return new MapProperty(parseType(typeArguments.get(1)));
         }
