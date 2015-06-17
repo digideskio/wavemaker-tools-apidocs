@@ -105,8 +105,14 @@ public abstract class AbstractParameterParser implements ParameterParser {
             }
         }
 
-        ((AbstractParameter) parameter).setFullyQualifiedType(DataTypeUtil.getFullyQualifiedName(TypeUtil
-                .extractTypeInformation(dataType).getActualType()));
+        TypeInformation typeInformation = TypeUtil.extractTypeInformation(dataType);
+        if (typeInformation.isArray()) {
+            ((AbstractParameter) parameter).setFullyQualifiedType(DataTypeUtil.getFullyQualifiedName(
+                    typeInformation.getTypeArguments().get(0)));
+        } else {
+            ((AbstractParameter) parameter).setFullyQualifiedType(DataTypeUtil.getFullyQualifiedName(
+                    typeInformation.getActualType()));
+        }
         ((AbstractParameter) parameter).setEditable(ContextUtil.getConfiguration().isEditable());
         ((AbstractParameter) parameter).setUuid(UUID.randomUUID().toString());
 
@@ -177,6 +183,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             PropertyParser propertyParser = new PropertyParserImpl(typeInfo.getTypeArguments().get(0));
             ((ArrayModel) schema).items(propertyParser.parse());
             ((ArrayModel) schema).setIsList(!typeInfo.isArray());
+            parameter.name(ContextUtil.getUniqueName(typeInfo.getTypeArguments().get(0)));
         } else {
             Optional<RefModel> modelOptional = ContextUtil.parseModel(typeInfo.getActualType());
             if (modelOptional.isPresent()) {
@@ -190,9 +197,9 @@ public abstract class AbstractParameterParser implements ParameterParser {
                 }
                 ((RefModel) schema).setTypeArguments(models);
             }
+            parameter.name(ContextUtil.getUniqueName(typeInfo.getActualType()));
         }
         parameter.schema(schema);
-        parameter.name(ContextUtil.getUniqueName(typeInfo.getActualType()));
     }
 
     protected void handleCookieParameter(CookieParameter parameter) {
