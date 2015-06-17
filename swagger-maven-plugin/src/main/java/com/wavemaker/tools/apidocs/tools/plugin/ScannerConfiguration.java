@@ -2,18 +2,24 @@ package com.wavemaker.tools.apidocs.tools.plugin;
 
 import java.util.List;
 
+import org.apache.maven.plugins.annotations.Parameter;
+
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 8/6/15
  */
 public class ScannerConfiguration {
 
+    @Parameter(name = "include-packages")
     private List<String> includePackages;
 
+    @Parameter(name = "exclude-packages")
     private List<String> excludePackages;
 
+    @Parameter(name = "include-classes")
     private List<String> includeClasses;
 
+    @Parameter(name = "exclude-classes")
     private List<String> excludeClasses;
 
     public List<String> getIncludePackages() {
