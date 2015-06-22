@@ -38,8 +38,10 @@ public abstract class AbstractModel extends AbstractExtensibleEntity implements 
             if (tags == null) {
                 tags = new LinkedList<>();
             }
-            tags.add(tag);
-            addWMExtension(TAG_EXT, tags);
+            if(!tags.contains(tag)) {
+                tags.add(tag);
+                addWMExtension(TAG_EXT, tags);
+            }
         }
     }
 
