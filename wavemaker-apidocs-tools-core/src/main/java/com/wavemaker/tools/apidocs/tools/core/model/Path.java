@@ -1,8 +1,12 @@
 package com.wavemaker.tools.apidocs.tools.core.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -10,10 +14,12 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
 @JsonPropertyOrder({"get", "post", "put", "delete", "options", "patch"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Path extends AbstractExtensibleEntity {
+public class Path implements ExtensibleEntity {
     private static final String TAG_EXT = "TAG";
     private static final String BASE_PATH_EXT = "BASE_PATH";
     private static final String RELATIVE_PATH_EXT = "RELATIVE_PATH";
+
+    private Map<String, Object> vendorExtensions = new HashMap<>();
 
     private Operation get;
     private Operation put;
@@ -182,32 +188,44 @@ public class Path extends AbstractExtensibleEntity {
             return false;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getVendorExtensions() {
+        return vendorExtensions;
+    }
+
+    @JsonAnySetter
+    public void setVendorExtension(String name, Object value) {
+        if (name.startsWith("x-")) {
+            vendorExtensions.put(name, value);
+        }
+    }
+
     @JsonIgnore
     public void setTagExt(String tag) {
-        addWMExtension(TAG_EXT, tag);
+        VendorUtils.addWMExtension(this, TAG_EXT, tag);
     }
 
     @JsonIgnore
     public String getTag() {
-        return (String) getWMExtension(TAG_EXT);
+        return (String) VendorUtils.getWMExtension(this, TAG_EXT);
     }
 
     @JsonIgnore
     public void setBasePath(String basePath) {
-        addWMExtension(BASE_PATH_EXT, basePath);
+        VendorUtils.addWMExtension(this, BASE_PATH_EXT, basePath);
     }
 
     public String getBasePath() {
-        return (String) getWMExtension(BASE_PATH_EXT);
+        return (String) VendorUtils.getWMExtension(this, BASE_PATH_EXT);
     }
 
     @JsonIgnore
     public void setRelativePath(String relativePath) {
-        addWMExtension(RELATIVE_PATH_EXT, relativePath);
+        VendorUtils.addWMExtension(this, RELATIVE_PATH_EXT, relativePath);
     }
 
     public String getRelativePath() {
-        return (String) getWMExtension(RELATIVE_PATH_EXT);
+        return (String) VendorUtils.getWMExtension(this, RELATIVE_PATH_EXT);
     }
 
 }

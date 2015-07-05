@@ -12,16 +12,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wavemaker.tools.api.core.models.AccessSpecifier;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Operation extends AbstractExtensibleEntity {
+public class Operation implements ExtensibleEntity {
     public static final String METHOD_IDENTIFIER_EXT = "METHOD_IDENTIFIER";
     public static final String ACCESS_SPECIFIER_EXT = "ACCESS_SPECIFIER";
     public static final String OPERATION_UID_EXT = "OPERATION_UID";
+
+    private Map<String, Object> vendorExtensions = new HashMap<>();
 
     private List<String> tags;
     private String summary;
@@ -269,23 +273,35 @@ public class Operation extends AbstractExtensibleEntity {
             this.deprecated = value;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getVendorExtensions() {
+        return vendorExtensions;
+    }
+
+    @JsonAnySetter
+    public void setVendorExtension(String name, Object value) {
+        if (name.startsWith("x-")) {
+            vendorExtensions.put(name, value);
+        }
+    }
+
     @JsonIgnore
     public void setMethodIdentifier(final String methodIdentifier) {
-        addWMExtension(METHOD_IDENTIFIER_EXT, methodIdentifier);
+        VendorUtils.addWMExtension(this, METHOD_IDENTIFIER_EXT, methodIdentifier);
     }
 
     @JsonIgnore
     public void setAccessSpecifier(final AccessSpecifier accessSpecifier) {
-        addWMExtension(ACCESS_SPECIFIER_EXT, accessSpecifier.name());
+        VendorUtils.addWMExtension(this, ACCESS_SPECIFIER_EXT, accessSpecifier.name());
     }
 
     @JsonIgnore
     public void setOperationUid(String uid) {
-        addWMExtension(OPERATION_UID_EXT, uid);
+        VendorUtils.addWMExtension(this, OPERATION_UID_EXT, uid);
     }
 
     @JsonIgnore
     public String getOperationUid() {
-        return (String) getWMExtension(OPERATION_UID_EXT);
+        return (String) VendorUtils.getWMExtension(this, OPERATION_UID_EXT);
     }
 }

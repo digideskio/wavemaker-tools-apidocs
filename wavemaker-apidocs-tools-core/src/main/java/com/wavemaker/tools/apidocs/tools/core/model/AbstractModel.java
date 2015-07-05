@@ -1,17 +1,22 @@
 package com.wavemaker.tools.apidocs.tools.core.model;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Sets;
 
-public abstract class AbstractModel extends AbstractExtensibleEntity implements Model {
+public abstract class AbstractModel implements Model, ExtensibleEntity {
     private static final String TAG_EXT = "TAGS";
     private static final String FULLY_QUALIFIED_NAME_EXT = "FULLY_QUALIFIED_NAME";
 
+    protected Map<String, Object> vendorExtensions = new HashMap<>();
     private ExternalDocs externalDocs;
 
     @Override
@@ -34,28 +39,40 @@ public abstract class AbstractModel extends AbstractExtensibleEntity implements 
 
     public void addTag(String tag) {
         synchronized (this) {
-            List<String> tags = (List<String>) getWMExtension(TAG_EXT);
+            List<String> tags = (List<String>) VendorUtils.getWMExtension(this, TAG_EXT);
             if (tags == null) {
                 tags = new LinkedList<>();
             }
             tags.add(tag);
-            addWMExtension(TAG_EXT, tags);
+            VendorUtils.addWMExtension(this, TAG_EXT, tags);
+        }
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getVendorExtensions() {
+        return vendorExtensions;
+    }
+
+    @JsonAnySetter
+    public void setVendorExtension(String name, Object value) {
+        if (name.startsWith("x-")) {
+            vendorExtensions.put(name, value);
         }
     }
 
     @JsonIgnore
     public Set<String> getTags() {
-        Object tags = getWMExtension(TAG_EXT);
+        Object tags = VendorUtils.getWMExtension(this, TAG_EXT);
         return (tags == null) ? Collections.<String>emptySet() : Sets.newLinkedHashSet((List<String>) tags);
     }
 
     @JsonIgnore
     public void setFullyQualifiedName(String fullyQualifiedName) {
-        addWMExtension(FULLY_QUALIFIED_NAME_EXT, fullyQualifiedName);
+        VendorUtils.addWMExtension(this, FULLY_QUALIFIED_NAME_EXT, fullyQualifiedName);
     }
 
     @JsonIgnore
     public String getFullyQualifiedName() {
-        return (String) getWMExtension(FULLY_QUALIFIED_NAME_EXT);
+        return (String) VendorUtils.getWMExtension(this, FULLY_QUALIFIED_NAME_EXT);
     }
 }

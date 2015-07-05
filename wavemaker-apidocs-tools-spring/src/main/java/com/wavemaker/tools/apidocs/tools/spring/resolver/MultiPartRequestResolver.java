@@ -24,15 +24,7 @@ import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
  */
 public class MultiPartRequestResolver implements ParameterResolver {
 
-    private MultiPartRequestResolver() {
-    }
-
-    private static class MultiPartRequestResolverHolder {
-        private static final MultiPartRequestResolver INSTANCE = new MultiPartRequestResolver();
-    }
-
-    public static MultiPartRequestResolver getInstance() {
-        return MultiPartRequestResolverHolder.INSTANCE;
+    public MultiPartRequestResolver() {
     }
 
     @Override

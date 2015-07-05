@@ -8,6 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
 
 public class RefProperty extends AbstractProperty implements Property {
     public static final String TYPE_ARGUMENTS_EXT = "TYPE_ARGUMENTS";
@@ -97,12 +98,12 @@ public class RefProperty extends AbstractProperty implements Property {
 
     @JsonIgnore
     public void setTypeArguments(List<Property> properties) {
-        addWMExtension(TYPE_ARGUMENTS_EXT, properties);
+        VendorUtils.addWMExtension(this, TYPE_ARGUMENTS_EXT, properties);
     }
 
     @JsonIgnore
     public List<Property> getTypeArguments() {
-        Object typeArguments = getWMExtension(TYPE_ARGUMENTS_EXT);
+        Object typeArguments = VendorUtils.getWMExtension(this, TYPE_ARGUMENTS_EXT);
         if (typeArguments == null) {
             return Collections.<Property>emptyList();
         } else {

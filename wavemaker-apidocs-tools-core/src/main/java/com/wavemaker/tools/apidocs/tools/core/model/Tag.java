@@ -1,12 +1,19 @@
 package com.wavemaker.tools.apidocs.tools.core.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Tag extends AbstractExtensibleEntity {
+public class Tag implements ExtensibleEntity {
     public static final String FULLY_QUALIFIED_NAME_EXT = "FULLY_QUALIFIED_NAME";
     public static final String VERSION_EXT = "VERSION";
+
+    private Map<String, Object> vendorExtensions = new HashMap<>();
 
     private String name;
     private String description;
@@ -51,14 +58,26 @@ public class Tag extends AbstractExtensibleEntity {
         this.externalDocs = externalDocs;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getVendorExtensions() {
+        return vendorExtensions;
+    }
+
+    @JsonAnySetter
+    public void setVendorExtension(String name, Object value) {
+        if (name.startsWith("x-")) {
+            vendorExtensions.put(name, value);
+        }
+    }
+
     @JsonIgnore
     public void setFullyQualifiedName(String fullyQualifiedName) {
-        addWMExtension(FULLY_QUALIFIED_NAME_EXT, fullyQualifiedName);
+        VendorUtils.addWMExtension(this, FULLY_QUALIFIED_NAME_EXT, fullyQualifiedName);
     }
 
     @JsonIgnore
     public void setVersion(String version) {
-        addWMExtension(VERSION_EXT, version);
+        VendorUtils.addWMExtension(this, VERSION_EXT, version);
     }
 
     @Override
