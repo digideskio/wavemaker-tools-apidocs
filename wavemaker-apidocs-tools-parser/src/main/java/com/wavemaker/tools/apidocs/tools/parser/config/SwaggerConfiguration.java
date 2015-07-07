@@ -59,6 +59,8 @@ public class SwaggerConfiguration {
     public static class Builder {
         private static final int CORE_THREAD_POOL_SIZE = 4;
         private static final int MAX_THREAD_POOL_SIZE = 6;
+        public static final String DEFAULT_VERSION = "1.0";
+        public static final String DEFAULT_TITLE = "Swagger Documentation";
 
         private String baseUrl = "";
         private boolean editable = true;
@@ -161,6 +163,11 @@ public class SwaggerConfiguration {
             }
             if (modelScanner == null) {
                 modelScanner = new FilterableModelScanner();
+            }
+            if (info == null) {
+                info = new Info();
+                info.setVersion(DEFAULT_VERSION);
+                info.setTitle(DEFAULT_TITLE);
             }
 
             return new SwaggerConfiguration(this);

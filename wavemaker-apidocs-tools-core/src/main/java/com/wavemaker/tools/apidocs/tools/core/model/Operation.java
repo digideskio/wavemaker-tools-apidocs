@@ -290,9 +290,17 @@ public class Operation implements ExtensibleEntity {
         VendorUtils.addWMExtension(this, METHOD_IDENTIFIER_EXT, methodIdentifier);
     }
 
+    public String getMethodIdentifier() {
+        return (String) VendorUtils.getWMExtension(this, METHOD_IDENTIFIER_EXT);
+    }
+
     @JsonIgnore
     public void setAccessSpecifier(final AccessSpecifier accessSpecifier) {
         VendorUtils.addWMExtension(this, ACCESS_SPECIFIER_EXT, accessSpecifier.name());
+    }
+
+    public AccessSpecifier getAccessSpecifier() {
+        return AccessSpecifier.forValue((String) VendorUtils.getWMExtension(this, ACCESS_SPECIFIER_EXT));
     }
 
     @JsonIgnore

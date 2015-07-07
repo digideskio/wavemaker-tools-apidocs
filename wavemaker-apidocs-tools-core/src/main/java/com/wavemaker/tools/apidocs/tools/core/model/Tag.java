@@ -75,9 +75,17 @@ public class Tag implements ExtensibleEntity {
         VendorUtils.addWMExtension(this, FULLY_QUALIFIED_NAME_EXT, fullyQualifiedName);
     }
 
+    public String getFullyQualifiedName() {
+        return (String) VendorUtils.getWMExtension(this, FULLY_QUALIFIED_NAME_EXT);
+    }
+
     @JsonIgnore
     public void setVersion(String version) {
         VendorUtils.addWMExtension(this, VERSION_EXT, version);
+    }
+
+    public String getVersion() {
+        return (String) VendorUtils.getWMExtension(this, VERSION_EXT);
     }
 
     @Override
