@@ -1,13 +1,20 @@
 package com.wavemaker.tools.apidocs.tools.core.model.parameters;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wavemaker.tools.apidocs.tools.core.model.AbstractExtensibleEntity;
+import java.util.HashMap;
+import java.util.Map;
 
-public abstract class AbstractParameter extends AbstractExtensibleEntity implements Parameter {
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
+
+public abstract class AbstractParameter implements Parameter {
     public static final String EDITABLE_EXT = "EDITABLE";
     public static final String RESOLVER_EXT = "RESOLVER";
     public static final String FULLY_QUALIFIED_TYPE_EXT = "FULLY_QUALIFIED_TYPE";
     public static final String UUID_EXT = "UUID";
+
+    private Map<String, Object> vendorExtensions = new HashMap<>();
 
     protected String in;
     protected String name;
@@ -57,25 +64,37 @@ public abstract class AbstractParameter extends AbstractExtensibleEntity impleme
 
     @JsonIgnore
     public void setEditable(boolean editable) {
-        addWMExtension(EDITABLE_EXT, editable);
+        VendorUtils.addWMExtension(this, EDITABLE_EXT, editable);
     }
 
     public boolean isEditable() {
-        return (boolean) getWMExtension(EDITABLE_EXT);
+        return (boolean) VendorUtils.getWMExtension(this, EDITABLE_EXT);
     }
 
     @JsonIgnore
     public void setResolver(String resolver) {
-        addWMExtension(RESOLVER_EXT, resolver);
+        VendorUtils.addWMExtension(this, RESOLVER_EXT, resolver);
     }
 
     public String getResolver() {
-        return (String) getWMExtension(RESOLVER_EXT);
+        return (String) VendorUtils.getWMExtension(this, RESOLVER_EXT);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getVendorExtensions() {
+        return vendorExtensions;
+    }
+
+    @JsonAnySetter
+    public void setVendorExtension(String name, Object value) {
+        if (name.startsWith("x-")) {
+            vendorExtensions.put(name, value);
+        }
     }
 
     @JsonIgnore
     public void setFullyQualifiedType(String fullyQualifiedType) {
-        addWMExtension(FULLY_QUALIFIED_TYPE_EXT, fullyQualifiedType);
+        VendorUtils.addWMExtension(this, FULLY_QUALIFIED_TYPE_EXT, fullyQualifiedType);
     }
 
     public String getFullyQualifiedType() {
@@ -84,11 +103,11 @@ public abstract class AbstractParameter extends AbstractExtensibleEntity impleme
 
     @JsonIgnore
     public void setUuid(String uuid) {
-        addWMExtension(UUID_EXT, uuid);
+        VendorUtils.addWMExtension(this, UUID_EXT, uuid);
     }
 
     public String getUuid() {
-        return (String) getWMExtension(UUID_EXT);
+        return (String) VendorUtils.getWMExtension(this, UUID_EXT);
     }
 
 }

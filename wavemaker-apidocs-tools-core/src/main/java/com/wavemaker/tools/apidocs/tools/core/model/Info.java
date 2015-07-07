@@ -1,15 +1,22 @@
 package com.wavemaker.tools.apidocs.tools.core.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Info extends AbstractExtensibleEntity {
+public class Info implements ExtensibleEntity {
     private static final String API_ID_EXT = "API_ID";
     private static final String ENTERPRISE_ID_EXT = "ENTERPRISE_ID";
     private static final String PROJECT_ID_EXT = "PROJECT_ID";
     private static final String SERVICE_TYPE_EXT = "SERVICE_TYPE";
     private static final String SERVICE_ID_EXT = "SERVICE_ID";
+
+    private Map<String, Object> vendorExtensions = new HashMap<>();
 
     private String description;
     private String version;
@@ -96,49 +103,61 @@ public class Info extends AbstractExtensibleEntity {
         this.license = license;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getVendorExtensions() {
+        return vendorExtensions;
+    }
+
+    @JsonAnySetter
+    public void setVendorExtension(String name, Object value) {
+        if (name.startsWith("x-")) {
+            vendorExtensions.put(name, value);
+        }
+    }
+
     @JsonIgnore
     public void setApiId(String apiId) {
-        addWMExtension(API_ID_EXT, apiId);
+        VendorUtils.addWMExtension(this, API_ID_EXT, apiId);
     }
 
     public String getApiId() {
-        return (String) getWMExtension(API_ID_EXT);
+        return (String) VendorUtils.getWMExtension(this, API_ID_EXT);
     }
 
     @JsonIgnore
     public void setEnterpriseId(String enterpriseId) {
-        addWMExtension(ENTERPRISE_ID_EXT, enterpriseId);
+        VendorUtils.addWMExtension(this, ENTERPRISE_ID_EXT, enterpriseId);
     }
 
     public String getEnterpriseId() {
-        return (String) getWMExtension(ENTERPRISE_ID_EXT);
+        return (String) VendorUtils.getWMExtension(this, ENTERPRISE_ID_EXT);
     }
 
     @JsonIgnore
     public void setProjectId(String projectId) {
-        addWMExtension(PROJECT_ID_EXT, projectId);
+        VendorUtils.addWMExtension(this, PROJECT_ID_EXT, projectId);
     }
 
     public String getProjectId() {
-        return (String) getWMExtension(PROJECT_ID_EXT);
+        return (String) VendorUtils.getWMExtension(this, PROJECT_ID_EXT);
     }
 
     @JsonIgnore
     public void setServiceType(String serviceType) {
-        addWMExtension(SERVICE_TYPE_EXT, serviceType);
+        VendorUtils.addWMExtension(this, SERVICE_TYPE_EXT, serviceType);
     }
 
     public String getServiceType() {
-        return (String) getWMExtension(SERVICE_TYPE_EXT);
+        return (String) VendorUtils.getWMExtension(this, SERVICE_TYPE_EXT);
     }
 
     @JsonIgnore
     public void setServiceId(String serviceId) {
-        addWMExtension(SERVICE_ID_EXT, serviceId);
+        VendorUtils.addWMExtension(this, SERVICE_ID_EXT, serviceId);
     }
 
     public String getServiceId() {
-        return (String) getWMExtension(SERVICE_ID_EXT);
+        return (String) VendorUtils.getWMExtension(this, SERVICE_ID_EXT);
     }
 
     public Info mergeWith(Info info) {

@@ -3,9 +3,12 @@ package com.wavemaker.tools.apidocs.tools.core.model.auth;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.wavemaker.tools.apidocs.tools.core.model.AbstractExtensibleEntity;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 
-public class OAuth2Definition extends AbstractExtensibleEntity implements SecuritySchemeDefinition {
+public class OAuth2Definition implements SecuritySchemeDefinition {
+    private Map<String, Object> vendorExtensions = new HashMap<>();
+
     private String type = "oauth2";
     private String authorizationUrl;
     private String tokenUrl;
@@ -89,5 +92,17 @@ public class OAuth2Definition extends AbstractExtensibleEntity implements Securi
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getVendorExtensions() {
+        return vendorExtensions;
+    }
+
+    @JsonAnySetter
+    public void setVendorExtension(String name, Object value) {
+        if (name.startsWith("x-")) {
+            vendorExtensions.put(name, value);
+        }
     }
 }

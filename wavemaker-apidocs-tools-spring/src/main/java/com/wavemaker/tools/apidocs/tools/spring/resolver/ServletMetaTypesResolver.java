@@ -21,15 +21,7 @@ import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
  */
 public class ServletMetaTypesResolver implements ParameterResolver {
 
-    private ServletMetaTypesResolver() {
-    }
-
-    private static class ServletMetaTypesResolverHolder {
-        private static final ServletMetaTypesResolver INSTANCE = new ServletMetaTypesResolver();
-    }
-
-    public static ServletMetaTypesResolver getInstance() {
-        return ServletMetaTypesResolverHolder.INSTANCE;
+    public ServletMetaTypesResolver() {
     }
 
     @Override

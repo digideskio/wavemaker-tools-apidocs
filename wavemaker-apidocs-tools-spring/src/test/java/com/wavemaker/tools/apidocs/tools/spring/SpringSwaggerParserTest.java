@@ -8,6 +8,8 @@
 package com.wavemaker.tools.apidocs.tools.spring;
 
 import java.io.File;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,6 +28,7 @@ import com.wavemaker.tools.apidocs.tools.parser.scanner.FilterableModelScanner;
 import com.wavemaker.tools.apidocs.tools.spring.resolver.MultiPartFileResolver;
 import com.wavemaker.tools.apidocs.tools.spring.resolver.MultiPartRequestResolver;
 import com.wavemaker.tools.apidocs.tools.spring.resolver.PageParameterResolver;
+import com.wavemaker.tools.apidocs.tools.spring.resolver.ServletMetaTypesResolver;
 
 public class SpringSwaggerParserTest {
 
@@ -63,8 +66,10 @@ public class SpringSwaggerParserTest {
         SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/test", classScanner);
         builder.setClassLoader(this.getClass().getClassLoader());
         builder.addParameterResolver(Pageable.class, new PageParameterResolver());
-        builder.addParameterResolver(MultipartFile.class, MultiPartFileResolver.getInstance());
-        builder.addParameterResolver(MultipartHttpServletRequest.class, MultiPartRequestResolver.getInstance());
+        builder.addParameterResolver(MultipartFile.class, new MultiPartFileResolver());
+        builder.addParameterResolver(MultipartHttpServletRequest.class, new MultiPartRequestResolver());
+        builder.addParameterResolver(HttpServletRequest.class, new ServletMetaTypesResolver());
+        builder.addParameterResolver(HttpServletResponse.class, new ServletMetaTypesResolver());
         SwaggerParser runner = new SpringSwaggerParser(builder.build());
         Swagger swagger = runner.generate();
 
@@ -92,8 +97,8 @@ public class SpringSwaggerParserTest {
         builder.setClassLoader(this.getClass().getClassLoader());
         builder.setModelScanner(modelScanner);
         builder.addParameterResolver(Pageable.class, new PageParameterResolver());
-        builder.addParameterResolver(MultipartFile.class, MultiPartFileResolver.getInstance());
-        builder.addParameterResolver(MultipartHttpServletRequest.class, MultiPartRequestResolver.getInstance());
+        builder.addParameterResolver(MultipartFile.class, new MultiPartFileResolver());
+        builder.addParameterResolver(MultipartHttpServletRequest.class, new MultiPartRequestResolver());
         SwaggerParser runner = new SpringSwaggerParser(builder.build());
         Swagger swagger = runner.generate();
 

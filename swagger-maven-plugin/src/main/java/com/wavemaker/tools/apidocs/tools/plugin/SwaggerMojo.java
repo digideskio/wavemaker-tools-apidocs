@@ -84,7 +84,7 @@ public class SwaggerMojo extends AbstractMojo {
         if (StringUtils.isNotBlank(collectionFormat)) {
             builder.setCollectionFormat(CollectionFormat.forValue(collectionFormat));
         }
-        builder.setInfo(info);
+        builder.setInfo(info.build());
 
         if (CollectionUtil.isNotEmpty(schemes)) {
             List<Scheme> schemeList = new LinkedList<>();
@@ -100,23 +100,35 @@ public class SwaggerMojo extends AbstractMojo {
     }
 
     private void buildParameterResolvers(final SwaggerConfiguration.Builder builder) throws MojoFailureException {
-        try {
-            if (parameterResolvers != null) {
-                for (final Map.Entry<String, String> entry : parameterResolvers.entrySet()) {
-                    Class<?> resolvableType = Class.forName(entry.getKey());
-                    Class<?> resolverType = Class.forName(entry.getValue(), true, this.getClass().getClassLoader());
-                    ParameterResolver resolver = (ParameterResolver) resolverType.newInstance();
 
-                    builder.addParameterResolver(resolvableType, resolver);
+        if (parameterResolvers != null) {
+            for (final Map.Entry<String, String> entry : parameterResolvers.entrySet()) {
+                Class<?> resolvableType;
+                ParameterResolver resolver;
+                Class<?> resolverType;
+                try {
+                    resolvableType = Class.forName(entry.getKey());
+                } catch (ClassNotFoundException e) {
+                    throw new MojoFailureException("Resolvable class not found: " + entry.getKey(), e);
                 }
+                try {
+                    resolverType = Class.forName(entry.getValue(), true, this.getClass().getClassLoader());
+                } catch (ClassNotFoundException e) {
+                    throw new MojoFailureException("Resolver class not found: " + entry.getValue(), e);
+                }
+                try {
+                    resolver = (ParameterResolver) resolverType.newInstance();
+                } catch (InstantiationException e) {
+                    throw new MojoFailureException("Error while creating new instance of parameter resolver:" + entry
+                            .getValue(), e);
+                } catch (IllegalAccessException e) {
+                    throw new MojoFailureException("Error while instatiation of parameter resolver class:" + entry
+                            .getValue(), e);
+                }
+                builder.addParameterResolver(resolvableType, resolver);
             }
-        } catch (ClassNotFoundException e) {
-            throw new MojoFailureException("Resolvable type not found", e);
-        } catch (InstantiationException e) {
-            throw new MojoFailureException("Error while creating new instance of parameter resolver", e);
-        } catch (IllegalAccessException e) {
-            throw new MojoFailureException("Error while instatiation of resolver class");
         }
+
     }
 
     private <T extends FilterableScanner> T buildScanner(ScannerConfiguration configuration, T scanner) {

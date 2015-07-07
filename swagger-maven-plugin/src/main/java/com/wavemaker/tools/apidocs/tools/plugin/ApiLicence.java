@@ -8,7 +8,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.License;
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 17/6/15
  */
-public class ApiLicence extends License {
+public class ApiLicence {
 
     @Parameter
     private String name;
@@ -16,13 +16,20 @@ public class ApiLicence extends License {
     @Parameter
     private String url;
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public String getUrl() {
         return url;
+    }
+
+    public License build() {
+        License license = new License();
+
+        license.name(name)
+                .url(url);
+
+        return license;
     }
 }

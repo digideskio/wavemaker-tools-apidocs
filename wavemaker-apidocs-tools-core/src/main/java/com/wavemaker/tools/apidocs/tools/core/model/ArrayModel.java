@@ -83,12 +83,12 @@ public class ArrayModel extends AbstractModel {
 
     @JsonIgnore
     public void setIsList(boolean list) {
-        addWMExtension(ArrayProperty.IS_LIST_EXT, list);
+        VendorUtils.addWMExtension(this, ArrayProperty.IS_LIST_EXT, list);
     }
 
     @JsonIgnore
     public boolean isList() {
-        Object list = getWMExtension(ArrayProperty.IS_LIST_EXT);
+        Object list = VendorUtils.getWMExtension(this, ArrayProperty.IS_LIST_EXT);
         return (list != null) && (boolean) list;
     }
 }
