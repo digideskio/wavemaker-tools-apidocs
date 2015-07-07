@@ -15,8 +15,6 @@ import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
-import com.wavemaker.tools.apidocs.tools.parser.util.ReflectionsImpl;
-
 /**
  * It will returns the classes from the given packages.
  *
@@ -36,7 +34,7 @@ public class FilterableClassScanner extends FilterableScanner implements ClassSc
         configuration.addUrls(ClasspathHelper.forClassLoader());
         configuration.addUrls(ClasspathHelper.forJavaClassPath());
 
-        Reflections reflections = new ReflectionsImpl(configuration);
+        Reflections reflections = new Reflections(configuration);
         classSet.addAll(reflections.getSubTypesOf(Object.class));
 
         return classSet;
