@@ -115,6 +115,7 @@ public abstract class AbstractMethodParser implements MethodParser {
         Response response = new Response();
         PropertyParser propertyParser = new PropertyParserImpl(method.getGenericReturnType());
         response.schema(propertyParser.parse());
+        response.setDescription("Success");
         operation.response(200, response); // TODO add more responses
     }
 

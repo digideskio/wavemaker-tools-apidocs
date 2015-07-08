@@ -27,9 +27,9 @@ public class ApiParserFactory {
 
     public static SwaggerParser newSpringParser(final SwaggerConfiguration.Builder builder) {
 
-        builder.addParameterResolver(MultipartFile.class, MultiPartFileResolver.getInstance());
-        builder.addParameterResolver(MultipartHttpServletRequest.class, MultiPartRequestResolver.getInstance());
-        builder.addParameterResolver(HttpServletRequest.class, ServletMetaTypesResolver.getInstance());
+        builder.addParameterResolver(MultipartFile.class, new MultiPartFileResolver());
+        builder.addParameterResolver(MultipartHttpServletRequest.class, new MultiPartRequestResolver());
+        builder.addParameterResolver(HttpServletRequest.class, new ServletMetaTypesResolver());
 
         return newSwaggerParser(FrameworkType.SPRING, builder);
     }

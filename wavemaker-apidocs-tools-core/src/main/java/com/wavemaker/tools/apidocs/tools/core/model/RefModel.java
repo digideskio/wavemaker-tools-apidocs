@@ -3,16 +3,19 @@ package com.wavemaker.tools.apidocs.tools.core.model;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.RefProperty;
 
-public class RefModel extends AbstractExtensibleEntity implements Model {
+public class RefModel implements Model, ExtensibleEntity {
 
     private static final ObjectMapper objectMapper = new ObjectMapper(); // configuration shared across objects.
     private static final TypeReference<List<Property>> propertyListTypeRef = new TypeReference<List<Property>>() {
@@ -35,6 +38,7 @@ public class RefModel extends AbstractExtensibleEntity implements Model {
             };
         }
     };
+    private Map<String, Object> vendorExtensions = new HashMap<>();
     // internally, the ref value is never fully qualified
     private String ref;
     private String description;
@@ -113,14 +117,26 @@ public class RefModel extends AbstractExtensibleEntity implements Model {
         externalDocs = value;
     }
 
+    @JsonAnyGetter
+    public Map<String, Object> getVendorExtensions() {
+        return vendorExtensions;
+    }
+
+    @JsonAnySetter
+    public void setVendorExtension(String name, Object value) {
+        if (name.startsWith("x-")) {
+            vendorExtensions.put(name, value);
+        }
+    }
+
     @JsonIgnore
     public void setTypeArguments(List<Model> properties) {
-        addWMExtension(RefProperty.TYPE_ARGUMENTS_EXT, properties);
+        VendorUtils.addWMExtension(this, RefProperty.TYPE_ARGUMENTS_EXT, properties);
     }
 
     @JsonIgnore
     public List<Model> getTypeArguments() {
-        Object typeArguments = getWMExtension(RefProperty.TYPE_ARGUMENTS_EXT);
+        Object typeArguments = VendorUtils.getWMExtension(this, RefProperty.TYPE_ARGUMENTS_EXT);
         if (typeArguments == null) {
             return Collections.<Model>emptyList();
         } else {

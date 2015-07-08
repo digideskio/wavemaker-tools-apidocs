@@ -1,9 +1,16 @@
 package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
-import com.wavemaker.tools.apidocs.tools.core.model.AbstractExtensibleEntity;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.wavemaker.tools.apidocs.tools.core.model.ExtensibleEntity;
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public abstract class AbstractProperty extends AbstractExtensibleEntity implements Property {
+public abstract class AbstractProperty implements Property, ExtensibleEntity {
+    private Map<String, Object> vendorExtensions = new HashMap<>();
+
     String name;
     String type;
     String format;
@@ -126,5 +133,17 @@ public abstract class AbstractProperty extends AbstractExtensibleEntity implemen
 
     public void setPropertyIdentifier(int id) {
 
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getVendorExtensions() {
+        return vendorExtensions;
+    }
+
+    @JsonAnySetter
+    public void setVendorExtension(String name, Object value) {
+        if (name.startsWith("x-")) {
+            vendorExtensions.put(name, value);
+        }
     }
 }

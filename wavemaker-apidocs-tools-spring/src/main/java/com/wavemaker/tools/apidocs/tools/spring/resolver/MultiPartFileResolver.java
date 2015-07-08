@@ -38,16 +38,8 @@ import com.wavemaker.tools.apidocs.tools.spring.parser.SpringParameterParser;
  */
 public class MultiPartFileResolver implements ParameterResolver {
 
-    private MultiPartFileResolver() {
+    public MultiPartFileResolver() {
 
-    }
-
-    private static class MultiPartFileResolverHolder {
-        private static final MultiPartFileResolver INSTANCE = new MultiPartFileResolver();
-    }
-
-    public static MultiPartFileResolver getInstance() {
-        return MultiPartFileResolverHolder.INSTANCE;
     }
 
     @Override

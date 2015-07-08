@@ -1,6 +1,7 @@
 package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
 public class ArrayProperty extends AbstractProperty implements Property {
@@ -59,12 +60,12 @@ public class ArrayProperty extends AbstractProperty implements Property {
 
     @JsonIgnore
     public void setIsList(boolean list) {
-        addWMExtension(IS_LIST_EXT, list);
+        VendorUtils.addWMExtension(this, IS_LIST_EXT, list);
     }
 
     @JsonIgnore
     public boolean isList() {
-        Object list = getWMExtension(IS_LIST_EXT);
+        Object list = VendorUtils.getWMExtension(this, IS_LIST_EXT);
         return (list != null) && (boolean) list;
     }
 }

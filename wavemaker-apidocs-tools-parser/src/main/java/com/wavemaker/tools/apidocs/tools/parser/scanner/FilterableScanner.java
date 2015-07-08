@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import org.reflections.util.FilterBuilder;
 
+import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 
@@ -13,6 +14,8 @@ import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
  * @since 11/6/15
  */
 public abstract class FilterableScanner extends FilterBuilder {
+
+    public static final String CLASS_EXT = ".class";
 
     public FilterableScanner includeAll() {
         this.include(".*");
@@ -44,20 +47,20 @@ public abstract class FilterableScanner extends FilterBuilder {
 
     public FilterableScanner excludeType(Class type) {
         Objects.requireNonNull(type, "Exclude type cannot be null");
-        add(Predicates.not(Predicates.equalTo(type.getName())));
+        add(Predicates.not(getEqualClassPredicate(type.getName())));
         return this;
     }
 
     public FilterableScanner includeType(Class type) {
         Objects.requireNonNull(type, "Include type cannot be null");
-        add(Predicates.equalTo(type.getName()));
+        add(getEqualClassPredicate(type.getName()));
         return this;
     }
 
     public FilterableScanner includeTypes(List<String> types) {
         if (CollectionUtil.isNotEmpty(types)) {
             for (final String type : types) {
-                add(Predicates.equalTo(type));
+                add(getEqualClassPredicate(type));
             }
         }
         return this;
@@ -66,9 +69,13 @@ public abstract class FilterableScanner extends FilterBuilder {
     public FilterableScanner excludeTypes(List<String> types) {
         if (CollectionUtil.isNotEmpty(types)) {
             for (final String type : types) {
-                add(Predicates.not(Predicates.equalTo(type)));
+                add(Predicates.not(getEqualClassPredicate(type)));
             }
         }
         return this;
+    }
+
+    private Predicate<String> getEqualClassPredicate(final String type) {
+        return Predicates.equalTo(type + CLASS_EXT);
     }
 }
