@@ -18,6 +18,7 @@ public class Path implements ExtensibleEntity {
     private static final String TAG_EXT = "TAG";
     private static final String BASE_PATH_EXT = "BASE_PATH";
     private static final String RELATIVE_PATH_EXT = "RELATIVE_PATH";
+    private static final String COMPLETE_PATH_EXT = "COMPLETE_PATH";
 
     private Map<String, Object> vendorExtensions = new HashMap<>();
 
@@ -228,4 +229,12 @@ public class Path implements ExtensibleEntity {
         return (String) VendorUtils.getWMExtension(this, RELATIVE_PATH_EXT);
     }
 
+    @JsonIgnore
+    public void setCompletePath(final String path) {
+        VendorUtils.addWMExtension(this, COMPLETE_PATH_EXT, path);
+    }
+
+    public String getCompletePath() {
+        return (String) VendorUtils.getWMExtension(this, COMPLETE_PATH_EXT);
+    }
 }
