@@ -15,22 +15,12 @@ import com.wavemaker.tools.apidocs.tools.parser.config.SwaggerConfiguration;
  */
 public class SwaggerParserContext {
 
-    private static SwaggerParserContext instance;
-
     private final SwaggerConfiguration configuration;
     private TypesContext typesContext;
 
-    private SwaggerParserContext(final SwaggerConfiguration configuration) {
+    public SwaggerParserContext(final SwaggerConfiguration configuration) {
         this.configuration = configuration;
         typesContext = new TypesContext();
-    }
-
-    public static void initContext(SwaggerConfiguration configuration) {
-        instance = new SwaggerParserContext(configuration);
-    }
-
-    public static void destroyContext() {
-        instance = null;
     }
 
     public TypesContext getTypesContext() {
@@ -39,13 +29,5 @@ public class SwaggerParserContext {
 
     public SwaggerConfiguration getConfiguration() {
         return configuration;
-    }
-
-    public ParameterResolvers getParameterResolvers() {
-        return configuration.getParameterResolvers();
-    }
-
-    public static SwaggerParserContext getInstance() {
-        return instance;
     }
 }

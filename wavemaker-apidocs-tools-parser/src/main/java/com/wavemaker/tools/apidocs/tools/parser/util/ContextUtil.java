@@ -3,6 +3,7 @@ package com.wavemaker.tools.apidocs.tools.parser.util;
 import com.google.common.base.Optional;
 import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
 import com.wavemaker.tools.apidocs.tools.parser.config.SwaggerConfiguration;
+import com.wavemaker.tools.apidocs.tools.parser.context.ResourceParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.context.TypesContext;
 
@@ -29,6 +30,6 @@ public class ContextUtil {
     }
 
     public static SwaggerParserContext getSwaggerParserContext() {
-        return SwaggerParserContext.getInstance();
+        return ResourceParserContext.getContext().getSwaggerParserContext();
     }
 }

@@ -35,7 +35,6 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.ArrayProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.StringProperty;
-import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
@@ -130,7 +129,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter._enum(((StringProperty) property).getEnum());
         }
         parameter
-                .setCollectionFormat(SwaggerParserContext.getInstance().getConfiguration().getCollectionFormat());
+                .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
     }
 
     protected void handleHeaderParameter(HeaderParameter parameter) {
@@ -144,7 +143,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter._enum(((StringProperty) property).getEnum());
         }
         parameter
-                .setCollectionFormat(SwaggerParserContext.getInstance().getConfiguration().getCollectionFormat());
+                .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
     }
 
     protected void handleQueryParameter(QueryParameter parameter) {
@@ -158,7 +157,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter._enum(((StringProperty) property).getEnum());
         }
         parameter
-                .setCollectionFormat(SwaggerParserContext.getInstance().getConfiguration().getCollectionFormat());
+                .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
     }
 
     protected void handleFormParameter(FormParameter parameter) {
@@ -172,7 +171,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter._enum(((StringProperty) property).getEnum());
         }
         parameter
-                .setCollectionFormat(SwaggerParserContext.getInstance().getConfiguration().getCollectionFormat());
+                .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
     }
 
     protected void handleBodyParameter(BodyParameter parameter) {
@@ -213,7 +212,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter._enum(((StringProperty) property).getEnum());
         }
         parameter
-                .setCollectionFormat(SwaggerParserContext.getInstance().getConfiguration().getCollectionFormat());
+                .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
     }
 
 

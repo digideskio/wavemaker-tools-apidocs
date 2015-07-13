@@ -25,6 +25,7 @@ import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.context.ResourceParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.MethodParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PathsParser;
+import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.MethodUtils;
 import com.wavemaker.tools.apidocs.tools.parser.util.Utils;
 
@@ -78,11 +79,11 @@ public abstract class AbstractPathsParser implements PathsParser {
             LOGGER.debug("Parsing method:{}", restMethod);
             MethodParser methodParser = getMethodParser(restMethod);
             Operation operation = methodParser.parse();
-            
+
             String[] paths = methodParser.getPaths();
-            String[] relativePaths = (paths.length > 0) ? paths : new String[] { "" };
+            String[] relativePaths = (paths.length > 0) ? paths : new String[]{""};
             for (final String relativePath : relativePaths) {
-            	String completePath = Utils
+                String completePath = Utils
                         .combinePaths(ResourceParserContext.getContext().getResourcePath(), relativePath);
                 Path path = pathMap.get(completePath);
                 if (path == null) {
@@ -93,6 +94,7 @@ public abstract class AbstractPathsParser implements PathsParser {
 
                 path.setBasePath(ResourceParserContext.getContext().getResourcePath());
                 path.setRelativePath(relativePath);
+                path.setCompletePath(Utils.combinePaths(ContextUtil.getConfiguration().getBaseUrl(), completePath));
 
                 for (final String method : methodParser.getHttpMethods()) { // setting operation for each method.
                     path.set(method.toLowerCase(), operation);

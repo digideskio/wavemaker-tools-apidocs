@@ -25,11 +25,11 @@ import com.wavemaker.tools.apidocs.tools.core.model.Response;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.context.ResourceParserContext;
-import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.MethodParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
+import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.MethodUtils;
 import com.wordnik.swagger.annotations.ApiOperation;
 
@@ -94,7 +94,7 @@ public abstract class AbstractMethodParser implements MethodParser {
             for (int i = 0; i < types.length; i++) {
                 Type type = types[i];
                 Class<?> actualType = TypeUtils.getRawType(type, null);
-                ParameterResolver resolver = SwaggerParserContext.getInstance().getParameterResolvers()
+                ParameterResolver resolver = ContextUtil.getConfiguration().getParameterResolvers()
                         .getResolver(actualType);
                 if (resolver != null) { // doing with
                     List<Parameter> parameterList = resolver

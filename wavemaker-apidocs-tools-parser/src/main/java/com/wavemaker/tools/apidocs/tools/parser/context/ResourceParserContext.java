@@ -19,17 +19,19 @@ import com.wavemaker.tools.api.core.models.AccessSpecifier;
 public class ResourceParserContext {
     private static final ThreadLocal<ResourceParserContext> parserContextTL = new ThreadLocal<>();
 
+    private SwaggerParserContext swaggerParserContext;
     private AccessSpecifier specifier;
     private String resourcePath;
     private String tag;
     private Set<String> produces;
     private Set<String> consumes;
 
-    private ResourceParserContext() {
+    private ResourceParserContext(final SwaggerParserContext swaggerParserContext) {
         produces = Collections.emptySet();
         consumes = Collections.emptySet();
         resourcePath = null;
         tag = null;
+        this.swaggerParserContext = swaggerParserContext;
         specifier = AccessSpecifier.APP_ONLY; // setting default one.
     }
 
@@ -74,8 +76,12 @@ public class ResourceParserContext {
         this.tag = tag;
     }
 
-    public static void initContext() {
-        parserContextTL.set(new ResourceParserContext());
+    public SwaggerParserContext getSwaggerParserContext() {
+        return this.swaggerParserContext;
+    }
+
+    public static void initContext(final SwaggerParserContext context) {
+        parserContextTL.set(new ResourceParserContext(context));
     }
 
     public static void destroyContext() {

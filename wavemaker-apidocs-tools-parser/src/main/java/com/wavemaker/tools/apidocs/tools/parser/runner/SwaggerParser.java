@@ -114,7 +114,7 @@ public abstract class SwaggerParser {
      * @return {@link Map} of Rest {@link Class} and {@link Resource}.
      */
     protected Swagger startProcessing() throws SwaggerParserException {
-        SwaggerParserContext.initContext(configuration);
+        SwaggerParserContext context = new SwaggerParserContext(configuration);
         Set<Class<?>> classToScan = configuration.getClassScanner().classesToScan();
         Set<Class<?>> restClasses;
         try {
@@ -125,13 +125,12 @@ public abstract class SwaggerParser {
         }
         Swagger swagger;
         try {
-            swagger = generateDocuments(restClasses);
+            swagger = generateDocuments(context, restClasses);
         } catch (InterruptedException e) {
             LOGGER.error("Error while generating documents", e);
             throw new TimeOutException("Error while generating documents", e);
         }
-        swagger.setDefinitions(SwaggerParserContext.getInstance().getTypesContext().getDefinitionsMap());
-        SwaggerParserContext.destroyContext();
+        swagger.setDefinitions(context.getTypesContext().getDefinitionsMap());
         return swagger;
     }
 
@@ -140,21 +139,24 @@ public abstract class SwaggerParser {
      * Actual Class parsing starts here. It will parse all given classes and returns {@link Map} of {@link Class} vs
      * {@link Resource}.
      *
+     *
+     * @param context
      * @param restClasses rest classes to look for documents.
      * @return {@link Map} of {@link Class} vs {@link Resource}s.
      */
-    protected Swagger generateDocuments(Set<Class<?>> restClasses) throws InterruptedException {
+    protected Swagger generateDocuments(
+            final SwaggerParserContext context, Set<Class<?>> restClasses) throws InterruptedException {
         final Map<Class<?>, Resource> resourceMap = new ConcurrentHashMap<>();
         ExecutorService executorService = new ThreadPoolExecutor(
-                SwaggerParserContext.getInstance().getConfiguration().getCoreThreadPoolSize(),
-                SwaggerParserContext.getInstance().getConfiguration().getMaxThreadPoolSize(), 0L,
+                context.getConfiguration().getCoreThreadPoolSize(),
+                context.getConfiguration().getMaxThreadPoolSize(), 0L,
                 TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
         for (final Class<?> restClass : restClasses) {
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
                     LOGGER.debug("Started parsing {} controller", restClass);
-                    ResourceParserContext.initContext();// creating parser context for each class.
+                    ResourceParserContext.initContext(context);// creating parser context for each class.
                     try {
                         resourceMap.put(restClass, parseRestClass(restClass));
                     } finally {

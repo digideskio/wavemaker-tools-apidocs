@@ -22,7 +22,6 @@ import org.apache.commons.lang3.ClassUtils;
 import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.*;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
-import com.wavemaker.tools.apidocs.tools.parser.context.SwaggerParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.exception.PropertyParserException;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
@@ -142,7 +141,7 @@ public class PropertyParserImpl implements PropertyParser {
     }
 
     private Property feedObjectProperty(TypeInformation typeInfo) {
-        SwaggerParserContext.getInstance().getTypesContext().parseModel(typeInfo.getActualType());
+        ContextUtil.parseModel(typeInfo.getActualType());
         RefProperty refProperty = new RefProperty(ContextUtil.getUniqueName(typeInfo.getActualType()));
 
         List<Property> typeArgProps = new LinkedList<>(); // adding type arguments
