@@ -22,6 +22,7 @@ import com.google.common.collect.Lists;
 import com.wavemaker.tools.api.core.annotations.WMAccessVisibility;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 import com.wavemaker.tools.apidocs.tools.core.model.Response;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.FormParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.context.ResourceParserContext;
@@ -40,6 +41,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 public abstract class AbstractMethodParser implements MethodParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMethodParser.class);
+    public static final String MULTIPART_FORM_DATA = "multipart/form-data";
 
     protected final Method methodToParse;
 
@@ -102,7 +104,12 @@ public abstract class AbstractMethodParser implements MethodParser {
                     parameters.addAll(parameterList);
                 } else {
                     ParameterParser parser = getParameterParser(i, types[i], annotations[i]);
-                    parameters.add(parser.parse());
+                    final Parameter parameter = parser.parse();
+                    if(parameter instanceof FormParameter) {
+                        operation.setConsumes(CollectionUtil.asList(MULTIPART_FORM_DATA));
+                        LOGGER.info("Found form parameter, setting operation content type to {}" , MULTIPART_FORM_DATA);
+                    }
+                    parameters.add(parameter);
                 }
             }
         }

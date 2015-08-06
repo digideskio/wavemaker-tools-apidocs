@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ValueConstants;
 
 import com.wavemaker.tools.apidocs.tools.core.model.ParameterType;
@@ -24,6 +25,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.BodyParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.HeaderParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.PathParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
+import com.wavemaker.tools.apidocs.tools.parser.exception.ParameterParserException;
 import com.wavemaker.tools.apidocs.tools.parser.impl.AbstractParameterParser;
 
 /**
@@ -39,8 +41,7 @@ public class SpringParameterParser extends AbstractParameterParser {
     }
 
     @Override
-    protected ParameterType getParameterType(
-            final Map<Class<? extends Annotation>, Annotation> annotationMap) {
+    protected ParameterType getParameterType(final Map<Class<? extends Annotation>, Annotation> annotationMap) {
         ParameterType parameterType = null;
 
         if (annotationMap.containsKey(PathVariable.class)) {
@@ -49,10 +50,14 @@ public class SpringParameterParser extends AbstractParameterParser {
             parameterType = ParameterType.QUERY;
         } else if (annotationMap.containsKey(RequestHeader.class)) {
             parameterType = ParameterType.HEADER;
+        }else if (annotationMap.containsKey(RequestPart.class)) {
+            parameterType = ParameterType.FORM;
         } else if (annotationMap.containsKey(RequestBody.class) || annotationMap.isEmpty()) {
             parameterType = ParameterType.BODY;
-        } else { // TODO alternatives.
+        } else {
             LOGGER.error("Unknown Parameter type found, Type:{}, annonations:{}", dataType, annotationMap);
+            throw new ParameterParserException("Unknown Parameter type found, Type:" + dataType +", annonations:" +
+                    annotationMap);
         }
         return parameterType;
     }

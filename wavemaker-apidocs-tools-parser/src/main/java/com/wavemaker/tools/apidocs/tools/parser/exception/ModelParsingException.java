@@ -11,7 +11,7 @@ package com.wavemaker.tools.apidocs.tools.parser.exception;
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 19/11/14
  */
-public class ModelParsingException extends RuntimeException{
+public class ModelParsingException extends SwaggerParserException{
 
     public ModelParsingException(final String message) {
         super(message);
