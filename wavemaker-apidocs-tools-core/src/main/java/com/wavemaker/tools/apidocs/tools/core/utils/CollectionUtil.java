@@ -19,7 +19,7 @@ import java.util.List;
 public class CollectionUtil {
     public static <T> List<T> asList(T... args) {
         if (args != null) {
-            Arrays.asList(args);
+            return Arrays.asList(args);
         }
         return Collections.emptyList();
     }
