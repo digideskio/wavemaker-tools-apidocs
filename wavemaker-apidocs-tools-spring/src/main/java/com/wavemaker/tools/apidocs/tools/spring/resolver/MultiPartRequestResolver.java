@@ -15,6 +15,7 @@ import java.util.List;
 import org.springframework.http.MediaType;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
+import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 
@@ -29,7 +30,7 @@ public class MultiPartRequestResolver implements ParameterResolver {
 
     @Override
     public List<Parameter> resolveParameter(
-            final int index, final Class<?> type, final Annotation[] annotations,
+            final int index, final TypeInformation typeInformation, final Annotation[] annotations,
             final Operation operation) {
         // setting consumes
         operation.setConsumes(Arrays.asList(MediaType.MULTIPART_FORM_DATA_VALUE));

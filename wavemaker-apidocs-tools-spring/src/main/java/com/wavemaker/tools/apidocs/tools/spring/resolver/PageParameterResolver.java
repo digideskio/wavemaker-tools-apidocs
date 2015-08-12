@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
+import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.IntegerProperty;
@@ -25,26 +26,26 @@ import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 public class PageParameterResolver implements ParameterResolver {
     @Override
     public List<Parameter> resolveParameter(
-            final int index, final Class<?> type, final Annotation[] annotations,
+            final int index, final TypeInformation typeInformation, final Annotation[] annotations,
             final Operation operation) {
         List<Parameter> parameters = new LinkedList<>();
 
         QueryParameter page = getDefaultParameterBuilder();
         page.setName("page");
         page.setDefaultValue("0");
-        page.setResolver(type.getName());
+        page.setResolver(typeInformation.getActualType().getName());
         parameters.add(page);
 
         QueryParameter size = getDefaultParameterBuilder();
         size.setName("size");
         size.setDefaultValue("20");
-        page.setResolver(type.getName());
+        page.setResolver(typeInformation.getActualType().getName());
         parameters.add(size);
 
         QueryParameter sort = getDefaultParameterBuilder();
         sort.setName("sort");
         sort.property(new StringProperty());
-        page.setResolver(type.getName());
+        page.setResolver(typeInformation.getActualType().getName());
         parameters.add(sort);
 
 

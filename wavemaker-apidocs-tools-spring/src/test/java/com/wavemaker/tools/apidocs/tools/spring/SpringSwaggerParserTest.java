@@ -134,7 +134,7 @@ public class SpringSwaggerParserTest {
         modelScanner.excludePackage("java");
         FilterableClassScanner classScanner = new FilterableClassScanner();
         classScanner.includeType(controllerClass);
-        SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/test", classScanner);
+        SwaggerConfiguration.Builder builder = new SwaggerConfiguration.Builder("/", classScanner);
         builder.setClassLoader(this.getClass().getClassLoader());
         builder.setModelScanner(modelScanner);
         addDefaultParameterResolvers(builder);

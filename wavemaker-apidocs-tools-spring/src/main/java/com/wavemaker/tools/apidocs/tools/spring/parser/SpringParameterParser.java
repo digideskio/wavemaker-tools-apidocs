@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ValueConstants;
 
 import com.wavemaker.tools.apidocs.tools.core.model.ParameterType;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.BodyParameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.FormParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.HeaderParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.PathParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
@@ -92,6 +93,16 @@ public class SpringParameterParser extends AbstractParameterParser {
             parameter.name(requestParam.value());
             parameter.setDefaultValue(getDefaultValue(requestParam.defaultValue()));
             parameter.setRequired(requestParam.required());
+        }
+    }
+
+    @Override
+    protected void handleFormParameter(final FormParameter parameter) {
+        super.handleFormParameter(parameter);
+        RequestPart requestPart = (RequestPart) annotations.get(RequestPart.class);
+        if (requestPart != null) {
+            parameter.name(requestPart.value());
+            parameter.setRequired(requestPart.required());
         }
     }
 

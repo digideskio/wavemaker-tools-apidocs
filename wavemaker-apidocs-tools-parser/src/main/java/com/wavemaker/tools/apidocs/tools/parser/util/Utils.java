@@ -1,9 +1,9 @@
 /**
  * Copyright (c) 2013 - 2014 WaveMaker, Inc. All Rights Reserved.
- *
- * This software is the confidential and proprietary information of WaveMaker, Inc.
- * You shall not disclose such Confidential Information and shall use it only in accordance
- * with the terms of the source code license agreement you entered into with WaveMaker, Inc.
+ * <p/>
+ * This software is the confidential and proprietary information of WaveMaker, Inc. You shall not disclose such
+ * Confidential Information and shall use it only in accordance with the terms of the source code license agreement you
+ * entered into with WaveMaker, Inc.
  */
 package com.wavemaker.tools.apidocs.tools.parser.util;
 
@@ -25,7 +25,9 @@ public class Utils {
         if (!StringUtils.startsWith(path1, PATH_SEPARATOR)) {
             sb.append(PATH_SEPARATOR);
         }
-        sb.append(path1);
+        if (!path1.equals(PATH_SEPARATOR)) { // #PATH_SEPARATOR added already.
+            sb.append(path1);
+        }
 
         if (!StringUtils.endsWith(path1, PATH_SEPARATOR) && !StringUtils.startsWith(path2, PATH_SEPARATOR)) {
             sb.append(PATH_SEPARATOR);

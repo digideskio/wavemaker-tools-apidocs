@@ -1,9 +1,23 @@
 /**
  * Copyright (c) 2013 - 2014 WaveMaker, Inc. All Rights Reserved.
- *
- * This software is the confidential and proprietary information of WaveMaker, Inc.
- * You shall not disclose such Confidential Information and shall use it only in accordance
- * with the terms of the source code license agreement you entered into with WaveMaker, Inc.
+ * <p/>
+ * This software is the confidential and proprietary information of WaveMaker, Inc. You shall not disclose such
+ * Confidential Information and shall use it only in accordance with the terms of the source code license agreement you
+ * entered into with WaveMaker, Inc.
+ * <p/>
+ * <p/>
+ * Copyright (c) 2013 - 2014 WaveMaker, Inc. All Rights Reserved.
+ * <p/>
+ * This software is the confidential and proprietary information of WaveMaker, Inc. You shall not disclose such
+ * Confidential Information and shall use it only in accordance with the terms of the source code license agreement you
+ * entered into with WaveMaker, Inc.
+ * <p/>
+ * <p/>
+ * Copyright (c) 2013 - 2014 WaveMaker, Inc. All Rights Reserved.
+ * <p/>
+ * This software is the confidential and proprietary information of WaveMaker, Inc. You shall not disclose such
+ * Confidential Information and shall use it only in accordance with the terms of the source code license agreement you
+ * entered into with WaveMaker, Inc.
  */
 /**
 
@@ -22,12 +36,15 @@ import org.springframework.http.MediaType;
 
 import com.google.common.collect.Lists;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
+import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.AbstractParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.BodyParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.FormParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.ArrayProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.FileProperty;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 import com.wavemaker.tools.apidocs.tools.spring.parser.SpringParameterParser;
@@ -44,22 +61,33 @@ public class MultiPartFileResolver implements ParameterResolver {
 
     @Override
     public List<Parameter> resolveParameter(
-            final int index, final Class<?> type, final Annotation[] annotations,
+            final int index, final TypeInformation typeInformation, final Annotation[] annotations,
             final Operation operation) {
-        SpringParameterParser parameterParser = new SpringParameterParser(index, type, annotations);
+        SpringParameterParser parameterParser = new SpringParameterParser(index, typeInformation.getGenericType(),
+                annotations);
         Parameter parameter = parameterParser.parse();
 
         if (!(parameter instanceof BodyParameter)) {
-            FileProperty property = new FileProperty();
+            final boolean array = typeInformation.isArray();
+            Property property = array ? new ArrayProperty(new FileProperty()) : new FileProperty();
             property.setRequired(true);
             if (parameter instanceof FormParameter) {
-                ((FormParameter) parameter).property(property);
+                if (array) {
+                    ((FormParameter) parameter).items(property);
+                } else {
+                    ((FormParameter) parameter).property(property);
+                }
             } else if (parameter instanceof QueryParameter) {
-                ((QueryParameter) parameter).property(property);
+                if (array) {
+                    ((QueryParameter) parameter).items(property);
+                } else {
+                    ((QueryParameter) parameter).property(property);
+                }
             }
         }
 
-        ((AbstractParameter) parameter).setResolver(type.getName());
+        parameter.setName(parameter.getName());
+        ((AbstractParameter) parameter).setResolver(typeInformation.getActualType().getName());
         // setting consumes to multi part form
         operation.setConsumes(Lists.newArrayList(MediaType.MULTIPART_FORM_DATA_VALUE));
 

@@ -1,9 +1,9 @@
 /**
  * Copyright (c) 2013 - 2014 WaveMaker, Inc. All Rights Reserved.
- *
- * This software is the confidential and proprietary information of WaveMaker, Inc.
- * You shall not disclose such Confidential Information and shall use it only in accordance
- * with the terms of the source code license agreement you entered into with WaveMaker, Inc.
+ * <p/>
+ * This software is the confidential and proprietary information of WaveMaker, Inc. You shall not disclose such
+ * Confidential Information and shall use it only in accordance with the terms of the source code license agreement you
+ * entered into with WaveMaker, Inc.
  */
 package com.wavemaker.tools.apidocs.tools.parser.impl;
 
@@ -14,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.commons.lang3.reflect.TypeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +21,7 @@ import com.google.common.collect.Lists;
 import com.wavemaker.tools.api.core.annotations.WMAccessVisibility;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 import com.wavemaker.tools.apidocs.tools.core.model.Response;
+import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.FormParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
@@ -32,6 +32,7 @@ import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.MethodUtils;
+import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
@@ -95,19 +96,21 @@ public abstract class AbstractMethodParser implements MethodParser {
         if (types != null) {
             for (int i = 0; i < types.length; i++) {
                 Type type = types[i];
-                Class<?> actualType = TypeUtils.getRawType(type, null);
+                final TypeInformation typeInformation = TypeUtil.extractTypeInformation(type);
+                Class<?> actualType = typeInformation.isArray() ? typeInformation.getTypeArguments().get(0)
+                        : typeInformation.getActualType();
                 ParameterResolver resolver = ContextUtil.getConfiguration().getParameterResolvers()
                         .getResolver(actualType);
                 if (resolver != null) { // doing with
                     List<Parameter> parameterList = resolver
-                            .resolveParameter(i, actualType, annotations[i], operation);
+                            .resolveParameter(i, typeInformation, annotations[i], operation);
                     parameters.addAll(parameterList);
                 } else {
-                    ParameterParser parser = getParameterParser(i, types[i], annotations[i]);
+                    ParameterParser parser = getParameterParser(i, type, annotations[i]);
                     final Parameter parameter = parser.parse();
-                    if(parameter instanceof FormParameter) {
+                    if (parameter instanceof FormParameter) {
                         operation.setConsumes(CollectionUtil.asList(MULTIPART_FORM_DATA));
-                        LOGGER.info("Found form parameter, setting operation content type to {}" , MULTIPART_FORM_DATA);
+                        LOGGER.info("Found form parameter, setting operation content type to {}", MULTIPART_FORM_DATA);
                     }
                     parameters.add(parameter);
                 }

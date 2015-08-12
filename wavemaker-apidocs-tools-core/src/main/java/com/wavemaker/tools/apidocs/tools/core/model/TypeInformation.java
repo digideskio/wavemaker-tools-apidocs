@@ -18,19 +18,21 @@ import java.util.List;
  * @since 14/11/14
  */
 public class TypeInformation {
+    private final Type genericType;
     private final Class<?> actualType;
     private final List<Class<?>> typeArguments;
     private final boolean isArray;
 
     public TypeInformation(
-            final Class<?> actualType, final List<Class<?>> typeArguments, final boolean isArray) {
+            final Class<?> actualType, final List<Class<?>> typeArguments, final boolean isArray, final Type genericType) {
         this.actualType = actualType;
         this.typeArguments = typeArguments;
         this.isArray = isArray;
+        this.genericType = genericType;
     }
 
-    public TypeInformation(final Class<?> actualType) {
-        this(actualType, new ArrayList<Class<?>>(0), actualType.isArray());
+    public TypeInformation(final Class<?> actualType, final Type genericType) {
+        this(actualType, new ArrayList<Class<?>>(0), actualType.isArray(), genericType);
     }
 
     /**
@@ -55,6 +57,10 @@ public class TypeInformation {
 
     public boolean isArray() {
         return isArray;
+    }
+
+    public Type getGenericType() {
+        return genericType;
     }
 
     @Override

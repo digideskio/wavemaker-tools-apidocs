@@ -44,7 +44,7 @@ public class TypeUtil {
         } else { // cases like WildCard Type and TypeVariable
             actualType = Object.class; // sending null doesn't make sense
         }
-        return new TypeInformation(actualType, Collections.EMPTY_LIST, false);
+        return new TypeInformation(actualType, Collections.EMPTY_LIST, false, type);
     }
 
     protected static TypeInformation getParameterizedTypeTypeInformation(ParameterizedType parameterizedType) {
@@ -55,7 +55,7 @@ public class TypeUtil {
             TypeInformation typeInfo = extractTypeInformation(type);
             typeArguments.add(typeInfo.getActualType());
         }
-        return new TypeInformation(actualType, typeArguments, false);
+        return new TypeInformation(actualType, typeArguments, false, parameterizedType);
     }
 
     protected static TypeInformation getArrayTypeInformation(Type type) {
@@ -70,6 +70,6 @@ public class TypeUtil {
             actualType = TypeUtils.getRawType(type, null);
             typeArguments.add((Class<?>) TypeUtils.getArrayComponentType(type));// check type.
         }
-        return new TypeInformation(actualType, typeArguments, true);
+        return new TypeInformation(actualType, typeArguments, true, type);
     }
 }

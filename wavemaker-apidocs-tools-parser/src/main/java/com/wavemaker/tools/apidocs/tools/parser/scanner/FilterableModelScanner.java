@@ -39,7 +39,7 @@ public class FilterableModelScanner extends FilterableScanner implements ModelSc
     @Override
     public boolean filter(final Class<?> type) {
         Objects.requireNonNull(type, "Type cannot be null");
-        return !ClassUtils.isPrimitiveOrWrapper(type) && apply(type.getName());
+        return !ClassUtils.isPrimitiveOrWrapper(type) && apply(type.getName() + CLASS_EXT);
     }
 
     @Override

@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
+import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 
@@ -26,7 +27,7 @@ public class ServletMetaTypesResolver implements ParameterResolver {
 
     @Override
     public List<Parameter> resolveParameter(
-            final int index, final Class<?> type, final Annotation[] annotations,
+            final int index, final TypeInformation typeInformation, final Annotation[] annotations,
             final Operation operation) {
         return Collections.EMPTY_LIST; // no need to fetch parameter info.
     }

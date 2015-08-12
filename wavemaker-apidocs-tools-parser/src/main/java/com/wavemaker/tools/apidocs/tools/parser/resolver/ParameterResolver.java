@@ -11,6 +11,7 @@ import java.lang.annotation.Annotation;
 import java.util.List;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
+import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
 
@@ -21,5 +22,5 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 public interface ParameterResolver {
 
     List<Parameter> resolveParameter(
-            int index, Class<?> type, Annotation[] annotations, final Operation operation);
+            int index, TypeInformation typeInformation, Annotation[] annotations, final Operation operation);
 }
