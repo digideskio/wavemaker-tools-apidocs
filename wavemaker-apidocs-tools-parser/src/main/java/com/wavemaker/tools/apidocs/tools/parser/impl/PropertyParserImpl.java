@@ -1,14 +1,16 @@
 /**
  * Copyright (c) 2013 - 2014 WaveMaker, Inc. All Rights Reserved.
- *
- * This software is the confidential and proprietary information of WaveMaker, Inc.
- * You shall not disclose such Confidential Information and shall use it only in accordance
- * with the terms of the source code license agreement you entered into with WaveMaker, Inc.
+ * <p/>
+ * This software is the confidential and proprietary information of WaveMaker, Inc. You shall not disclose such
+ * Confidential Information and shall use it only in accordance with the terms of the source code license agreement you
+ * entered into with WaveMaker, Inc.
  */
 package com.wavemaker.tools.apidocs.tools.parser.impl;
 
 import java.io.File;
 import java.lang.reflect.Type;
+import java.net.URI;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -63,10 +65,14 @@ public class PropertyParserImpl implements PropertyParser {
                 property = feedStringProperty(actualType);
             } else if (ClassUtils.isPrimitiveOrWrapper(actualType)) {
                 property = feedPrimitiveProperty(actualType);
-            } else if (File.class.equals(actualType)) {
+            } else if (File.class.equals(actualType) || File.class.isAssignableFrom(actualType)) {
                 property = new FileProperty();
             } else if (UUID.class.equals(actualType)) {
                 property = new UUIDProperty();
+            } else if (URI.class.equals(actualType)) {
+                property = new StringProperty(StringProperty.Format.URI);
+            } else if (URL.class.equals(actualType)) {
+                property = new StringProperty(StringProperty.Format.URL);
             } else if (Date.class.equals(actualType)) {
                 property = new DateProperty();
             } else {
@@ -108,24 +114,27 @@ public class PropertyParserImpl implements PropertyParser {
 
     private Property feedPrimitiveProperty(Class<?> type) {
         Class<?> wrapperType = (type.isPrimitive()) ? ClassUtils.primitiveToWrapper(type) : type;
-        Property property = null;
+        Property property;
         if (Boolean.class.equals(wrapperType)) {
             property = new BooleanProperty();
         } else if (Character.class.equals(wrapperType)) {
             property = new StringProperty();
             ((StringProperty) property).setMaxLength(1);
+        } else if (Byte.class.equals(wrapperType)) {
+            property = new StringProperty(StringProperty.Format.BYTE);
         } else if (Number.class.isAssignableFrom(wrapperType)) {
-            if (Integer.class.equals(wrapperType) || Short.class.equals(wrapperType)) {
-                property = new IntegerProperty();
-            } else if (Long.class.equals(wrapperType)) {
+            if (Long.class.equals(wrapperType)) {
                 property = new LongProperty();
             } else if (Double.class.equals(wrapperType)) {
                 property = new DoubleProperty();
             } else if (Float.class.equals(wrapperType)) {
                 property = new FloatProperty();
+            } else {
+                property = new IntegerProperty(); // cases like Integer, Short and any remaining
             }
+
         } else {
-            // cases like Byte.class, Void.class
+            property = new ObjectProperty(); // cases like Void.class
         }
         return property;
     }

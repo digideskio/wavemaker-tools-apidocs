@@ -6,12 +6,48 @@ import java.util.List;
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
 public class StringProperty extends AbstractProperty implements Property {
+    public static final String TYPE = "string";
+
     protected List<String> _enum;
     protected Integer minLength = null, maxLength = null;
     protected String pattern = null;
 
+    public enum Format {
+        BYTE("byte"),
+        URI("uri"),
+        URL("url");
+
+        private final String name;
+
+        Format(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public static Format fromName(String name) {
+            for (Format item : values()) {
+                if (item.getName().equals(name)) {
+                    return item;
+                }
+            }
+            return null;
+        }
+    }
+
     public StringProperty() {
-        super.type = "string";
+        this((String) null);
+    }
+
+    public StringProperty(Format format) {
+        this(format.getName());
+    }
+
+    public StringProperty(String format) {
+        super.type = TYPE;
+        super.format = format;
     }
 
     public StringProperty xml(Xml xml) {
