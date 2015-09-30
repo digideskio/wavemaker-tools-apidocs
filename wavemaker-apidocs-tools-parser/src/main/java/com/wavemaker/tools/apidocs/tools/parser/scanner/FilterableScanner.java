@@ -30,7 +30,7 @@ public abstract class FilterableScanner extends FilterBuilder {
     public FilterableScanner includePackages(List<String> packages) {
         if (CollectionUtil.isNotEmpty(packages)) {
             for (final String aPackage : packages) {
-                add(new Include(prefix(aPackage)));
+                includePackage(aPackage);
             }
         }
         return this;
@@ -39,9 +39,23 @@ public abstract class FilterableScanner extends FilterBuilder {
     public FilterableScanner excludePackages(List<String> packages) {
         if (CollectionUtil.isNotEmpty(packages)) {
             for (final String aPackage : packages) {
-                add(new Exclude(prefix(aPackage)));
+                excludePackage(aPackage);
             }
         }
+        return this;
+    }
+
+    @Override
+    public FilterableScanner includePackage(final String... prefixes) {
+        for (String prefix : prefixes) {
+            add(new Include(prefix(asPackagePrefix(prefix))));
+        }
+        return this;
+    }
+
+    @Override
+    public FilterableScanner excludePackage(final String prefix) {
+        super.excludePackage(asPackagePrefix(prefix));
         return this;
     }
 
@@ -77,5 +91,9 @@ public abstract class FilterableScanner extends FilterBuilder {
 
     private Predicate<String> getEqualClassPredicate(final String type) {
         return Predicates.equalTo(type + CLASS_EXT);
+    }
+
+    private String asPackagePrefix(String prefix) {
+        return prefix.endsWith(".") ? prefix : (prefix + ".");
     }
 }

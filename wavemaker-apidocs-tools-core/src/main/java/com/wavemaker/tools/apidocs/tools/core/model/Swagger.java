@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -29,6 +31,10 @@ public class Swagger {
     protected Map<String, Parameter> parameters;
     protected ExternalDocs externalDocs;
 
+    public Swagger() {
+        this.tags = new LinkedList<>();
+    }
+
     // builders
     public Swagger info(Info info) {
         this.setInfo(info);
@@ -51,6 +57,7 @@ public class Swagger {
     }
 
     public Swagger tags(List<Tag> tags) {
+        Objects.requireNonNull(tags, "Tags cannot be null");
         this.setTags(tags);
         return this;
     }
@@ -179,9 +186,7 @@ public class Swagger {
     }
 
     public void addTag(Tag tag) {
-        if (this.tags == null)
-            this.tags = new ArrayList<Tag>();
-        if (tag != null && tag.getName() != null) {
+        if (tag.getName() != null) {
             boolean found = false;
             for (Tag existing : this.tags) {
                 if (existing.getName().equals(tag.getName()))
