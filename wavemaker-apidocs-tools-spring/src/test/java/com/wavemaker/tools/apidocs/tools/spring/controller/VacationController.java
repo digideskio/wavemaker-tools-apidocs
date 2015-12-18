@@ -16,16 +16,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.wavemaker.runtime.data.exception.EntityNotFoundException;
 import com.wavemaker.runtime.data.expression.QueryFilter;
 import com.wavemaker.runtime.util.WMMultipartUtils;
+import com.wavemaker.tools.apidocs.tools.spring.Department;
+import com.wavemaker.tools.apidocs.tools.spring.Employee;
 import com.wavemaker.tools.apidocs.tools.spring.Vacation;
 import com.wavemaker.tools.apidocs.tools.springservice.VacationService;
 import com.wordnik.swagger.annotations.Api;
@@ -34,7 +38,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
  * Controller object for domain model class Vacation.
- * @see com.wavemaker.tools.api.spring.test.Vacation
+ * @see Vacation
  */
 
 @RestController
@@ -48,6 +52,14 @@ public class VacationController {
 	@Qualifier("hrdb.VacationService")
 	private VacationService service;
 
+	/**
+	 * Method for testing Request part.
+	 */
+
+	@RequestMapping(value = "/sampleJavaOperation", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST, consumes = "multipart/form-data")
+	public String sampleJavaOperation(@RequestPart("emp") Employee emp, @RequestPart("dept") Department dept) {
+		return null;
+	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	@ApiOperation(value = "Returns the list of Vacation instances matching the search criteria.")
