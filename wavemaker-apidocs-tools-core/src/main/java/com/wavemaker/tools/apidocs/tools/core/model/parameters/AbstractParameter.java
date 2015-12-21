@@ -98,7 +98,7 @@ public abstract class AbstractParameter implements Parameter {
     }
 
     public String getFullyQualifiedType() {
-        return (String) (FULLY_QUALIFIED_TYPE_EXT);
+        return (String) VendorUtils.getWMExtension(this, FULLY_QUALIFIED_TYPE_EXT);
     }
 
     @JsonIgnore
