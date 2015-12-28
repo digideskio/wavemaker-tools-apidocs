@@ -22,6 +22,8 @@ import com.wavemaker.tools.apidocs.tools.parser.parser.PathsParser;
  */
 public class SpringResourceParser extends AbstractResourceParser {
 
+    private static final String CONTROLLER_SUFFIX = "Controller";
+
     public SpringResourceParser(final Class<?> type) {
         super(type);
     }
@@ -34,6 +36,17 @@ public class SpringResourceParser extends AbstractResourceParser {
     @Override
     protected Set<String> getConsumes() {
         return new HashSet<>(Arrays.asList(type.getAnnotation(RequestMapping.class).consumes()));
+    }
+
+    @Override
+    protected String getResourceName() {
+        final String typeSimpleName = type.getSimpleName();
+
+        if (typeSimpleName.endsWith(CONTROLLER_SUFFIX)) {
+            final int indexOf = typeSimpleName.lastIndexOf(CONTROLLER_SUFFIX);
+            return typeSimpleName.substring(0, indexOf);
+        }
+        return typeSimpleName;
     }
 
     @Override

@@ -40,6 +40,7 @@ public abstract class AbstractResourceParser implements ResourceParser {
         }
         resource.setName(ContextUtil.getUniqueName(type));
         resource.setFullyQualifiedName(DataTypeUtil.getFullyQualifiedName(type));
+        resource.setControllerName(getResourceName());
 
         ResourceParserContext.getContext().setTag(resource.asTag().getName());
         ResourceParserContext.getContext().setResourcePath(getResourcePath());
@@ -62,6 +63,8 @@ public abstract class AbstractResourceParser implements ResourceParser {
     protected abstract Set<String> getProduces();
 
     protected abstract Set<String> getConsumes();
+
+    protected abstract String getResourceName();
 
     /**
      * It should return the path of the api.

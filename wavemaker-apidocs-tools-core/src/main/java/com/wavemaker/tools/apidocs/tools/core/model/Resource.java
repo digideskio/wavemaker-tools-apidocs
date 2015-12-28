@@ -20,6 +20,7 @@ public class Resource {
     private String description;
     private Map<String, Path> pathMap;
     private String fullyQualifiedName;
+    private String controllerName;
     private String version;
 
 
@@ -69,6 +70,14 @@ public class Resource {
         this.fullyQualifiedName = fullyQualifiedName;
     }
 
+    public String getControllerName() {
+        return controllerName;
+    }
+
+    public void setControllerName(final String controllerName) {
+        this.controllerName = controllerName;
+    }
+
     public void setTag(String tag) {
         if (pathMap != null) {
             for (final Map.Entry<String, Path> pathEntry : pathMap.entrySet()) {
@@ -84,6 +93,7 @@ public class Resource {
         tag.setDescription(description);
         tag.setVersion(version);
         tag.setFullyQualifiedName(fullyQualifiedName);
+        tag.setControllerName(controllerName);
 
         return tag;
     }

@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Tag implements ExtensibleEntity {
     public static final String FULLY_QUALIFIED_NAME_EXT = "FULLY_QUALIFIED_NAME";
+    public static final String CONTROLLER_NAME_EXT = "CONTROLLER_NAME";
     public static final String VERSION_EXT = "VERSION";
 
     private Map<String, Object> vendorExtensions = new HashMap<>();
@@ -77,6 +78,15 @@ public class Tag implements ExtensibleEntity {
 
     public String getFullyQualifiedName() {
         return (String) VendorUtils.getWMExtension(this, FULLY_QUALIFIED_NAME_EXT);
+    }
+
+    @JsonIgnore
+    public void setControllerName(String controllerName) {
+        VendorUtils.addWMExtension(this, CONTROLLER_NAME_EXT, controllerName);
+    }
+
+    public String getControllerName() {
+        return (String) VendorUtils.getWMExtension(this, CONTROLLER_NAME_EXT);
     }
 
     @JsonIgnore
