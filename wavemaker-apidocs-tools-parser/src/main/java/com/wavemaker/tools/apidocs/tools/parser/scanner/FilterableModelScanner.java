@@ -1,13 +1,16 @@
 package com.wavemaker.tools.apidocs.tools.parser.scanner;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.lang3.ClassUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.Optional;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
+import com.wavemaker.tools.apidocs.tools.parser.impl.ExcludedTypeModelParser;
 import com.wavemaker.tools.apidocs.tools.parser.impl.ReflectionModelParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ModelParser;
 
@@ -17,13 +20,22 @@ import com.wavemaker.tools.apidocs.tools.parser.parser.ModelParser;
  */
 public class FilterableModelScanner extends FilterableScanner implements ModelScanner {
 
-    private Set<AdapterInfo> adapters;
+    private static final ExcludedTypeModelParser excludedTypeModelParser = new ExcludedTypeModelParser();
+
     private Set<SubstituteInfo> substitutes;
+    private Set<AdapterInfo> adapters;
+    private Set<PackageAdapterInfo> packageAdapters;
 
     public FilterableModelScanner() {
-        adapters = new LinkedHashSet<>();
         substitutes = new LinkedHashSet<>();
-        excludeType(Object.class); // excluding object model by default
+        adapters = new LinkedHashSet<>();
+        packageAdapters = new HashSet<>();
+//        excludeType(Object.class); // excluding object model by default
+    }
+
+    @Override
+    public void addPackageTypeAdapter(final String packagePrefix, final ModelParser parser) {
+        packageAdapters.add(new PackageAdapterInfo(packagePrefix, parser));
     }
 
     @Override
@@ -34,6 +46,18 @@ public class FilterableModelScanner extends FilterableScanner implements ModelSc
     @Override
     public void addSubstitute(final Class<?> baseType, final Class<?> substituteType, final boolean includeSubTypes) {
         substitutes.add(new SubstituteInfo(baseType, substituteType, includeSubTypes));
+    }
+
+    @Override
+    public FilterableModelScanner excludePackage(final String prefix) {
+        addPackageTypeAdapter(prefix, excludedTypeModelParser);
+        return this;
+    }
+
+    @Override
+    public FilterableModelScanner excludeType(final Class type) {
+        addTypeAdapter(type, excludedTypeModelParser, false);
+        return this;
     }
 
     @Override
@@ -69,6 +93,12 @@ public class FilterableModelScanner extends FilterableScanner implements ModelSc
         for (final AdapterInfo adapter : adapters) {
             if (adapter.canApply(finalType)) {
                 return Optional.of(adapter.parser);
+            }
+        }
+
+        for (final PackageAdapterInfo packageAdapter : packageAdapters) {
+            if (packageAdapter.canApply(finalType)) {
+                return Optional.of(packageAdapter.parser);
             }
         }
 
@@ -131,6 +161,34 @@ public class FilterableModelScanner extends FilterableScanner implements ModelSc
         public SubstituteInfo(final Class<?> baseType, final Class<?> substituteType, final boolean includeSubTypes) {
             super(baseType, includeSubTypes);
             this.substituteType = Objects.requireNonNull(substituteType, "Substitute type cannot be null");
+        }
+    }
+
+    private static class PackageAdapterInfo {
+
+        private String packagePrefix;
+        private ModelParser parser;
+
+        public PackageAdapterInfo(final String packagePrefix, final ModelParser parser) {
+            if (StringUtils.isNotBlank(packagePrefix)) {
+                this.packagePrefix = packagePrefix;
+            } else {
+                throw new IllegalArgumentException("Package prefix cannot be null or empty");
+            }
+            this.parser = Objects.requireNonNull(parser, "Model Parser type cannot be null");
+        }
+
+        public boolean canApply(Class<?> targetType) {
+            if (targetType != null) {
+                if (targetType.getName().startsWith(packagePrefix)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public ModelParser getParser() {
+            return parser;
         }
     }
 }

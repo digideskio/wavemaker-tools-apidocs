@@ -6,16 +6,17 @@ import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
 public class ArrayProperty extends AbstractProperty implements Property {
     public static final String IS_LIST_EXT = "IS_LIST";
+    public static final String TYPE = "array";
 
     protected Boolean uniqueItems = false;
     protected Property items;
 
     public ArrayProperty() {
-        super.type = "array";
+        super.type = TYPE;
     }
 
     public ArrayProperty(Property items) {
-        super.type = "array";
+        super.type = TYPE;
         setItems(items);
     }
 

@@ -40,8 +40,11 @@ public class Utils {
     public static List<Class<?>> getAllFilteredSuperTypes(Class<?> type) {
         List<Class<?>> superTypes = new LinkedList<>();
         if (type.getSuperclass() != null) {
-            if (ContextUtil.getConfiguration().getModelScanner().filter(type.getSuperclass())) {
-                superTypes.add(type.getSuperclass());
+            // All classes in java overrides Object, we need to ignore it to avoid making all models as Composed.
+            if (!type.getSuperclass().equals(Object.class)) {
+                if (ContextUtil.getConfiguration().getModelScanner().filter(type.getSuperclass())) {
+                    superTypes.add(type.getSuperclass());
+                }
             }
         }
         if (type.getInterfaces() != null) {

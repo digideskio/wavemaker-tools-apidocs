@@ -65,6 +65,12 @@ public class MethodUtils {
         return identifierMap;
     }
 
+    public static String generateMethodIdentifier(Method method) {
+        final String uniqueIdentifierId = getMethodUniqueIdentifierId(method);
+
+        return method.getDeclaringClass().getSimpleName() + "-" + uniqueIdentifierId;
+    }
+
     public static String getMethodUniqueIdentifierId(Method method) {
         Class<?>[] parameterTypes = method.getParameterTypes();
         HashCodeBuilder hashCodeBuilder = new HashCodeBuilder();
@@ -117,7 +123,7 @@ public class MethodUtils {
     /**
      * It will returns all Non static {@link Method}s of given {@link Class}.
      *
-     * @param type       {@link Class} to be scanned for methods.
+     * @param type {@link Class} to be scanned for methods.
      * @param predicates custom predicates to filter.
      * @return {@link Set} of filtered {@link Method}s.
      */

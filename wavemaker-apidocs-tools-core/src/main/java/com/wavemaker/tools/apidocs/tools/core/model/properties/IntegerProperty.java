@@ -3,8 +3,10 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
 public class IntegerProperty extends AbstractNumericProperty implements Property {
+    public static final String TYPE = "integer";
+
     public IntegerProperty() {
-        super.type = "integer";
+        super.type = TYPE;
         super.format = "int32";
     }
 

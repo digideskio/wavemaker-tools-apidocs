@@ -12,10 +12,13 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.collect.Sets;
 import com.wavemaker.tools.apidocs.tools.core.model.Info;
 import com.wavemaker.tools.apidocs.tools.core.model.Scheme;
 import com.wavemaker.tools.apidocs.tools.parser.context.ParameterResolvers;
+import com.wavemaker.tools.apidocs.tools.parser.impl.ExcludedTypeModelParser;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 import com.wavemaker.tools.apidocs.tools.parser.scanner.ClassScanner;
 import com.wavemaker.tools.apidocs.tools.parser.scanner.FilterableModelScanner;
@@ -164,11 +167,20 @@ public class SwaggerConfiguration {
             if (modelScanner == null) {
                 modelScanner = new FilterableModelScanner();
             }
+            if (StringUtils.isBlank(baseUrl)) {
+                baseUrl = "/";
+            }
             if (info == null) {
                 info = new Info();
+            }
+            if (StringUtils.isBlank(info.getVersion())) {
                 info.setVersion(DEFAULT_VERSION);
+            }
+            if (StringUtils.isBlank(info.getTitle())) {
                 info.setTitle(DEFAULT_TITLE);
             }
+
+            modelScanner.addPackageTypeAdapter("java.lang", new ExcludedTypeModelParser());
 
             return new SwaggerConfiguration(this);
         }

@@ -10,6 +10,8 @@ import com.wavemaker.tools.apidocs.tools.parser.parser.ModelParser;
  */
 public interface ModelScanner {
 
+    void addPackageTypeAdapter(String packagePrefix, ModelParser parser);
+
     void addTypeAdapter(Class<?> type, ModelParser parser, final boolean includeSubTypes);
 
     void addSubstitute(Class<?> baseType, Class<?> substituteType, final boolean includeSubTypes);

@@ -74,8 +74,7 @@ public class SpringParameterParser extends AbstractParameterParser {
     }
 
     @Override
-    protected void handleHeaderParameter(
-            final HeaderParameter parameter) {
+    protected void handleHeaderParameter(final HeaderParameter parameter) {
         super.handleHeaderParameter(parameter);
         RequestHeader requestHeader = (RequestHeader) annotations.get(RequestHeader.class);
         if (requestHeader != null) {

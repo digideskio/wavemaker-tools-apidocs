@@ -56,7 +56,20 @@ public class SpringMethodParser extends AbstractMethodParser {
     @Override
     public String[] getPaths() {
         RequestMapping requestMapping = methodToParse.getAnnotation(RequestMapping.class);
-        return requestMapping.value();
+        final String[] value = requestMapping.value();
+
+        String[] paths = new String[value.length];
+
+        for (int i = 0; i < value.length; i++) {
+            String path = value[i];
+            // replacing spring pattern
+            path = path.replace(":.+", "");
+            path = path.replace(":.*", "");
+
+            paths[i] = path;
+        }
+
+        return paths;
     }
 
     @Override

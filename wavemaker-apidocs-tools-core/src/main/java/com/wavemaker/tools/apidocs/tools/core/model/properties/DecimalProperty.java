@@ -3,8 +3,10 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
 public class DecimalProperty extends AbstractNumericProperty implements Property {
+    public static final String TYPE = "number";
+
     public DecimalProperty() {
-        super.type = "number";
+        super.type =  TYPE;
     }
 
     public DecimalProperty xml(Xml xml) {

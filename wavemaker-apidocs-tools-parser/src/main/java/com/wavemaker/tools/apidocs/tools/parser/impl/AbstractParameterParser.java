@@ -32,8 +32,10 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.HeaderParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.PathParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.SerializableParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.ArrayProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.RefProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.StringProperty;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
@@ -104,6 +106,14 @@ public abstract class AbstractParameterParser implements ParameterParser {
             }
         }
 
+        if (parameter instanceof SerializableParameter) {
+            // setting collection format only if it is type of array
+            if (ArrayProperty.TYPE.equalsIgnoreCase(((SerializableParameter) parameter).getType())) {
+                ((SerializableParameter) parameter)
+                        .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
+            }
+        }
+
         TypeInformation typeInformation = TypeUtil.extractTypeInformation(dataType);
         if (typeInformation.isArray()) {
             ((AbstractParameter) parameter).setFullyQualifiedType(DataTypeUtil.getFullyQualifiedName(
@@ -128,8 +138,6 @@ public abstract class AbstractParameterParser implements ParameterParser {
         if (property instanceof StringProperty) {
             parameter._enum(((StringProperty) property).getEnum());
         }
-        parameter
-                .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
     }
 
     protected void handleHeaderParameter(HeaderParameter parameter) {
@@ -142,8 +150,6 @@ public abstract class AbstractParameterParser implements ParameterParser {
         if (property instanceof StringProperty) {
             parameter._enum(((StringProperty) property).getEnum());
         }
-        parameter
-                .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
     }
 
     protected void handleQueryParameter(QueryParameter parameter) {
@@ -156,11 +162,24 @@ public abstract class AbstractParameterParser implements ParameterParser {
         if (property instanceof StringProperty) {
             parameter._enum(((StringProperty) property).getEnum());
         }
-        parameter
-                .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
     }
 
     protected void handleFormParameter(FormParameter parameter) {
+        PropertyParser propertyParser = new PropertyParserImpl(dataType);
+        Property property = propertyParser.parse();
+        if (property instanceof RefProperty) {
+            property = new StringProperty();
+        }
+        parameter.property(property);
+        if (property instanceof ArrayProperty) {
+            parameter.items(((ArrayProperty) property).getItems());
+        }
+        if (property instanceof StringProperty) {
+            parameter._enum(((StringProperty) property).getEnum());
+        }
+    }
+
+    protected void handleCookieParameter(CookieParameter parameter) {
         PropertyParser propertyParser = new PropertyParserImpl(dataType);
         Property property = propertyParser.parse();
         parameter.property(property);
@@ -170,8 +189,6 @@ public abstract class AbstractParameterParser implements ParameterParser {
         if (property instanceof StringProperty) {
             parameter._enum(((StringProperty) property).getEnum());
         }
-        parameter
-                .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
     }
 
     protected void handleBodyParameter(BodyParameter parameter) {
@@ -199,20 +216,6 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter.name(ContextUtil.getUniqueName(typeInfo.getActualType()));
         }
         parameter.schema(schema);
-    }
-
-    protected void handleCookieParameter(CookieParameter parameter) {
-        PropertyParser propertyParser = new PropertyParserImpl(dataType);
-        Property property = propertyParser.parse();
-        parameter.property(property);
-        if (property instanceof ArrayProperty) {
-            parameter.items(((ArrayProperty) property).getItems());
-        }
-        if (property instanceof StringProperty) {
-            parameter._enum(((StringProperty) property).getEnum());
-        }
-        parameter
-                .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
     }
 
 
