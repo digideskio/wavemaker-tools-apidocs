@@ -21,7 +21,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Operation implements ExtensibleEntity {
-    public static final String METHOD_IDENTIFIER_EXT = "METHOD_IDENTIFIER";
+    public static final String METHOD_NAME_EXT = "METHOD_NAME";
     public static final String ACCESS_SPECIFIER_EXT = "ACCESS_SPECIFIER";
     public static final String OPERATION_UID_EXT = "OPERATION_UID";
 
@@ -286,12 +286,12 @@ public class Operation implements ExtensibleEntity {
     }
 
     @JsonIgnore
-    public void setMethodIdentifier(final String methodIdentifier) {
-        VendorUtils.addWMExtension(this, METHOD_IDENTIFIER_EXT, methodIdentifier);
+    public void setMethodName(final String methodIdentifier) {
+        VendorUtils.addWMExtension(this, METHOD_NAME_EXT, methodIdentifier);
     }
 
-    public String getMethodIdentifier() {
-        return (String) VendorUtils.getWMExtension(this, METHOD_IDENTIFIER_EXT);
+    public String getMethodName() {
+        return (String) VendorUtils.getWMExtension(this, METHOD_NAME_EXT);
     }
 
     @JsonIgnore

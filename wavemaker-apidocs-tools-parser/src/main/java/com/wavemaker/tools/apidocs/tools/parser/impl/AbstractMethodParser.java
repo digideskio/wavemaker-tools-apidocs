@@ -57,7 +57,7 @@ public abstract class AbstractMethodParser implements MethodParser {
 
         operation.setOperationUid(UUID.randomUUID().toString());
         operation.operationId(MethodUtils.generateMethodIdentifier(methodToParse));
-        operation.setMethodIdentifier(MethodUtils.getMethodUniqueIdentifierId(methodToParse));
+        operation.setMethodName(methodToParse.getName());
 
         if (methodToParse.isAnnotationPresent(ApiOperation.class)) {
             ApiOperation apiOperation = methodToParse.getAnnotation(ApiOperation.class);
