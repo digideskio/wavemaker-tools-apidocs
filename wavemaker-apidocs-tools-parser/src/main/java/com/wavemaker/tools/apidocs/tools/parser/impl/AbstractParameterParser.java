@@ -25,6 +25,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.ParameterType;
 import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
 import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.AbstractParameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.AbstractSerializableParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.BodyParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.CookieParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.FormParameter;
@@ -32,7 +33,6 @@ import com.wavemaker.tools.apidocs.tools.core.model.parameters.HeaderParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.PathParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
-import com.wavemaker.tools.apidocs.tools.core.model.parameters.SerializableParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.ArrayProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.RefProperty;
@@ -74,18 +74,22 @@ public abstract class AbstractParameterParser implements ParameterParser {
         switch (parameterType) {
             case PATH:
                 parameter = new PathParameter();
-                handlePathParameter((PathParameter) parameter);
+                handleSerializableParameter((PathParameter) parameter);
+                handleSerializableParameter((PathParameter) parameter);
                 break;
             case QUERY:
                 parameter = new QueryParameter();
+                handleSerializableParameter((QueryParameter) parameter);
                 handleQueryParameter((QueryParameter) parameter);
                 break;
             case HEADER:
                 parameter = new HeaderParameter();
+                handleSerializableParameter((HeaderParameter) parameter);
                 handleHeaderParameter((HeaderParameter) parameter);
                 break;
             case FORM:
                 parameter = new FormParameter();
+                handleSerializableParameter((FormParameter) parameter);
                 handleFormParameter((FormParameter) parameter);
                 break;
             case BODY:
@@ -94,6 +98,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
                 break;
             case COOKIE:
                 parameter = new CookieParameter();
+                handleSerializableParameter((CookieParameter) parameter);
                 handleCookieParameter((CookieParameter) parameter);
                 break;
         }
@@ -103,14 +108,6 @@ public abstract class AbstractParameterParser implements ParameterParser {
             parameter.setDescription(param.value());
             if (StringUtils.isBlank(parameter.getName())) { // setting name if not exists with param type specific
                 parameter.setName(param.name());
-            }
-        }
-
-        if (parameter instanceof SerializableParameter) {
-            // setting collection format only if it is type of array
-            if (ArrayProperty.TYPE.equalsIgnoreCase(((SerializableParameter) parameter).getType())) {
-                ((SerializableParameter) parameter)
-                        .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
             }
         }
 
@@ -128,43 +125,8 @@ public abstract class AbstractParameterParser implements ParameterParser {
         return parameter;
     }
 
-    protected void handlePathParameter(PathParameter parameter) {
-        PropertyParser propertyParser = new PropertyParserImpl(dataType);
-        Property property = propertyParser.parse();
-        parameter.property(property);
-        if (property instanceof ArrayProperty) {
-            parameter.items(((ArrayProperty) property).getItems());
-        }
-        if (property instanceof StringProperty) {
-            parameter._enum(((StringProperty) property).getEnum());
-        }
-    }
-
-    protected void handleHeaderParameter(HeaderParameter parameter) {
-        PropertyParser propertyParser = new PropertyParserImpl(dataType);
-        Property property = propertyParser.parse();
-        parameter.property(property);
-        if (property instanceof ArrayProperty) {
-            parameter.items(((ArrayProperty) property).getItems());
-        }
-        if (property instanceof StringProperty) {
-            parameter._enum(((StringProperty) property).getEnum());
-        }
-    }
-
-    protected void handleQueryParameter(QueryParameter parameter) {
-        PropertyParser propertyParser = new PropertyParserImpl(dataType);
-        Property property = propertyParser.parse();
-        parameter.property(property);
-        if (property instanceof ArrayProperty) {
-            parameter.items(((ArrayProperty) property).getItems());
-        }
-        if (property instanceof StringProperty) {
-            parameter._enum(((StringProperty) property).getEnum());
-        }
-    }
-
-    protected void handleFormParameter(FormParameter parameter) {
+    protected <T extends AbstractSerializableParameter<T>> void handleSerializableParameter
+            (AbstractSerializableParameter<T> parameter) {
         PropertyParser propertyParser = new PropertyParserImpl(dataType);
         Property property = propertyParser.parse();
         if (property instanceof RefProperty) {
@@ -173,22 +135,27 @@ public abstract class AbstractParameterParser implements ParameterParser {
         parameter.property(property);
         if (property instanceof ArrayProperty) {
             parameter.items(((ArrayProperty) property).getItems());
+            parameter
+                    .setCollectionFormat(ContextUtil.getConfiguration().getCollectionFormat());
         }
         if (property instanceof StringProperty) {
             parameter._enum(((StringProperty) property).getEnum());
         }
     }
 
+    protected void handlePathParameter(final PathParameter parameter) {
+    }
+
+    protected void handleHeaderParameter(HeaderParameter parameter) {
+    }
+
+    protected void handleQueryParameter(QueryParameter parameter) {
+    }
+
+    protected void handleFormParameter(FormParameter parameter) {
+    }
+
     protected void handleCookieParameter(CookieParameter parameter) {
-        PropertyParser propertyParser = new PropertyParserImpl(dataType);
-        Property property = propertyParser.parse();
-        parameter.property(property);
-        if (property instanceof ArrayProperty) {
-            parameter.items(((ArrayProperty) property).getItems());
-        }
-        if (property instanceof StringProperty) {
-            parameter._enum(((StringProperty) property).getEnum());
-        }
     }
 
     protected void handleBodyParameter(BodyParameter parameter) {

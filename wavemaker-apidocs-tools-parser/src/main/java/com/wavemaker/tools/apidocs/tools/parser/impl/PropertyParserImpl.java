@@ -63,7 +63,7 @@ public class PropertyParserImpl implements PropertyParser {
             Class<?> actualType = typeInfo.getActualType();
             if (DataTypeUtil.isEnum(actualType) || String.class.equals(actualType)) {
                 property = feedStringProperty(actualType);
-            } else if (ClassUtils.isPrimitiveOrWrapper(actualType)) {
+            } else if (ClassUtils.isPrimitiveOrWrapper(actualType) || Number.class.isAssignableFrom(actualType)) {
                 property = feedPrimitiveProperty(actualType);
             } else if (File.class.equals(actualType) || File.class.isAssignableFrom(actualType)) {
                 property = new FileProperty();
