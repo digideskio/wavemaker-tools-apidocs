@@ -75,7 +75,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             case PATH:
                 parameter = new PathParameter();
                 handleSerializableParameter((PathParameter) parameter);
-                handleSerializableParameter((PathParameter) parameter);
+                handlePathParameter((PathParameter) parameter);
                 break;
             case QUERY:
                 parameter = new QueryParameter();

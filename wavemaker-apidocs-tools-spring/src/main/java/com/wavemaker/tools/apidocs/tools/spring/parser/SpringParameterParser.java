@@ -65,7 +65,7 @@ public class SpringParameterParser extends AbstractParameterParser {
 
     @Override
     protected void handlePathParameter(final PathParameter parameter) {
-        super.handleSerializableParameter(parameter);
+        super.handlePathParameter(parameter);
         PathVariable pathVariable = (PathVariable) annotations.get(PathVariable.class);
         if (pathVariable != null) {
             parameter.name(pathVariable.value());
