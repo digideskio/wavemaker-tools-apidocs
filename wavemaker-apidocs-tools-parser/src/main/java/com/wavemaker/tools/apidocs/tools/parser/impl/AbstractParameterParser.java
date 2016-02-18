@@ -133,6 +133,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
             property = new StringProperty();
         }
         parameter.property(property);
+        parameter.setFormat(property.getFormat());
         if (property instanceof ArrayProperty) {
             parameter.items(((ArrayProperty) property).getItems());
             parameter
