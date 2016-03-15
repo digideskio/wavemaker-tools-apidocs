@@ -73,7 +73,7 @@ public class PropertyParserImpl implements PropertyParser {
                 property = new StringProperty(StringProperty.Format.URI);
             } else if (URL.class.equals(actualType)) {
                 property = new StringProperty(StringProperty.Format.URL);
-            } else if (Date.class.equals(actualType)) {
+            } else if (Date.class.isAssignableFrom(actualType)) {
                 property = new DateProperty();
             } else {
                 property = feedObjectProperty(typeInfo);
