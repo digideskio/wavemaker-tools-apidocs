@@ -13,6 +13,10 @@
 
     <name>wavemaker-apidocs-tools-parser</name>
 
+    <properties>
+        <main.basedir>${basedir}/..</main.basedir>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
