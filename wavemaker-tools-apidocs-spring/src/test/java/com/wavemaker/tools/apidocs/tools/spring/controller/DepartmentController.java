@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -59,9 +60,23 @@ public class DepartmentController {
         return null;
     }
 
+    @RequestMapping(value = "/count2", method = RequestMethod.GET)
+    @ApiOperation(value = "Returns the total count of Department instances.")
+    public Long countAll(@RequestParam("countId") String countId, @RequestParam("countId2") String countId2) {
+        LOGGER.debug("counting Departments");
+        return null;
+    }
+
     @RequestMapping(value = "/count", method = RequestMethod.GET)
     @ApiOperation(value = "Returns the total count of Department instances.")
     public Long countAll() {
+        LOGGER.debug("counting Departments");
+        return null;
+    }
+
+    @RequestMapping(value = "/count1", method = RequestMethod.GET)
+    @ApiOperation(value = "Returns the total count of Department instances.")
+    public Long countAll(@RequestParam("countId") String countId) {
         LOGGER.debug("counting Departments");
         return null;
     }
@@ -87,7 +102,7 @@ public class DepartmentController {
         return null;
     }
 
-    @RequestMapping(value = "/{id:.+}", method = RequestMethod.PUT, consumes = {"multipart/form-data"})
+    @RequestMapping(value = "/{id:.+}/upload", method = RequestMethod.PUT, consumes = {"multipart/form-data"})
     @ApiOperation(value = "Updates the Department instance associated with the given id.This API should be used when Department instance fields that require multipart data.")
     public Department editDepartment(
             @PathVariable("id") Integer id, MultipartHttpServletRequest multipartHttpServletRequest) {
@@ -102,9 +117,15 @@ public class DepartmentController {
         return null;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = {"multipart/form-data"})
+    @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = {"multipart/form-data"})
     @ApiOperation(value = "Creates a new Department instance.This API should be used when the Department instance has fields that requires multipart data.")
     public Department createDepartment(MultipartHttpServletRequest multipartHttpServletRequest) {
+        return null;
+    }
+
+    @RequestMapping(value = "/create2", method = RequestMethod.POST, consumes = {"multipart/form-data"})
+    @ApiOperation(value = "Creates a new Department instance.This API should be used when the Department instance has fields that requires multipart data.")
+    public Department createDepartment(@RequestParam("departmentJson") String department) {
         return null;
     }
 

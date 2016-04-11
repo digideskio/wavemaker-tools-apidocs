@@ -20,7 +20,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +38,6 @@ import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
-import com.wavemaker.tools.apidocs.tools.parser.util.MethodUtils;
 import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
 import com.wordnik.swagger.annotations.ApiOperation;
 
@@ -63,8 +61,7 @@ public abstract class AbstractMethodParser implements MethodParser {
     public Operation parse() {
         Operation operation = new Operation();
 
-        operation.setOperationUid(UUID.randomUUID().toString());
-        operation.operationId(MethodUtils.generateMethodIdentifier(methodToParse));
+        operation.operationId(methodToParse.getName());
         operation.setMethodName(methodToParse.getName());
 
         if (methodToParse.isAnnotationPresent(ApiOperation.class)) {

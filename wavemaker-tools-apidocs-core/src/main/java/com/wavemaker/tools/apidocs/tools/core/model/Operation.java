@@ -310,14 +310,4 @@ public class Operation implements ExtensibleEntity {
     public AccessSpecifier getAccessSpecifier() {
         return AccessSpecifier.forValue((String) VendorUtils.getWMExtension(this, ACCESS_SPECIFIER_EXT));
     }
-
-    @JsonIgnore
-    public void setOperationUid(String uid) {
-        VendorUtils.addWMExtension(this, OPERATION_UID_EXT, uid);
-    }
-
-    @JsonIgnore
-    public String getOperationUid() {
-        return (String) VendorUtils.getWMExtension(this, OPERATION_UID_EXT);
-    }
 }
