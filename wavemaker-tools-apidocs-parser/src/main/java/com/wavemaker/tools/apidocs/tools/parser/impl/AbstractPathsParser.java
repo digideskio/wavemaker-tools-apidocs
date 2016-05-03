@@ -18,7 +18,6 @@ package com.wavemaker.tools.apidocs.tools.parser.impl;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -120,8 +119,6 @@ public abstract class AbstractPathsParser implements PathsParser {
         Map<Method, String> methodStringHashMap = new HashMap<>(methods.size());
         String className = ContextUtil.getUniqueName(controllerClass);
 
-        Collections.sort(methods, MethodComparator.getInstance());
-
         for (final Method method : methods) {
             String operationId = className + "_" + method.getName();
             int attempt = 1;
@@ -151,32 +148,4 @@ public abstract class AbstractPathsParser implements PathsParser {
      * @return {@link MethodParser} instance.
      */
     protected abstract MethodParser getMethodParser(Method method);
-
-    private static class MethodComparator implements Comparator<Method> {
-
-        private MethodComparator() {
-        }
-
-        private static class MethodComparatorHolder {
-            private static final MethodComparator INSTANCE = new MethodComparator();
-        }
-
-        public static MethodComparator getInstance() {
-            return MethodComparatorHolder.INSTANCE;
-        }
-
-        @Override
-        public int compare(final Method o1, final Method o2) {
-            final int o1ParameterCount = o1.getGenericParameterTypes().length;
-            final int o2ParameterCount = o2.getGenericParameterTypes().length;
-
-            if (o1ParameterCount == o2ParameterCount) {
-                return 0;
-            } else if (o1ParameterCount < o2ParameterCount) {
-                return -1;
-            } else {
-                return 1;
-            }
-        }
-    }
 }
