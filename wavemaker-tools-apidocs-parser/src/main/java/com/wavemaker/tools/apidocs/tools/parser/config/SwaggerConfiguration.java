@@ -47,9 +47,6 @@ public class SwaggerConfiguration {
     private Set<Scheme> schemes;
     private Info info;
     private boolean editable;
-    private int coreThreadPoolSize;
-    private int maxThreadPoolSize;
-    private long timeout;
 
 
     private SwaggerConfiguration(Builder builder) {
@@ -60,24 +57,16 @@ public class SwaggerConfiguration {
         this.schemes = builder.schemes;
         this.editable = builder.editable;
         this.info = builder.info;
-        this.coreThreadPoolSize = builder.coreThreadPoolSize;
-        this.maxThreadPoolSize = builder.maxThreadPoolSize;
-        this.timeout = builder.timeout;
         this.classLoader = Objects.requireNonNull(builder.classLoader, "Class loader should not be null");
         this.classScanner = Objects.requireNonNull(builder.classScanner, "Class scanner should not be null");
     }
 
     public static class Builder {
-        private static final int CORE_THREAD_POOL_SIZE = 4;
-        private static final int MAX_THREAD_POOL_SIZE = 6;
         public static final String DEFAULT_VERSION = "1.0";
         public static final String DEFAULT_TITLE = "Swagger Documentation";
 
         private String baseUrl = "";
         private boolean editable = true;
-        private int coreThreadPoolSize = 1; // default thread executor with '1'.
-        private int maxThreadPoolSize = 1;
-        private long timeout = 30 * 1000; // milliseconds
         private String collectionFormat = CollectionFormat.MULTI.name().toLowerCase();
         private Set<Scheme> schemes = Sets.newHashSet(Arrays.asList(Scheme.HTTP, Scheme.HTTPS));
         private Info info;
@@ -121,33 +110,6 @@ public class SwaggerConfiguration {
 
         public Builder setInfo(final Info info) {
             this.info = info;
-            return this;
-        }
-
-        public Builder setDefaultThreadPool() {
-            this.setCoreThreadPoolSize(CORE_THREAD_POOL_SIZE);
-            this.setMaxThreadPoolSize(MAX_THREAD_POOL_SIZE);
-            return this;
-        }
-
-        public Builder setCoreThreadPoolSize(final int coreThreadPoolSize) {
-            if (coreThreadPoolSize < 1) {
-                throw new IllegalArgumentException("Thread pool size cannot be less than 1");
-            }
-            this.coreThreadPoolSize = coreThreadPoolSize;
-            return this;
-        }
-
-        public Builder setMaxThreadPoolSize(final int maxThreadPoolSize) {
-            if (maxThreadPoolSize < 1) {
-                throw new IllegalArgumentException("Thread pool size cannot be less than 1");
-            }
-            this.maxThreadPoolSize = maxThreadPoolSize;
-            return this;
-        }
-
-        public Builder setTimeout(final long timeout) {
-            this.timeout = timeout;
             return this;
         }
 
@@ -226,19 +188,8 @@ public class SwaggerConfiguration {
         return editable;
     }
 
-    public int getCoreThreadPoolSize() {
-        return coreThreadPoolSize;
-    }
-
-    public int getMaxThreadPoolSize() {
-        return maxThreadPoolSize;
-    }
-
     public Set<Scheme> getSchemes() {
         return schemes;
     }
 
-    public long getTimeout() {
-        return timeout;
-    }
 }

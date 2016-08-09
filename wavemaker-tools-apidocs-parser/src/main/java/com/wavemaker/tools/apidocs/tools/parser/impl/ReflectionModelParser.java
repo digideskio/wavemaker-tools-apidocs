@@ -18,12 +18,15 @@ package com.wavemaker.tools.apidocs.tools.parser.impl;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.reflections.ReflectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.wavemaker.tools.apidocs.tools.core.model.AbstractModel;
@@ -46,6 +49,8 @@ import com.wordnik.swagger.annotations.ApiModel;
  * @since 10/11/14
  */
 public class ReflectionModelParser implements ModelParser {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReflectionModelParser.class);
 
     protected final Class<?> modelClass;
 
@@ -124,7 +129,14 @@ public class ReflectionModelParser implements ModelParser {
 
     protected Map<String, Property> parsePropertiesUsingFields(Class<?> classToScan) {
         Map<String, Property> properties = new LinkedHashMap<>();
-        Collection<Field> fields = ReflectionUtils.getFields(classToScan, NonStaticMemberPredicate.getInstance());
+        Collection<Field> fields = Collections.EMPTY_LIST;
+        try {
+            fields = ReflectionUtils.getFields(classToScan, NonStaticMemberPredicate.getInstance());
+        } catch (Throwable th) {
+            // XXX should throw? if we throw error entire swagger generation will get failed.
+            // Here issues with class loader, like NoClassDefFoundError and ClassNotFound exception.
+            LOGGER.error("Error while reading fields for class:{}", classToScan, th);
+        }
         for (Field field : fields) {
             PropertyParser parser = new PropertyParserImpl(field.getGenericType());
             properties.put(field.getName(), parser.parse());

@@ -20,9 +20,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -83,7 +80,7 @@ public abstract class SwaggerParser {
      * It will returns the {@link Method} associated with given unique key.
      *
      * @param uniqueKey key to be search
-     * @param type      type to search methods
+     * @param type type to search methods
      * @return {@link Method} matching with given uniqueKey.
      */
     public Method getMethodForUniqueKey(String uniqueKey, Class<?> type) {
@@ -147,7 +144,6 @@ public abstract class SwaggerParser {
      * Actual Class parsing starts here. It will parse all given classes and returns {@link Map} of {@link Class} vs
      * {@link Resource}.
      *
-     *
      * @param context
      * @param restClasses rest classes to look for documents.
      * @return {@link Map} of {@link Class} vs {@link Resource}s.
@@ -155,28 +151,17 @@ public abstract class SwaggerParser {
     protected Swagger generateDocuments(
             final SwaggerParserContext context, Set<Class<?>> restClasses) throws InterruptedException {
         final Map<Class<?>, Resource> resourceMap = new ConcurrentHashMap<>();
-        ExecutorService executorService = new ThreadPoolExecutor(
-                context.getConfiguration().getCoreThreadPoolSize(),
-                context.getConfiguration().getMaxThreadPoolSize(), 0L,
-                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
         for (final Class<?> restClass : restClasses) {
-            executorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    LOGGER.debug("Started parsing {} controller", restClass);
-                    ResourceParserContext.initContext(context);// creating parser context for each class.
-                    try {
-                        resourceMap.put(restClass, parseRestClass(restClass));
-                    } finally {
-                        ResourceParserContext.destroyContext(); // destroying parser context after parsing.
-                    }
-                }
-            });
+            LOGGER.debug("Started parsing {} controller", restClass);
+            ResourceParserContext.initContext(context);// creating parser context for each class.
+            try {
+                resourceMap.put(restClass, parseRestClass(restClass));
+            } catch (Throwable th) {
+                throw new SwaggerParserException("Error while generating swagger for class:" + restClass.getName(), th);
+            } finally {
+                ResourceParserContext.destroyContext(); // destroying parser context after parsing.
+            }
         }
-        executorService.shutdown();
-        LOGGER.debug("Waiting to finish parsing documents, max time limit of {} {}.", configuration.getTimeout(),
-                TIME_UNIT);
-        executorService.awaitTermination(configuration.getTimeout(), TIME_UNIT);
         return swaggerFrom(resourceMap);
     }
 
