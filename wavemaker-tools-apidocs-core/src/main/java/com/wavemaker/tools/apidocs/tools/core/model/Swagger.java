@@ -207,8 +207,10 @@ public class Swagger {
                 if (existing.getName().equals(tag.getName()))
                     found = true;
             }
-            if (!found)
+            if (!found) {
                 this.tags.add(tag);
+                Collections.sort(this.tags);
+            }
         }
     }
 

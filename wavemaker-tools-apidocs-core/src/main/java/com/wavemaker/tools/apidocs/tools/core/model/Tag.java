@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Tag implements ExtensibleEntity {
+public class Tag implements ExtensibleEntity, Comparable<Tag> {
     public static final String FULLY_QUALIFIED_NAME_EXT = "FULLY_QUALIFIED_NAME";
     public static final String CONTROLLER_NAME_EXT = "CONTROLLER_NAME";
     public static final String VERSION_EXT = "VERSION";
@@ -122,5 +122,10 @@ public class Tag implements ExtensibleEntity {
         b.append("\texternalDocs: ").append(getExternalDocs()).append("\n");
         b.append("}");
         return b.toString();
+    }
+
+    @Override
+    public int compareTo(final Tag other) {
+        return getName().compareToIgnoreCase(other.getName());
     }
 }
