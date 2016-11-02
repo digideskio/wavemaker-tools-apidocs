@@ -24,13 +24,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.wavemaker.tools.apidocs.tools.core.model.auth.SecuritySchemeDefinition;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
 
 @JsonInclude(Include.NON_NULL)
-public class Swagger {
+public class Swagger implements ExtensibleEntity {
+
+    public static final String PROXY_ENABLED = "PROXY-ENABLED";
+    public static final String PROXY_HOSTNAME = "PROXY-HOSTNAME";
+    public static final String PROXY_PORT = "PROXY-PORT";
+    public static final String PROXY_USERNAME = "PROXY-USERNAME";
+    public static final String PROXY_PASSWORD = "PROXY-PASSWORD";
+
     protected String swagger = "2.0";
     protected Info info;
     protected String host;
@@ -45,6 +55,8 @@ public class Swagger {
     protected Map<String, Model> definitions;
     protected Map<String, Parameter> parameters;
     protected ExternalDocs externalDocs;
+    protected Map<String, Object> vendorExtensions = new HashMap<>();
+
 
     public Swagger() {
         this.tags = new LinkedList<>();
@@ -54,6 +66,19 @@ public class Swagger {
     public Swagger info(Info info) {
         this.setInfo(info);
         return this;
+    }
+
+
+    @JsonAnyGetter
+    public Map<String, Object> getVendorExtensions() {
+        return vendorExtensions;
+    }
+
+    @JsonAnySetter
+    public void setVendorExtension(String key, Object value) {
+        if (key.startsWith("x-")) {
+            vendorExtensions.put(key, value);
+        }
     }
 
     public Swagger host(String host) {
@@ -321,5 +346,57 @@ public class Swagger {
     public void setExternalDocs(ExternalDocs value) {
         externalDocs = value;
     }
+
+    @JsonIgnore
+    public void setProxyEnabled( String value) {
+        VendorUtils.addWMExtension(this, PROXY_ENABLED, value);
+    }
+
+    @JsonIgnore
+    public String getProxyEnabled() {
+        return (String) VendorUtils.getWMExtension(this, PROXY_ENABLED);
+    }
+
+    @JsonIgnore
+    public void setProxyHostName( String value) {
+        VendorUtils.addWMExtension(this, PROXY_HOSTNAME, value);
+    }
+
+    @JsonIgnore
+    public String getProxyHostName() {
+        return (String) VendorUtils.getWMExtension(this, PROXY_HOSTNAME);
+    }
+
+    @JsonIgnore
+    public void setProxyPort( String value) {
+        VendorUtils.addWMExtension(this,PROXY_PORT, value);
+    }
+
+
+    @JsonIgnore
+    public String getProxyPort() {
+        return (String) VendorUtils.getWMExtension(this, PROXY_PORT);
+    }
+
+    @JsonIgnore
+    public void setProxyUsername(String value) {
+        VendorUtils.addWMExtension(this, PROXY_USERNAME, value);
+    }
+
+    @JsonIgnore
+    public String getProxyUsername() {
+        return (String) VendorUtils.getWMExtension(this, PROXY_USERNAME);
+    }
+
+    @JsonIgnore
+    public void setProxyPassword( String value) {
+        VendorUtils.addWMExtension(this, PROXY_PASSWORD, value);
+    }
+
+    @JsonIgnore
+    public String getProxyPassword() {
+        return (String) VendorUtils.getWMExtension(this, PROXY_PASSWORD);
+    }
+
 
 }
