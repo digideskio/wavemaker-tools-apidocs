@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
+import com.wavemaker.tools.api.core.annotations.ReturnsAs;
 import com.wavemaker.tools.api.core.annotations.WMAccessVisibility;
 import com.wavemaker.tools.apidocs.tools.core.model.Operation;
 import com.wavemaker.tools.apidocs.tools.core.model.Response;
@@ -40,6 +41,7 @@ import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
 import com.wordnik.swagger.annotations.ApiOperation;
+import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -128,7 +130,9 @@ public abstract class AbstractMethodParser implements MethodParser {
 
     protected void parseReturnType(Method method, Operation operation) {
         Response response = new Response();
-        PropertyParser propertyParser = new PropertyParserImpl(method.getGenericReturnType());
+        Type type = findType(method);
+
+        PropertyParser propertyParser = new PropertyParserImpl(type);
         response.schema(propertyParser.parse());
         response.setDescription("Success");
         operation.response(200, response); // TODO add more responses
@@ -138,5 +142,19 @@ public abstract class AbstractMethodParser implements MethodParser {
     protected abstract void handleFrameWorkSpecific(Method methodToParse, Operation operation);
 
     protected abstract ParameterParser getParameterParser(int index, Type type, Annotation[] annotations);
+
+    private Type findType(final Method method) {
+        Type type = method.getGenericReturnType();
+
+        final ReturnsAs returnsAs = method.getAnnotation(ReturnsAs.class);
+        if (returnsAs != null) {
+            if (returnsAs.typeArguments().length == 0) {
+                type = returnsAs.value();
+            } else {
+                type = ParameterizedTypeImpl.make(returnsAs.value(), returnsAs.typeArguments(), null);
+            }
+        }
+        return type;
+    }
 
 }
