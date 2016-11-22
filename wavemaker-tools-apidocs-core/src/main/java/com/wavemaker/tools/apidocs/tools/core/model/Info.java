@@ -31,6 +31,7 @@ public class Info implements ExtensibleEntity {
     private static final String SERVICE_TYPE_EXT = "SERVICE_TYPE";
     private static final String SERVICE_ID_EXT = "SERVICE_ID";
 
+
     private Map<String, Object> vendorExtensions = new HashMap<>();
 
     private String description;
@@ -39,6 +40,13 @@ public class Info implements ExtensibleEntity {
     private String termsOfService;
     private Contact contact;
     private License license;
+
+    public static final String PROXY_ENABLED = "PROXY-ENABLED";
+    public static final String PROXY_HOSTNAME = "PROXY-HOSTNAME";
+    public static final String PROXY_PORT = "PROXY-PORT";
+    public static final String PROXY_USERNAME = "PROXY-USERNAME";
+    public static final String PROXY_PASSWORD = "PROXY-PASSWORD";
+
 
     public Info version(String version) {
         this.setVersion(version);
@@ -194,5 +202,56 @@ public class Info implements ExtensibleEntity {
         }
         return this;
     }
+    public void setProxyEnabled( String value) {
+        VendorUtils.addWMExtension(this, PROXY_ENABLED, value);
+    }
+
+    @JsonIgnore
+    public String getProxyEnabled() {
+        return (String) VendorUtils.getWMExtension(this, PROXY_ENABLED);
+    }
+
+    @JsonIgnore
+    public void setProxyHostName( String value) {
+        VendorUtils.addWMExtension(this, PROXY_HOSTNAME, value);
+    }
+
+    @JsonIgnore
+    public String getProxyHostName() {
+        return (String) VendorUtils.getWMExtension(this, PROXY_HOSTNAME);
+    }
+
+    @JsonIgnore
+    public void setProxyPort( String value) {
+        VendorUtils.addWMExtension(this,PROXY_PORT, value);
+    }
+
+
+    @JsonIgnore
+    public String getProxyPort() {
+        return (String) VendorUtils.getWMExtension(this, PROXY_PORT);
+    }
+
+    @JsonIgnore
+    public void setProxyUsername(String value) {
+        VendorUtils.addWMExtension(this, PROXY_USERNAME, value);
+    }
+
+    @JsonIgnore
+    public String getProxyUsername() {
+        return (String) VendorUtils.getWMExtension(this, PROXY_USERNAME);
+    }
+
+    @JsonIgnore
+    public void setProxyPassword( String value) {
+        VendorUtils.addWMExtension(this, PROXY_PASSWORD, value);
+    }
+
+    @JsonIgnore
+    public String getProxyPassword() {
+        return (String) VendorUtils.getWMExtension(this, PROXY_PASSWORD);
+    }
+
+
 
 }
