@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.reflections.ReflectionUtils;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -144,8 +144,24 @@ public class MethodUtils {
             predicateList.addAll(Arrays.asList(predicates));
         }
 
-        return ReflectionUtils.getMethods(type, Predicates.and(predicateList));
+        return getMethods(type, Predicates.and(predicateList));
 
+    }
+
+    private static Set<Method> getMethods(Class<?> type, Predicate<? super Method> predicate) {
+        final Method[] declaredMethods = type.isInterface() ? type.getMethods() : type.getDeclaredMethods();
+
+        Set<Method> filtered = new LinkedHashSet<>();
+
+        if (declaredMethods != null && declaredMethods.length > 0) {
+            for (final Method method : declaredMethods) {
+                if (predicate.apply(method)) {
+                    filtered.add(method);
+                }
+            }
+        }
+
+        return filtered;
     }
 
 }
