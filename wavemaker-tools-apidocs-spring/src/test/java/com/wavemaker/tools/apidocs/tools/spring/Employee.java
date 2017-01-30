@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 
@@ -45,6 +47,7 @@ public class Employee  implements java.io.Serializable {
      private String city;
      private String state;
      private String zip;
+     @JsonProperty("birthDate")
      private Date birthdate;
      private String picurl;
      private String twitterid;

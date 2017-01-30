@@ -144,6 +144,12 @@ public class SpringSwaggerParserTest {
     }
 
     @Test
+    public void testSingleClassDepartment() throws Exception {
+        Swagger swagger = runForSingleClass(DepartmentController.class);
+        writeToFile(swagger, "swagger_for_department.json");
+    }
+
+    @Test
     public void testMultiThread() throws InterruptedException {
         ExecutorService service = Executors.newFixedThreadPool(4);
         List<Class<?>> controllerClasses = new ArrayList<>();

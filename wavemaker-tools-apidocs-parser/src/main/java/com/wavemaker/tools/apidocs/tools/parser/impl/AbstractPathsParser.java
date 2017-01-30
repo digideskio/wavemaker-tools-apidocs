@@ -99,12 +99,11 @@ public abstract class AbstractPathsParser implements PathsParser {
                 if (path == null) {
                     LOGGER.debug("found new path:{}", completePath);
                     path = new Path();
+                    path.setBasePath(ResourceParserContext.getContext().getResourcePath());
+                    path.setRelativePath(relativePath);
+                    path.setCompletePath(Utils.combinePaths(ContextUtil.getConfiguration().getBaseUrl(), completePath));
                     pathMap.put(completePath, path);
                 }
-
-                path.setBasePath(ResourceParserContext.getContext().getResourcePath());
-                path.setRelativePath(relativePath);
-                path.setCompletePath(Utils.combinePaths(ContextUtil.getConfiguration().getBaseUrl(), completePath));
 
                 for (final String method : methodParser.getHttpMethods()) { // setting operation for each method.
                     path.set(method.toLowerCase(), operation);

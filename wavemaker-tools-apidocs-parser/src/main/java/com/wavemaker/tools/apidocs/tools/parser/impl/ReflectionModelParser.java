@@ -24,10 +24,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.reflections.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.wavemaker.tools.apidocs.tools.core.model.AbstractModel;
 import com.wavemaker.tools.apidocs.tools.core.model.ComposedModel;
@@ -139,9 +141,20 @@ public class ReflectionModelParser implements ModelParser {
         }
         for (Field field : fields) {
             PropertyParser parser = new PropertyParserImpl(field.getGenericType());
-            properties.put(field.getName(), parser.parse());
+            properties.put(findFieldName(field), parser.parse());
         }
         return properties;
+    }
+
+    protected String findFieldName(Field field) {
+        String name = field.getName();
+        if (field.isAnnotationPresent(JsonProperty.class)) {
+            final String value = field.getAnnotation(JsonProperty.class).value();
+            if (StringUtils.isNotBlank(value)) {
+                name = value;
+            }
+        }
+        return name;
     }
 
 
