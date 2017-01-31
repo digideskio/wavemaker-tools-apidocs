@@ -143,9 +143,12 @@ public class Operation implements ExtensibleEntity {
     }
 
     public void addTag(String tag) {
-        if (this.tags == null)
+        if (this.tags == null) {
             this.tags = new ArrayList<>();
-        this.tags.add(tag);
+        }
+        if (!this.tags.contains(tag)) {
+            this.tags.add(tag);
+        }
     }
 
     public String getSummary() {
