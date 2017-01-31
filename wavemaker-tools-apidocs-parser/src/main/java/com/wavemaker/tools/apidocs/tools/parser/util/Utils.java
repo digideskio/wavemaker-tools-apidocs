@@ -61,14 +61,6 @@ public class Utils {
                 }
             }
         }
-        if (type.getInterfaces() != null) {
-            for (final Class<?> aInterface : type.getInterfaces()) {
-                if (ContextUtil.getConfiguration().getModelScanner().filter(aInterface)) {
-                    superTypes.add(aInterface);
-                }
-            }
-        }
-
         return superTypes;
     }
 
