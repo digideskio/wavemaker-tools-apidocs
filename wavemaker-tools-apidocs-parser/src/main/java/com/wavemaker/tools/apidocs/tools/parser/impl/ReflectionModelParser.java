@@ -15,14 +15,17 @@
  */
 package com.wavemaker.tools.apidocs.tools.parser.impl;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.ReflectionUtils;
@@ -100,6 +103,7 @@ public class ReflectionModelParser implements ModelParser {
             model.setDescription(classToScan.getAnnotation(ApiModel.class).description());
         }
         model.setProperties(getModelProperties(classToScan));
+        model.setRequired(findRequiredFields(model.getProperties()));
 
         return model;
     }
@@ -141,7 +145,9 @@ public class ReflectionModelParser implements ModelParser {
         }
         for (Field field : fields) {
             PropertyParser parser = new PropertyParserImpl(field.getGenericType());
-            properties.put(findFieldName(field), parser.parse());
+            final Property property = parser.parse();
+            property.setRequired(isRequired(field));
+            properties.put(findFieldName(field), property);
         }
         return properties;
     }
@@ -155,6 +161,24 @@ public class ReflectionModelParser implements ModelParser {
             }
         }
         return name;
+    }
+
+    protected boolean isRequired(AnnotatedElement field) {
+        return field.isAnnotationPresent(NotNull.class);
+    }
+
+    protected List<String> findRequiredFields(Map<String, Property> propertyMap) {
+        List<String> requiredFields = new ArrayList<>();
+
+        if (propertyMap != null) {
+            for (final Map.Entry<String, Property> entry : propertyMap.entrySet()) {
+                if (entry.getValue().getRequired()) {
+                    requiredFields.add(entry.getKey());
+                }
+            }
+        }
+
+        return requiredFields;
     }
 
 
