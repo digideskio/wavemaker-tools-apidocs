@@ -1,12 +1,12 @@
 /**
  * Copyright © 2013 - 2017 WaveMaker, Inc.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,6 +28,7 @@ public abstract class AbstractParameter implements Parameter {
     public static final String RESOLVER_EXT = "RESOLVER";
     public static final String FULLY_QUALIFIED_TYPE_EXT = "FULLY_QUALIFIED_TYPE";
     public static final String UUID_EXT = "UUID";
+    public static final String CONTENT_TYPE = "CONTENT_TYPE";
 
     private Map<String, Object> vendorExtensions = new HashMap<>();
 
@@ -76,6 +77,16 @@ public abstract class AbstractParameter implements Parameter {
     public void setAccess(String access) {
         this.access = access;
     }
+
+    @JsonIgnore
+    public void setContentType(String contentType) {
+        VendorUtils.addWMExtension(this, CONTENT_TYPE, contentType);
+    }
+
+    public String getContentType() {
+        return (String) VendorUtils.getWMExtension(this, CONTENT_TYPE);
+    }
+
 
     @JsonIgnore
     public void setEditable(boolean editable) {
