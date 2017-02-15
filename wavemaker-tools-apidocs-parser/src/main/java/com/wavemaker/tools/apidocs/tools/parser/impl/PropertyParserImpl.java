@@ -17,6 +17,8 @@ package com.wavemaker.tools.apidocs.tools.parser.impl;
 
 import java.io.File;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 import java.net.URL;
 import java.util.Collection;
@@ -131,9 +133,9 @@ public class PropertyParserImpl implements PropertyParser {
         } else if (Byte.class.equals(wrapperType)) {
             property = new StringProperty(StringProperty.Format.BYTE);
         } else if (Number.class.isAssignableFrom(wrapperType)) {
-            if (Long.class.equals(wrapperType)) {
+            if (Long.class.equals(wrapperType) || BigInteger.class.equals(wrapperType)) {
                 property = new LongProperty();
-            } else if (Double.class.equals(wrapperType)) {
+            } else if (Double.class.equals(wrapperType) || BigDecimal.class.equals(wrapperType)) {
                 property = new DoubleProperty();
             } else if (Float.class.equals(wrapperType)) {
                 property = new FloatProperty();
