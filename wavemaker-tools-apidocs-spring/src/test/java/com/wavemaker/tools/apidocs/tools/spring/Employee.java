@@ -17,6 +17,8 @@ package com.wavemaker.tools.apidocs.tools.spring;
 // Generated 19 Nov, 2014 12:15:13 PM by Hibernate Tools 4.3.1
 
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -51,33 +53,14 @@ public class Employee implements java.io.Serializable {
     @JsonProperty("birthDate")
     private Date birthdate;
     private String picurl;
-    private String twitterid;
-    private Integer tenantid;
+    private BigDecimal twitterid;
+    private BigInteger tenantid;
     private Set<Employee> employees = new HashSet<Employee>(0);
     private Set<Vacation> vacations = new HashSet<Vacation>(0);
 
     public Employee() {
     }
 
-    public Employee(
-            Department department, Employee employee, String firstname, String lastname, String street, String city,
-            String state, String zip, Date birthdate, String picurl, String twitterid, Integer tenantid,
-            Set<Employee> employees, Set<Vacation> vacations) {
-        this.department = department;
-        this.employee = employee;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.birthdate = birthdate;
-        this.picurl = picurl;
-        this.twitterid = twitterid;
-        this.tenantid = tenantid;
-        this.employees = employees;
-        this.vacations = vacations;
-    }
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -194,21 +177,21 @@ public class Employee implements java.io.Serializable {
 
 
     @Column(name = "TWITTERID", length = 40)
-    public String getTwitterid() {
+    public BigDecimal getTwitterid() {
         return this.twitterid;
     }
 
-    public void setTwitterid(String twitterid) {
+    public void setTwitterid(BigDecimal twitterid) {
         this.twitterid = twitterid;
     }
 
 
     @Column(name = "TENANTID")
-    public Integer getTenantid() {
+    public BigInteger getTenantid() {
         return this.tenantid;
     }
 
-    public void setTenantid(Integer tenantid) {
+    public void setTenantid(BigInteger tenantid) {
         this.tenantid = tenantid;
     }
 
