@@ -16,8 +16,11 @@
 package com.wavemaker.tools.apidocs.tools.core.model.parameters;
 
 public class FormParameter extends AbstractSerializableParameter<FormParameter> {
+
+    public static final String FORM_DATA = "formData";
+
     public FormParameter() {
-        super.setIn("formData");
+        super.setIn(FORM_DATA);
     }
 
     @Override

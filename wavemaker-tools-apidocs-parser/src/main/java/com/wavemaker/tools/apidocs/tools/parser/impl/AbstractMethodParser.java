@@ -32,6 +32,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.Response;
 import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.FormParameter;
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
+import com.wavemaker.tools.apidocs.tools.core.model.parameters.QueryParameter;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.context.ResourceParserContext;
 import com.wavemaker.tools.apidocs.tools.parser.parser.MethodParser;
@@ -39,6 +40,7 @@ import com.wavemaker.tools.apidocs.tools.parser.parser.ParameterParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
+import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
 import com.wordnik.swagger.annotations.ApiOperation;
 import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
@@ -50,6 +52,10 @@ import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 public abstract class AbstractMethodParser implements MethodParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMethodParser.class);
+
+    private static final String APPLICATION_JSON = "application/json";
+
+
     public static final String MULTIPART_FORM_DATA = "multipart/form-data";
 
     protected final Method methodToParse;
@@ -61,6 +67,7 @@ public abstract class AbstractMethodParser implements MethodParser {
 
     @Override
     public Operation parse() {
+
         Operation operation = new Operation();
 
         operation.operationId(methodToParse.getName());
@@ -91,6 +98,11 @@ public abstract class AbstractMethodParser implements MethodParser {
         parseReturnType(methodToParse, operation);
         parseParameters(methodToParse, operation);
 
+        boolean isMultipartRequest = operation.getConsumes().contains(MULTIPART_FORM_DATA);
+        if (isMultipartRequest) {
+            postProcessingOfParameters(operation);
+        }
+
         return operation;
     }
 
@@ -116,6 +128,9 @@ public abstract class AbstractMethodParser implements MethodParser {
                     ParameterParser parser = getParameterParser(i, type, annotations[i]);
                     final Parameter parameter = parser.parse();
                     if (parameter instanceof FormParameter) {
+                        if (DataTypeUtil.isNotPrimitiveType((Class) type)) {
+                            ((FormParameter) parameter).setContentType(APPLICATION_JSON);
+                        }
                         operation.setConsumes(CollectionUtil.asList(MULTIPART_FORM_DATA));
                         LOGGER.info("Found form parameter, setting operation content type to {}", MULTIPART_FORM_DATA);
                     }
@@ -155,6 +170,15 @@ public abstract class AbstractMethodParser implements MethodParser {
             }
         }
         return type;
+    }
+
+    private void postProcessingOfParameters(Operation operation) {
+        List<Parameter> parameters = operation.getParameters();
+        for (Parameter parameter : parameters) {
+            if (parameter instanceof QueryParameter) {
+                parameter.setIn(FormParameter.FORM_DATA);
+            }
+        }
     }
 
 }
