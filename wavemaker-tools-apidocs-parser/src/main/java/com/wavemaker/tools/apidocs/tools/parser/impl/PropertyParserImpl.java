@@ -46,6 +46,8 @@ import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
  */
 public class PropertyParserImpl implements PropertyParser {
 
+    private static final String LOCAL_DATE_TIME_CLASS_NAME = "org.joda.time.LocalDateTime";
+
     protected Type type;
 
     protected PropertyParserImpl(Type type) {
@@ -85,6 +87,10 @@ public class PropertyParserImpl implements PropertyParser {
                 property = new StringProperty(StringProperty.Format.URL);
             } else if (Date.class.isAssignableFrom(actualType)) {
                 property = new DateProperty();
+                ((DateProperty) property).setSubFormat(actualType.getSimpleName().toLowerCase());
+            } else if (LOCAL_DATE_TIME_CLASS_NAME.equals(actualType.getName())) {
+                property = new DateProperty();
+                ((DateProperty) property).setSubFormat("date-time");
             } else {
                 property = feedObjectProperty(typeInfo);
             }

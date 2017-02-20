@@ -128,7 +128,7 @@ public abstract class AbstractMethodParser implements MethodParser {
                     ParameterParser parser = getParameterParser(i, type, annotations[i]);
                     final Parameter parameter = parser.parse();
                     if (parameter instanceof FormParameter) {
-                        if (DataTypeUtil.isNotPrimitiveType((Class) type)) {
+                        if (DataTypeUtil.isNotPrimitiveType(typeInformation.getActualType())) {
                             ((FormParameter) parameter).setContentType(APPLICATION_JSON);
                         }
                         operation.setConsumes(CollectionUtil.asList(MULTIPART_FORM_DATA));

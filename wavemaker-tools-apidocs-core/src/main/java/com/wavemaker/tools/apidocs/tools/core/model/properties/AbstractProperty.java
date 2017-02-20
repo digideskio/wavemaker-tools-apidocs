@@ -20,10 +20,15 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wavemaker.tools.apidocs.tools.core.model.ExtensibleEntity;
+import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
 public abstract class AbstractProperty implements Property, ExtensibleEntity {
+
+    private static final String SUB_FORMAT_EXT = "SUB_FORMAT";
+
     private Map<String, Object> vendorExtensions = new HashMap<>();
 
     String name;
@@ -148,6 +153,15 @@ public abstract class AbstractProperty implements Property, ExtensibleEntity {
 
     public void setPropertyIdentifier(int id) {
 
+    }
+
+    public void setSubFormat(String subFormat) {
+        VendorUtils.addWMExtension(this, SUB_FORMAT_EXT, subFormat);
+    }
+
+    @JsonIgnore
+    public String getSubFormat() {
+        return (String) VendorUtils.getWMExtension(this, SUB_FORMAT_EXT);
     }
 
     @JsonAnyGetter
