@@ -15,6 +15,7 @@
  */
 package com.wavemaker.tools.apidocs.tools.parser.impl;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
@@ -35,13 +37,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import com.wavemaker.tools.apidocs.tools.core.model.AbstractModel;
 import com.wavemaker.tools.apidocs.tools.core.model.ComposedModel;
+import com.wavemaker.tools.apidocs.tools.core.model.Constraint;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.core.model.ModelImpl;
 import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
+import com.wavemaker.tools.apidocs.tools.core.model.constraint.BasicConstraint;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.AbstractProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ModelParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.AnnotationUtils;
+import com.wavemaker.tools.apidocs.tools.parser.util.ConstraintsUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.MethodUtils;
@@ -147,6 +153,18 @@ public class ReflectionModelParser implements ModelParser {
             PropertyParser parser = new PropertyParserImpl(field.getGenericType());
             final Property property = parser.parse();
             property.setRequired(isRequired(field));
+            List<Annotation> constraintAnnotations = ConstraintsUtil.getConstraintAnnotations(field);
+            if (!constraintAnnotations.isEmpty()) {
+                List<Constraint> constraintList = new ArrayList<>(constraintAnnotations.size());
+                for (Annotation constraintAnnotation : constraintAnnotations) {
+                    Map<String, Object> constraintAnnotationParametersMap = ConstraintsUtil.getConstraintAnnotationParametersMap(constraintAnnotation);
+                    BasicConstraint basicConstraint = new BasicConstraint();
+                    basicConstraint.setConstraintType(constraintAnnotation.annotationType().getSimpleName());
+                    basicConstraint.setConstraintParameters(constraintAnnotationParametersMap);
+                    constraintList.add(basicConstraint);
+                }
+                ((AbstractProperty) property).setConstraints(constraintList);
+            }
             property.setReadOnly(isReadOnly(field));
             properties.put(findFieldName(field), property);
         }

@@ -16,12 +16,14 @@
 package com.wavemaker.tools.apidocs.tools.core.model.parameters;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.wavemaker.tools.apidocs.tools.core.model.Constraint;
 import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
 
 @JsonDeserialize
@@ -31,6 +33,7 @@ public abstract class AbstractParameter implements Parameter {
     public static final String FULLY_QUALIFIED_TYPE_EXT = "FULLY_QUALIFIED_TYPE";
     public static final String UUID_EXT = "UUID";
     public static final String CONTENT_TYPE = "CONTENT_TYPE";
+    public static final String CONSTRAINTS_EXT = "CONSTRAINTS";
 
     private Map<String, Object> vendorExtensions = new HashMap<>();
 
@@ -136,6 +139,16 @@ public abstract class AbstractParameter implements Parameter {
 
     public String getUuid() {
         return (String) VendorUtils.getWMExtension(this, UUID_EXT);
+    }
+
+    @JsonIgnore
+    public List<Constraint> getConstraints() {
+        return (List<Constraint>) VendorUtils.getWMExtension(this, CONSTRAINTS_EXT);
+    }
+
+    @JsonIgnore
+    public void setConstraints(List<Constraint> constraints) {
+        VendorUtils.addWMExtension(this, CONSTRAINTS_EXT, constraints);
     }
 
 }
