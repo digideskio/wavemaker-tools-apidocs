@@ -16,13 +16,11 @@
 package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wavemaker.tools.apidocs.tools.core.model.Constraint;
 import com.wavemaker.tools.apidocs.tools.core.model.ExtensibleEntity;
 import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
@@ -30,7 +28,6 @@ import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 public abstract class AbstractProperty implements Property, ExtensibleEntity {
 
     private static final String SUB_FORMAT_EXT = "SUB_FORMAT";
-    public static final String CONSTRAINTS_EXT = "CONSTRAINTS";
 
     private Map<String, Object> vendorExtensions = new HashMap<>();
 
@@ -165,16 +162,6 @@ public abstract class AbstractProperty implements Property, ExtensibleEntity {
     @JsonIgnore
     public String getSubFormat() {
         return (String) VendorUtils.getWMExtension(this, SUB_FORMAT_EXT);
-    }
-
-    @JsonIgnore
-    public List<Constraint> getConstraints() {
-        return (List<Constraint>) VendorUtils.getWMExtension(this, CONSTRAINTS_EXT);
-    }
-
-    @JsonIgnore
-    public void setConstraints(List<Constraint> constraints) {
-        VendorUtils.addWMExtension(this, CONSTRAINTS_EXT, constraints);
     }
 
     @JsonAnyGetter
