@@ -15,9 +15,15 @@
  */
 package com.wavemaker.tools.apidocs.tools.core.model.parameters;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wavemaker.tools.apidocs.tools.core.model.Model;
+import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
+import com.wavemaker.tools.apidocs.tools.core.utils.JsonUtils;
+
 public class FormParameter extends AbstractSerializableParameter<FormParameter> {
 
     public static final String FORM_DATA = "formData";
+    public static final String SCHEMA_EXT = "SCHEMA";
 
     public FormParameter() {
         super.setIn(FORM_DATA);
@@ -26,5 +32,20 @@ public class FormParameter extends AbstractSerializableParameter<FormParameter> 
     @Override
     protected String getDefaultCollectionFormat() {
         return "multi";
+    }
+
+    @JsonIgnore
+    public void setSchema(Model model) {
+        VendorUtils.addWMExtension(this, SCHEMA_EXT, model);
+    }
+
+    public Model getSchema() {
+        final Object model = VendorUtils.getWMExtension(this, SCHEMA_EXT);
+
+        if (model == null) {
+            return null;
+        } else {
+            return JsonUtils.getInstance().convertValue(model, Model.class);
+        }
     }
 }

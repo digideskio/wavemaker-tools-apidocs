@@ -22,13 +22,12 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
+import com.wavemaker.tools.apidocs.tools.core.utils.JsonUtils;
 
 public class RefProperty extends AbstractProperty implements Property {
     public static final String TYPE_ARGUMENTS_EXT = "TYPE_ARGUMENTS";
 
-    private static final ObjectMapper objectMapper = new ObjectMapper(); // configuration shared across objects.
     private static final TypeReference<List<Property>> propertyListTypeRef = new TypeReference<List<Property>>() {
         public Type getType() {
             return new ParameterizedType() {
@@ -122,7 +121,7 @@ public class RefProperty extends AbstractProperty implements Property {
         if (typeArguments == null) {
             return Collections.<Property>emptyList();
         } else {
-            return objectMapper.convertValue(typeArguments, propertyListTypeRef);
+            return JsonUtils.getInstance().convertValue(typeArguments, propertyListTypeRef);
         }
     }
 }

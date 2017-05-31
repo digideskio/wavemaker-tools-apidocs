@@ -28,7 +28,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.wavemaker.tools.apidocs.tools.spring.User;
@@ -104,6 +106,13 @@ public class UserController {
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = {"multipart/form-data"})
     @ApiOperation(value = "Creates a new User instance.This API should be used when the User instance has fields that requires multipart data.")
     public User createUser(MultipartHttpServletRequest multipartHttpServletRequest) {
+        return null;
+    }
+
+    @RequestMapping(value = "/blob", method = RequestMethod.POST, consumes = {"multipart/form-data"})
+    @ApiOperation(value = "Creates a new User instance.This API should be used when the User instance has fields that requires multipart data.")
+    public User createUserWithParts(
+            @RequestPart("_wm_data_json") User user, @RequestPart("userImage") MultipartFile userImage) {
         return null;
     }
 

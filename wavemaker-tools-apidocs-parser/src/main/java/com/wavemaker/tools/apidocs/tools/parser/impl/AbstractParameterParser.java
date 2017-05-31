@@ -127,6 +127,9 @@ public abstract class AbstractParameterParser implements ParameterParser {
             ((AbstractParameter) parameter).setFullyQualifiedType(DataTypeUtil.getFullyQualifiedName(
                     typeInformation.getActualType()));
         }
+        if (parameter instanceof FormParameter) {
+            ((FormParameter) parameter).setSchema(getModel(typeInformation));
+        }
         ((AbstractParameter) parameter).setEditable(ContextUtil.getConfiguration().isEditable());
         ((AbstractParameter) parameter).setUuid(UUID.randomUUID().toString());
 
@@ -169,13 +172,22 @@ public abstract class AbstractParameterParser implements ParameterParser {
 
     protected void handleBodyParameter(BodyParameter parameter) {
         TypeInformation typeInfo = TypeUtil.extractTypeInformation(dataType);
+        Model schema = getModel(typeInfo);
+        if (schema instanceof ArrayModel) {
+            parameter.name(ContextUtil.getUniqueName(typeInfo.getTypeArguments().get(0)));
+        } else {
+            parameter.name(ContextUtil.getUniqueName(typeInfo.getActualType()));
+        }
+        parameter.schema(schema);
+    }
+
+    protected Model getModel(final TypeInformation typeInfo) {
         Model schema = null;
         if (typeInfo.isArray() || Collection.class.isAssignableFrom(typeInfo.getActualType())) {
             schema = new ArrayModel();
             PropertyParser propertyParser = new PropertyParserImpl(typeInfo.getTypeArguments().get(0));
             ((ArrayModel) schema).items(propertyParser.parse());
             ((ArrayModel) schema).setIsList(!typeInfo.isArray());
-            parameter.name(ContextUtil.getUniqueName(typeInfo.getTypeArguments().get(0)));
         } else {
             Optional<RefModel> modelOptional = ContextUtil.parseModel(typeInfo.getActualType());
             if (modelOptional.isPresent()) {
@@ -189,9 +201,8 @@ public abstract class AbstractParameterParser implements ParameterParser {
                 }
                 ((RefModel) schema).setTypeArguments(models);
             }
-            parameter.name(ContextUtil.getUniqueName(typeInfo.getActualType()));
         }
-        parameter.schema(schema);
+        return schema;
     }
 
 
