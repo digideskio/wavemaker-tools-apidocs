@@ -44,16 +44,18 @@ public class Employee implements java.io.Serializable {
     private Integer eid;
     private Department department;
     private Employee employee;
+    @JsonProperty(required = true)
     private String firstname;
     private String lastname;
     private String street;
     private String city;
     private String state;
     private String zip;
-    @JsonProperty("birthDate")
+    @JsonProperty(value = "birthDate", required = true)
     private Date birthdate;
     private String picurl;
     private BigDecimal twitterid;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private BigInteger tenantid;
     private Set<Employee> employees = new HashSet<Employee>(0);
     private Set<Vacation> vacations = new HashSet<Vacation>(0);
@@ -145,7 +147,7 @@ public class Employee implements java.io.Serializable {
         this.state = state;
     }
 
-
+    @NotNull
     @Column(name = "ZIP")
     public String getZip() {
         return this.zip;
@@ -181,6 +183,7 @@ public class Employee implements java.io.Serializable {
         return this.twitterid;
     }
 
+    @NotNull
     public void setTwitterid(BigDecimal twitterid) {
         this.twitterid = twitterid;
     }

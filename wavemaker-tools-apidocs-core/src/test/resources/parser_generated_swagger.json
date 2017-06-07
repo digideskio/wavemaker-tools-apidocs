@@ -1,0 +1,3332 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "hrdb database service apis",
+    "version": "1.0",
+    "title": "HRDB service"
+  },
+  "basePath": "/test",
+  "tags": [
+    {
+      "name": "controller2.VacationController",
+      "description": "Exposes APIs to work with Vacation resource.",
+      "x-WM-FULLY_QUALIFIED_NAME": "com.wavemaker.tools.apidocs.tools.spring.controller2.VacationController",
+      "x-WM-VERSION": "",
+      "x-WM-CONTROLLER_NAME": "Vacation"
+    },
+    {
+      "name": "DepartmentController",
+      "description": "Exposes APIs to work with Department resource.",
+      "x-WM-FULLY_QUALIFIED_NAME": "com.wavemaker.tools.apidocs.tools.spring.controller.DepartmentController",
+      "x-WM-VERSION": "",
+      "x-WM-CONTROLLER_NAME": "Department"
+    },
+    {
+      "name": "EmployeeController",
+      "description": "Exposes APIs to work with Employee resource.",
+      "x-WM-FULLY_QUALIFIED_NAME": "com.wavemaker.tools.apidocs.tools.spring.controller.EmployeeController",
+      "x-WM-VERSION": "",
+      "x-WM-CONTROLLER_NAME": "Employee"
+    },
+    {
+      "name": "UserController",
+      "description": "Exposes APIs to work with User resource.",
+      "x-WM-FULLY_QUALIFIED_NAME": "com.wavemaker.tools.apidocs.tools.spring.controller.UserController",
+      "x-WM-VERSION": "",
+      "x-WM-CONTROLLER_NAME": "User"
+    },
+    {
+      "name": "VacationController",
+      "description": "Exposes APIs to work with Vacation resource.",
+      "x-WM-FULLY_QUALIFIED_NAME": "com.wavemaker.tools.apidocs.tools.spring.controller.VacationController",
+      "x-WM-VERSION": "",
+      "x-WM-CONTROLLER_NAME": "Vacation"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/hrdb/Department/": {
+      "get": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Returns the list of Department instances.",
+        "operationId": "DepartmentController_getDepartments",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Pageable",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Pageable",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "1a51bb91-39d7-4e78-84be-3f32ff4d3984",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.data.domain.Pageable"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Page",
+              "x-WM-TYPE_ARGUMENTS": [
+                {
+                  "$ref": "#/definitions/Department",
+                  "x-WM-TYPE_ARGUMENTS": []
+                }
+              ]
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "getDepartments",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "post": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Creates a new Department instance.",
+        "operationId": "DepartmentController_createDepartment",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Department",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Department",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "2741354c-db81-428a-ae31-f3c9198c129a",
+            "x-WM-FULLY_QUALIFIED_TYPE": "com.wavemaker.tools.apidocs.tools.spring.Department"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Department",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "createDepartment",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Department",
+      "x-WM-TAG": "DepartmentController",
+      "x-WM-RELATIVE_PATH": "/",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Department/"
+    },
+    "/hrdb/Department/count": {
+      "get": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Returns the total count of Department instances.",
+        "operationId": "DepartmentController_countAll_1",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "countAll",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Department",
+      "x-WM-TAG": "DepartmentController",
+      "x-WM-RELATIVE_PATH": "/count",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Department/count"
+    },
+    "/hrdb/Department/count1": {
+      "get": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Returns the total count of Department instances.",
+        "operationId": "DepartmentController_countAll_2",
+        "parameters": [
+          {
+            "name": "countId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "88055f58-4128-4980-a5c8-fe77b6a905c0",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "countAll",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Department",
+      "x-WM-TAG": "DepartmentController",
+      "x-WM-RELATIVE_PATH": "/count1",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Department/count1"
+    },
+    "/hrdb/Department/count2": {
+      "get": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Returns the total count of Department instances.",
+        "operationId": "DepartmentController_countAll",
+        "parameters": [
+          {
+            "name": "countId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "19c09a8b-95f9-4293-9a1c-91d42013ab88",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.String"
+          },
+          {
+            "name": "countId2",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "a4112253-1f26-43c1-8939-1d0c8aab86bd",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "countAll",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Department",
+      "x-WM-TAG": "DepartmentController",
+      "x-WM-RELATIVE_PATH": "/count2",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Department/count2"
+    },
+    "/hrdb/Department/create2": {
+      "post": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Creates a new Department instance.This API should be used when the Department instance has fields that requires multipart data.",
+        "operationId": "DepartmentController_createDepartment_1",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "departmentJson",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "87301599-a9b7-4860-b86e-ec400f24a931",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Department",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "createDepartment",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Department",
+      "x-WM-TAG": "DepartmentController",
+      "x-WM-RELATIVE_PATH": "/create2",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Department/create2"
+    },
+    "/hrdb/Department/search": {
+      "post": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Returns the list of Department instances matching the search criteria.",
+        "operationId": "DepartmentController_findAll",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Pageable",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Pageable",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "16bf03da-4283-4fdb-a574-ba8fd75fc7c2",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.data.domain.Pageable"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Page",
+              "x-WM-TYPE_ARGUMENTS": [
+                {
+                  "$ref": "#/definitions/Department",
+                  "x-WM-TYPE_ARGUMENTS": []
+                }
+              ]
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "findAll",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Department",
+      "x-WM-TAG": "DepartmentController",
+      "x-WM-RELATIVE_PATH": "/search",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Department/search"
+    },
+    "/hrdb/Department/upload": {
+      "post": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Creates a new Department instance.This API should be used when the Department instance has fields that requires multipart data.",
+        "operationId": "DepartmentController_createDepartment_2",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "MultipartHttpServletRequest",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/MultipartHttpServletRequest",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "75079814-e693-4996-b973-52e91db9e6bf",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.web.multipart.MultipartHttpServletRequest"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Department",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "createDepartment",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Department",
+      "x-WM-TAG": "DepartmentController",
+      "x-WM-RELATIVE_PATH": "/upload",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Department/upload"
+    },
+    "/hrdb/Department/{id}": {
+      "get": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Returns the Department instance associated with the given id.",
+        "operationId": "DepartmentController_getDepartment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "be7246fb-0259-4ee4-8401-41c3e52febce",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Department",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "getDepartment",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "put": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Updates the Department instance associated with the given id.",
+        "operationId": "DepartmentController_editDepartment_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "863e7bad-76ea-437e-bd05-6a39493fb32a",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          },
+          {
+            "in": "body",
+            "name": "Department",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Department",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "aaf8b757-9793-4d2d-ba13-6f5a73241f22",
+            "x-WM-FULLY_QUALIFIED_TYPE": "com.wavemaker.tools.apidocs.tools.spring.Department"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Department",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "editDepartment",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "delete": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Deletes the Department instance associated with the given id.",
+        "operationId": "DepartmentController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "80709156-dacf-44c9-8db8-ee296bb03f64",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "delete",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Department",
+      "x-WM-TAG": "DepartmentController",
+      "x-WM-RELATIVE_PATH": "/{id}",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Department/{id}"
+    },
+    "/hrdb/Department/{id}/upload": {
+      "put": {
+        "tags": [
+          "DepartmentController"
+        ],
+        "description": "Updates the Department instance associated with the given id.This API should be used when Department instance fields that require multipart data.",
+        "operationId": "DepartmentController_editDepartment",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "051a1510-f945-41b6-816c-8600a459a369",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          },
+          {
+            "in": "body",
+            "name": "MultipartHttpServletRequest",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/MultipartHttpServletRequest",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "fa882b6b-34ad-4521-b222-b1106b22b842",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.web.multipart.MultipartHttpServletRequest"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Department",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "editDepartment",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Department",
+      "x-WM-TAG": "DepartmentController",
+      "x-WM-RELATIVE_PATH": "/{id}/upload",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Department/{id}/upload"
+    },
+    "/hrdb/Employee/": {
+      "get": {
+        "tags": [
+          "EmployeeController"
+        ],
+        "description": "Returns the list of Employee instances.",
+        "operationId": "EmployeeController_getEmployees",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Pageable",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Pageable",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "d29ce765-69e0-417e-aadd-d08ac0100e62",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.data.domain.Pageable"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Page",
+              "x-WM-TYPE_ARGUMENTS": [
+                {
+                  "$ref": "#/definitions/Employee",
+                  "x-WM-TYPE_ARGUMENTS": []
+                }
+              ]
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "getEmployees",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "post": {
+        "tags": [
+          "EmployeeController"
+        ],
+        "description": "Creates a new Employee instance.",
+        "operationId": "EmployeeController_createEmployee_1",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Employee",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Employee",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "9e6e60cd-c112-4e9d-9adc-b120cf3815c1",
+            "x-WM-FULLY_QUALIFIED_TYPE": "com.wavemaker.tools.apidocs.tools.spring.Employee"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Employee",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "createEmployee",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Employee",
+      "x-WM-TAG": "EmployeeController",
+      "x-WM-RELATIVE_PATH": "/",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Employee/"
+    },
+    "/hrdb/Employee/byName": {
+      "get": {
+        "tags": [
+          "EmployeeController"
+        ],
+        "operationId": "EmployeeController_getByOptionalAndRequired",
+        "parameters": [
+          {
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "d9c20773-7f41-459e-8d3a-98787d2a7fa8",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.String"
+          },
+          {
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "dfb9933f-4f17-4b36-b34e-ac8c46453a19",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.String"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Employee",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "getByOptionalAndRequired",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Employee",
+      "x-WM-TAG": "EmployeeController",
+      "x-WM-RELATIVE_PATH": "/byName",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Employee/byName"
+    },
+    "/hrdb/Employee/count": {
+      "get": {
+        "tags": [
+          "EmployeeController"
+        ],
+        "description": "Returns the total count of Employee instances.",
+        "operationId": "EmployeeController_countAll",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "countAll",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Employee",
+      "x-WM-TAG": "EmployeeController",
+      "x-WM-RELATIVE_PATH": "/count",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Employee/count"
+    },
+    "/hrdb/Employee/multi": {
+      "post": {
+        "tags": [
+          "EmployeeController"
+        ],
+        "description": "Creates a new Employee instance.",
+        "operationId": "EmployeeController_createEmployees",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Employee",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Employee",
+                "x-WM-TYPE_ARGUMENTS": []
+              },
+              "x-WM-IS_LIST": true
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "7ff8808d-be0f-47a4-9aee-6d5532ad4827",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.util.List"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "uniqueItems": false,
+              "items": {
+                "$ref": "#/definitions/Employee",
+                "x-WM-TYPE_ARGUMENTS": []
+              },
+              "x-WM-IS_LIST": true
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "createEmployees",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Employee",
+      "x-WM-TAG": "EmployeeController",
+      "x-WM-RELATIVE_PATH": "/multi",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Employee/multi"
+    },
+    "/hrdb/Employee/search": {
+      "post": {
+        "tags": [
+          "EmployeeController"
+        ],
+        "description": "Returns the list of Employee instances matching the search criteria.",
+        "operationId": "EmployeeController_findAll",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Pageable",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Pageable",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "3b560671-d7bd-4931-9fcd-1bf68d796b01",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.data.domain.Pageable"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Page",
+              "x-WM-TYPE_ARGUMENTS": [
+                {
+                  "$ref": "#/definitions/Employee",
+                  "x-WM-TYPE_ARGUMENTS": []
+                }
+              ]
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "findAll",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Employee",
+      "x-WM-TAG": "EmployeeController",
+      "x-WM-RELATIVE_PATH": "/search",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Employee/search"
+    },
+    "/hrdb/Employee/{id}": {
+      "get": {
+        "tags": [
+          "EmployeeController"
+        ],
+        "description": "Returns the Employee instance associated with the given id.",
+        "operationId": "EmployeeController_getEmployee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "ef0e3e2e-087d-4939-81e5-e6d796387db9",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Employee",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "getEmployee",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "put": {
+        "tags": [
+          "EmployeeController"
+        ],
+        "description": "Updates the Employee instance associated with the given id.",
+        "operationId": "EmployeeController_editEmployee_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "67be4ff7-f88f-4a60-8108-b02ccb34155e",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          },
+          {
+            "in": "body",
+            "name": "Employee",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Employee",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "1424ef15-831b-4893-9c2a-cd51121e65df",
+            "x-WM-FULLY_QUALIFIED_TYPE": "com.wavemaker.tools.apidocs.tools.spring.Employee"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Employee",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "editEmployee",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "delete": {
+        "tags": [
+          "EmployeeController"
+        ],
+        "description": "Deletes the Employee instance associated with the given id.",
+        "operationId": "EmployeeController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "cc611f67-2c3b-4fa7-8f78-b538074dafc9",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "delete",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Employee",
+      "x-WM-TAG": "EmployeeController",
+      "x-WM-RELATIVE_PATH": "/{id}",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Employee/{id}"
+    },
+    "/hrdb/User/": {
+      "get": {
+        "tags": [
+          "UserController"
+        ],
+        "description": "Returns the list of User instances.",
+        "operationId": "UserController_getUsers",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Pageable",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Pageable",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "613bab19-8149-422c-b691-ff83851545c8",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.data.domain.Pageable"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Page",
+              "x-WM-TYPE_ARGUMENTS": [
+                {
+                  "$ref": "#/definitions/User",
+                  "x-WM-TYPE_ARGUMENTS": []
+                }
+              ]
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "getUsers",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "post": {
+        "tags": [
+          "UserController"
+        ],
+        "description": "Creates a new User instance.This API should be used when the User instance has fields that requires multipart data.",
+        "operationId": "UserController_createUser_1",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "MultipartHttpServletRequest",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/MultipartHttpServletRequest",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "3d26d771-1b10-4034-be86-e91a7e6b2667",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.web.multipart.MultipartHttpServletRequest"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "createUser",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/User",
+      "x-WM-TAG": "UserController",
+      "x-WM-RELATIVE_PATH": "/",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/User/"
+    },
+    "/hrdb/User/blob": {
+      "post": {
+        "tags": [
+          "UserController"
+        ],
+        "description": "Creates a new User instance.This API should be used when the User instance has fields that requires multipart data.",
+        "operationId": "UserController_createUserWithParts",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "_wm_data_json",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "283296e5-7a96-465d-a926-f66d07ab4f67",
+            "x-WM-SCHEMA": {
+              "$ref": "#/definitions/User",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-CONTENT_TYPE": "application/json",
+            "x-WM-FULLY_QUALIFIED_TYPE": "com.wavemaker.tools.apidocs.tools.spring.User"
+          },
+          {
+            "name": "userImage",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "81ad0975-bda1-4d4d-b5de-a2bf18cb0dcd",
+            "x-WM-SCHEMA": {
+              "$ref": "#/definitions/MultipartFile",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-CONTENT_TYPE": "application/json",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.web.multipart.MultipartFile"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "createUserWithParts",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/User",
+      "x-WM-TAG": "UserController",
+      "x-WM-RELATIVE_PATH": "/blob",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/User/blob"
+    },
+    "/hrdb/User/count": {
+      "get": {
+        "tags": [
+          "UserController"
+        ],
+        "description": "Returns the total count of User instances.",
+        "operationId": "UserController_countAll",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "countAll",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/User",
+      "x-WM-TAG": "UserController",
+      "x-WM-RELATIVE_PATH": "/count",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/User/count"
+    },
+    "/hrdb/User/search": {
+      "post": {
+        "tags": [
+          "UserController"
+        ],
+        "description": "Returns the list of User instances matching the search criteria.",
+        "operationId": "UserController_findAll",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Pageable",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Pageable",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "63c94e32-f2c9-42a0-84c7-4953f8a69f01",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.data.domain.Pageable"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Page",
+              "x-WM-TYPE_ARGUMENTS": [
+                {
+                  "$ref": "#/definitions/User",
+                  "x-WM-TYPE_ARGUMENTS": []
+                }
+              ]
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "findAll",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/User",
+      "x-WM-TAG": "UserController",
+      "x-WM-RELATIVE_PATH": "/search",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/User/search"
+    },
+    "/hrdb/User/{id}": {
+      "get": {
+        "tags": [
+          "UserController"
+        ],
+        "description": "Returns the User instance associated with the given id.",
+        "operationId": "UserController_getUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "6ef874c2-3cb4-40a4-8271-d55e57c50d8b",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "getUser",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "put": {
+        "tags": [
+          "UserController"
+        ],
+        "description": "Updates the User instance associated with the given id.",
+        "operationId": "UserController_editUser_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "8cb51d13-00f8-4c20-91f0-45a32510f442",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          },
+          {
+            "in": "body",
+            "name": "User",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "4186ed09-158e-4692-9ab5-facf6956ab0d",
+            "x-WM-FULLY_QUALIFIED_TYPE": "com.wavemaker.tools.apidocs.tools.spring.User"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "editUser",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "delete": {
+        "tags": [
+          "UserController"
+        ],
+        "description": "Deletes the User instance associated with the given id.",
+        "operationId": "UserController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "ab563f74-e104-448f-adf8-b417bb322842",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "delete",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/User",
+      "x-WM-TAG": "UserController",
+      "x-WM-RELATIVE_PATH": "/{id}",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/User/{id}"
+    },
+    "/hrdb/Vacation/": {
+      "get": {
+        "tags": [
+          "controller2.VacationController"
+        ],
+        "description": "Returns the list of Vacation instances.",
+        "operationId": "controller2.VacationController_getVacations",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Pageable",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Pageable",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "5943a5b8-9985-41b6-97f8-900204145958",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.data.domain.Pageable"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Page",
+              "x-WM-TYPE_ARGUMENTS": [
+                {
+                  "$ref": "#/definitions/Vacation",
+                  "x-WM-TYPE_ARGUMENTS": []
+                }
+              ]
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "getVacations",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "post": {
+        "tags": [
+          "controller2.VacationController"
+        ],
+        "description": "Creates a new Vacation instance.",
+        "operationId": "controller2.VacationController_createVacation_1",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Vacation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Vacation",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "2740c9c0-20be-4011-af01-146497c3b4f9",
+            "x-WM-FULLY_QUALIFIED_TYPE": "com.wavemaker.tools.apidocs.tools.spring.Vacation"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Vacation",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "createVacation",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Vacation",
+      "x-WM-TAG": "controller2.VacationController",
+      "x-WM-RELATIVE_PATH": "/",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Vacation/"
+    },
+    "/hrdb/Vacation/count": {
+      "get": {
+        "tags": [
+          "controller2.VacationController"
+        ],
+        "description": "Returns the total count of Vacation instances.",
+        "operationId": "controller2.VacationController_countAll",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "countAll",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Vacation",
+      "x-WM-TAG": "controller2.VacationController",
+      "x-WM-RELATIVE_PATH": "/count",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Vacation/count"
+    },
+    "/hrdb/Vacation/search": {
+      "post": {
+        "tags": [
+          "controller2.VacationController"
+        ],
+        "description": "Returns the list of Vacation instances matching the search criteria.",
+        "operationId": "controller2.VacationController_findAll",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Pageable",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Pageable",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "4a9bacf1-a47a-4a7f-85ea-5b44f5f01d6e",
+            "x-WM-FULLY_QUALIFIED_TYPE": "org.springframework.data.domain.Pageable"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Page",
+              "x-WM-TYPE_ARGUMENTS": [
+                {
+                  "$ref": "#/definitions/Vacation",
+                  "x-WM-TYPE_ARGUMENTS": []
+                }
+              ]
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "findAll",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Vacation",
+      "x-WM-TAG": "controller2.VacationController",
+      "x-WM-RELATIVE_PATH": "/search",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Vacation/search"
+    },
+    "/hrdb/Vacation/{id}": {
+      "get": {
+        "tags": [
+          "controller2.VacationController"
+        ],
+        "description": "Returns the Vacation instance associated with the given id.",
+        "operationId": "controller2.VacationController_getVacation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "81f03315-acdb-4108-8024-e517a4f1cae4",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Vacation",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "getVacation",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "put": {
+        "tags": [
+          "controller2.VacationController"
+        ],
+        "description": "Updates the Vacation instance associated with the given id.",
+        "operationId": "controller2.VacationController_editVacation_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "c38ca3c7-383d-4aea-88b1-9ced45408bdb",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          },
+          {
+            "in": "body",
+            "name": "Vacation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Vacation",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "d08cbf8d-6a55-4167-a326-9e36fd389c93",
+            "x-WM-FULLY_QUALIFIED_TYPE": "com.wavemaker.tools.apidocs.tools.spring.Vacation"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Vacation",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "editVacation",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "delete": {
+        "tags": [
+          "controller2.VacationController"
+        ],
+        "description": "Deletes the Vacation instance associated with the given id.",
+        "operationId": "controller2.VacationController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-WM-EDITABLE": true,
+            "x-WM-UUID": "5c97a9e5-44a3-4df1-bb9d-d087302622f4",
+            "x-WM-FULLY_QUALIFIED_TYPE": "java.lang.Integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        },
+        "x-WM-METHOD_NAME": "delete",
+        "x-WM-ACCESS_SPECIFIER": "APP_ONLY"
+      },
+      "x-WM-BASE_PATH": "/hrdb/Vacation",
+      "x-WM-TAG": "controller2.VacationController",
+      "x-WM-RELATIVE_PATH": "/{id}",
+      "x-WM-COMPLETE_PATH": "/test/hrdb/Vacation/{id}"
+    }
+  },
+  "definitions": {
+    "Locale": {
+      "properties": {
+        "localeExtensions": {
+          "$ref": "#/definitions/LocaleExtensions",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "hashCodeValue": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "languageTag": {
+          "type": "string"
+        },
+        "baseLocale": {
+          "$ref": "#/definitions/BaseLocale",
+          "x-WM-TYPE_ARGUMENTS": []
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.util.Locale",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "HttpHeaders": {
+      "properties": {
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/List",
+            "x-WM-TYPE_ARGUMENTS": []
+          }
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "org.springframework.http.HttpHeaders",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "ServletRequest": {
+      "properties": {
+        "contentLength": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "parameterNames": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "locale": {
+          "$ref": "#/definitions/Locale",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "parameterMap": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "attributeNames": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "characterEncoding": {
+          "type": "string"
+        },
+        "serverName": {
+          "type": "string"
+        },
+        "serverPort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "reader": {
+          "$ref": "#/definitions/BufferedReader",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "remoteAddr": {
+          "type": "string"
+        },
+        "remoteHost": {
+          "type": "string"
+        },
+        "locales": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "$ref": "#/definitions/Locale",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          ]
+        },
+        "secure": {
+          "type": "boolean"
+        },
+        "remotePort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "localName": {
+          "type": "string"
+        },
+        "localAddr": {
+          "type": "string"
+        },
+        "localPort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "servletContext": {
+          "$ref": "#/definitions/ServletContext",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "asyncStarted": {
+          "type": "boolean"
+        },
+        "asyncSupported": {
+          "type": "boolean"
+        },
+        "asyncContext": {
+          "$ref": "#/definitions/AsyncContext",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "dispatcherType": {
+          "type": "string",
+          "enum": [
+            "FORWARD",
+            "INCLUDE",
+            "REQUEST",
+            "ASYNC",
+            "ERROR"
+          ]
+        },
+        "scheme": {
+          "type": "string"
+        },
+        "inputStream": {
+          "$ref": "#/definitions/ServletInputStream",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "protocol": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.ServletRequest",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "ServletOutputStream": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OutputStream"
+        },
+        {}
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.ServletOutputStream",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "OutputStream": {
+      "x-WM-FULLY_QUALIFIED_NAME": "java.io.OutputStream",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Page": {
+      "properties": {
+        "sort": {
+          "$ref": "#/definitions/Sort",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "numberOfElements": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalElements": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "firstPage": {
+          "type": "boolean"
+        },
+        "lastPage": {
+          "type": "boolean"
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "content": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "$ref": "#/definitions/Object",
+            "x-WM-TYPE_ARGUMENTS": []
+          },
+          "x-WM-IS_LIST": true
+        },
+        "number": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "org.springframework.data.domain.Page",
+      "x-WM-TAGS": [
+        "UserController",
+        "DepartmentController",
+        "controller2.VacationController",
+        "EmployeeController"
+      ]
+    },
+    "CharsetEncoder": {
+      "properties": {
+        "malformedInputAction": {
+          "$ref": "#/definitions/CodingErrorAction",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "charset": {
+          "$ref": "#/definitions/Charset",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "unmappableCharacterAction": {
+          "$ref": "#/definitions/CodingErrorAction",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "replacement": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "type": "string",
+            "format": "byte"
+          }
+        },
+        "cachedDecoder": {
+          "$ref": "#/definitions/WeakReference",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "$ref": "#/definitions/CharsetDecoder",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          ]
+        },
+        "averageBytesPerChar": {
+          "type": "number",
+          "format": "float"
+        },
+        "state": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "maxBytesPerChar": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.nio.charset.CharsetEncoder",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "MultipartFile": {
+      "properties": {
+        "contentType": {
+          "type": "string"
+        },
+        "originalFilename": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "empty": {
+          "type": "boolean"
+        },
+        "bytes": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "type": "string",
+            "format": "byte"
+          }
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "inputStream": {
+          "$ref": "#/definitions/InputStream",
+          "x-WM-TYPE_ARGUMENTS": []
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "org.springframework.web.multipart.MultipartFile",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Department": {
+      "properties": {
+        "employees": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/Employee",
+            "x-WM-TYPE_ARGUMENTS": []
+          },
+          "x-WM-IS_LIST": true
+        },
+        "budget": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "deptid": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tenantid": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "deptcode": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "q1": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "q2": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "q3": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "q4": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.wavemaker.tools.apidocs.tools.spring.Department",
+      "x-WM-TAGS": [
+        "DepartmentController"
+      ]
+    },
+    "Pageable": {
+      "properties": {
+        "sort": {
+          "$ref": "#/definitions/Sort",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "org.springframework.data.domain.Pageable",
+      "x-WM-TAGS": [
+        "UserController",
+        "DepartmentController",
+        "controller2.VacationController",
+        "EmployeeController"
+      ]
+    },
+    "Sort": {
+      "properties": {
+        "orders": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "$ref": "#/definitions/Sort$Order",
+            "x-WM-TYPE_ARGUMENTS": []
+          },
+          "x-WM-IS_LIST": true
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "org.springframework.data.domain.Sort",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "List": {
+      "properties": {
+        "empty": {
+          "type": "boolean"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.util.List",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "JspConfigDescriptor": {
+      "properties": {
+        "jspPropertyGroups": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "$ref": "#/definitions/JspPropertyGroupDescriptor",
+            "x-WM-TYPE_ARGUMENTS": []
+          },
+          "x-WM-IS_LIST": true
+        },
+        "taglibs": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "$ref": "#/definitions/TaglibDescriptor",
+            "x-WM-TYPE_ARGUMENTS": []
+          },
+          "x-WM-IS_LIST": true
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.descriptor.JspConfigDescriptor",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Cookie": {
+      "properties": {
+        "secure": {
+          "type": "boolean"
+        },
+        "value": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "isHttpOnly": {
+          "type": "boolean"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "maxAge": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.http.Cookie",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Buffer": {
+      "properties": {
+        "address": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "capacity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "mark": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "position": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.nio.Buffer",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Vacation": {
+      "properties": {
+        "employee": {
+          "$ref": "#/definitions/Employee",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "startdate": {
+          "type": "string",
+          "format": "date",
+          "x-WM-SUB_FORMAT": "date"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "tenantid": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "enddate": {
+          "type": "string",
+          "format": "date",
+          "x-WM-SUB_FORMAT": "date"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.wavemaker.tools.apidocs.tools.spring.Vacation",
+      "x-WM-TAGS": [
+        "DepartmentController",
+        "VacationController",
+        "controller2.VacationController"
+      ]
+    },
+    "ServletConfig": {
+      "properties": {
+        "servletContext": {
+          "$ref": "#/definitions/ServletContext",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "initParameterNames": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "servletName": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.ServletConfig",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "WritableByteChannel": {
+      "properties": {
+        "open": {
+          "type": "boolean"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.nio.channels.WritableByteChannel",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Employee": {
+      "required": [
+        "birthDate",
+        "eid",
+        "firstname"
+      ],
+      "properties": {
+        "department": {
+          "$ref": "#/definitions/Department",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "employees": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/Employee",
+            "x-WM-TYPE_ARGUMENTS": []
+          },
+          "x-WM-IS_LIST": true
+        },
+        "state": {
+          "type": "string"
+        },
+        "tenantid": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "street": {
+          "type": "string"
+        },
+        "vacations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/Vacation",
+            "x-WM-TYPE_ARGUMENTS": []
+          },
+          "x-WM-IS_LIST": true
+        },
+        "picurl": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "twitterid": {
+          "type": "number",
+          "format": "double"
+        },
+        "employee": {
+          "$ref": "#/definitions/Employee",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "city": {
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "date",
+          "x-WM-SUB_FORMAT": "date"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "eid": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "zip": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.wavemaker.tools.apidocs.tools.spring.Employee",
+      "x-WM-TAGS": [
+        "DepartmentController",
+        "EmployeeController"
+      ]
+    },
+    "HttpSessionContext": {
+      "properties": {
+        "ids": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.http.HttpSessionContext",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Part": {
+      "properties": {
+        "contentType": {
+          "type": "string"
+        },
+        "headerNames": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "type": "string"
+          },
+          "x-WM-IS_LIST": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "inputStream": {
+          "$ref": "#/definitions/InputStream",
+          "x-WM-TYPE_ARGUMENTS": []
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.http.Part",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "TaglibDescriptor": {
+      "properties": {
+        "taglibLocation": {
+          "type": "string"
+        },
+        "taglibURI": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.descriptor.TaglibDescriptor",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Object": {
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "User": {
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "userid": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "tenantid": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "com.wavemaker.tools.apidocs.tools.spring.User",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "CodingErrorAction": {
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.nio.charset.CodingErrorAction",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Formatter": {
+      "properties": {
+        "l": {
+          "$ref": "#/definitions/Locale",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "lastException": {
+          "$ref": "#/definitions/IOException",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "a": {
+          "$ref": "#/definitions/Appendable",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "zero": {
+          "type": "string",
+          "maxLength": 1
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.util.Formatter",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Appendable": {
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "CharBuffer": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Buffer"
+        },
+        {
+          "properties": {
+            "offset": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "isReadOnly": {
+              "type": "boolean"
+            },
+            "hb": {
+              "type": "array",
+              "uniqueItems": false,
+              "items": {
+                "type": "string",
+                "maxLength": 1
+              }
+            }
+          }
+        }
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "java.nio.CharBuffer",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Reader": {
+      "properties": {
+        "lock": {
+          "$ref": "#/definitions/Object",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "skipBuffer": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "type": "string",
+            "maxLength": 1
+          }
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.io.Reader",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "AsyncContext": {
+      "properties": {
+        "timeout": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "request": {
+          "$ref": "#/definitions/ServletRequest",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "response": {
+          "$ref": "#/definitions/ServletResponse",
+          "x-WM-TYPE_ARGUMENTS": []
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.AsyncContext",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "JspPropertyGroupDescriptor": {
+      "properties": {
+        "buffer": {
+          "type": "string"
+        },
+        "isXml": {
+          "type": "string"
+        },
+        "elIgnored": {
+          "type": "string"
+        },
+        "scriptingInvalid": {
+          "type": "string"
+        },
+        "includeCodas": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "type": "string"
+          },
+          "x-WM-IS_LIST": true
+        },
+        "urlPatterns": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "type": "string"
+          },
+          "x-WM-IS_LIST": true
+        },
+        "deferredSyntaxAllowedAsLiteral": {
+          "type": "string"
+        },
+        "includePreludes": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "type": "string"
+          },
+          "x-WM-IS_LIST": true
+        },
+        "pageEncoding": {
+          "type": "string"
+        },
+        "trimDirectiveWhitespaces": {
+          "type": "string"
+        },
+        "defaultContentType": {
+          "type": "string"
+        },
+        "errorOnUndeclaredNamespace": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.descriptor.JspPropertyGroupDescriptor",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "BufferedWriter": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Writer"
+        },
+        {
+          "properties": {
+            "nextChar": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "out": {
+              "$ref": "#/definitions/Writer",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "cb": {
+              "type": "array",
+              "uniqueItems": false,
+              "items": {
+                "type": "string",
+                "maxLength": 1
+              }
+            },
+            "lineSeparator": {
+              "type": "string"
+            },
+            "nChars": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "java.io.BufferedWriter",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "LocaleExtensions": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "extensionMap": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/Extension",
+            "x-WM-TYPE_ARGUMENTS": []
+          }
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "sun.util.locale.LocaleExtensions",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "ServletInputStream": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/InputStream"
+        },
+        {}
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.ServletInputStream",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "WeakReference": {
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Iterator": {
+      "x-WM-FULLY_QUALIFIED_NAME": "java.util.Iterator",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Sort$Order": {
+      "properties": {
+        "direction": {
+          "type": "string",
+          "enum": [
+            "ASC",
+            "DESC"
+          ]
+        },
+        "property": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "org.springframework.data.domain.Sort.Order",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Servlet": {
+      "properties": {
+        "servletInfo": {
+          "type": "string"
+        },
+        "servletConfig": {
+          "$ref": "#/definitions/ServletConfig",
+          "x-WM-TYPE_ARGUMENTS": []
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.Servlet",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "ClassLoader": {
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "ServletContext": {
+      "properties": {
+        "majorVersion": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "minorVersion": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "contextPath": {
+          "type": "string"
+        },
+        "attributeNames": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "effectiveMajorVersion": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "effectiveMinorVersion": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "servlets": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "$ref": "#/definitions/Servlet",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          ]
+        },
+        "servletNames": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "serverInfo": {
+          "type": "string"
+        },
+        "initParameterNames": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "servletContextName": {
+          "type": "string"
+        },
+        "servletRegistrations": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/Object",
+            "x-WM-TYPE_ARGUMENTS": []
+          }
+        },
+        "filterRegistrations": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/Object",
+            "x-WM-TYPE_ARGUMENTS": []
+          }
+        },
+        "sessionCookieConfig": {
+          "$ref": "#/definitions/SessionCookieConfig",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "defaultSessionTrackingModes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "COOKIE",
+              "URL",
+              "SSL"
+            ]
+          },
+          "x-WM-IS_LIST": true
+        },
+        "effectiveSessionTrackingModes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "COOKIE",
+              "URL",
+              "SSL"
+            ]
+          },
+          "x-WM-IS_LIST": true
+        },
+        "jspConfigDescriptor": {
+          "$ref": "#/definitions/JspConfigDescriptor",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "classLoader": {
+          "$ref": "#/definitions/ClassLoader",
+          "x-WM-TYPE_ARGUMENTS": []
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.ServletContext",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "SessionCookieConfig": {
+      "properties": {
+        "comment": {
+          "type": "string"
+        },
+        "httpOnly": {
+          "type": "boolean"
+        },
+        "secure": {
+          "type": "boolean"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "maxAge": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.SessionCookieConfig",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "StreamEncoder": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Writer"
+        },
+        {
+          "properties": {
+            "cs": {
+              "$ref": "#/definitions/Charset",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "bb": {
+              "$ref": "#/definitions/ByteBuffer",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "leftoverChar": {
+              "type": "string",
+              "maxLength": 1
+            },
+            "isOpen": {
+              "type": "boolean"
+            },
+            "ch": {
+              "$ref": "#/definitions/WritableByteChannel",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "haveLeftoverChar": {
+              "type": "boolean"
+            },
+            "lcb": {
+              "$ref": "#/definitions/CharBuffer",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "encoder": {
+              "$ref": "#/definitions/CharsetEncoder",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "out": {
+              "$ref": "#/definitions/OutputStream",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        }
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "sun.nio.cs.StreamEncoder",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "PrintWriter": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Writer"
+        },
+        {
+          "properties": {
+            "formatter": {
+              "$ref": "#/definitions/Formatter",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "autoFlush": {
+              "type": "boolean"
+            },
+            "psOut": {
+              "$ref": "#/definitions/PrintStream",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "trouble": {
+              "type": "boolean"
+            },
+            "lineSeparator": {
+              "type": "string"
+            },
+            "out": {
+              "$ref": "#/definitions/Writer",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        }
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "java.io.PrintWriter",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "PrintStream": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/FilterOutputStream"
+        },
+        {
+          "properties": {
+            "formatter": {
+              "$ref": "#/definitions/Formatter",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "closing": {
+              "type": "boolean"
+            },
+            "autoFlush": {
+              "type": "boolean"
+            },
+            "charOut": {
+              "$ref": "#/definitions/OutputStreamWriter",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "trouble": {
+              "type": "boolean"
+            },
+            "textOut": {
+              "$ref": "#/definitions/BufferedWriter",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        }
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "java.io.PrintStream",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "ServletResponse": {
+      "properties": {
+        "contentType": {
+          "type": "string"
+        },
+        "outputStream": {
+          "$ref": "#/definitions/ServletOutputStream",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "locale": {
+          "$ref": "#/definitions/Locale",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "writer": {
+          "$ref": "#/definitions/PrintWriter",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "bufferSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "committed": {
+          "type": "boolean"
+        },
+        "characterEncoding": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.ServletResponse",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Enumeration": {
+      "x-WM-FULLY_QUALIFIED_NAME": "java.util.Enumeration",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "CharsetDecoder": {
+      "properties": {
+        "state": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "replacement": {
+          "type": "string"
+        },
+        "maxCharsPerByte": {
+          "type": "number",
+          "format": "float"
+        },
+        "charset": {
+          "$ref": "#/definitions/Charset",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "unmappableCharacterAction": {
+          "$ref": "#/definitions/CodingErrorAction",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "averageCharsPerByte": {
+          "type": "number",
+          "format": "float"
+        },
+        "malformedInputAction": {
+          "$ref": "#/definitions/CodingErrorAction",
+          "x-WM-TYPE_ARGUMENTS": []
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.nio.charset.CharsetDecoder",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "HttpSession": {
+      "properties": {
+        "creationTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "attributeNames": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "servletContext": {
+          "$ref": "#/definitions/ServletContext",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "lastAccessedTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "maxInactiveInterval": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sessionContext": {
+          "$ref": "#/definitions/HttpSessionContext",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "new": {
+          "type": "boolean"
+        },
+        "valueNames": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "javax.servlet.http.HttpSession",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "InputStream": {
+      "x-WM-FULLY_QUALIFIED_NAME": "java.io.InputStream",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Charset": {
+      "properties": {
+        "aliases": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "type": "string"
+          }
+        },
+        "aliasSet": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          },
+          "x-WM-IS_LIST": true
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.nio.charset.Charset",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "IOException": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Exception"
+        },
+        {}
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "java.io.IOException",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "ByteBuffer": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Buffer"
+        },
+        {
+          "properties": {
+            "hb": {
+              "type": "array",
+              "uniqueItems": false,
+              "items": {
+                "type": "string",
+                "format": "byte"
+              }
+            },
+            "offset": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "isReadOnly": {
+              "type": "boolean"
+            },
+            "bigEndian": {
+              "type": "boolean"
+            },
+            "nativeByteOrder": {
+              "type": "boolean"
+            }
+          }
+        }
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "java.nio.ByteBuffer",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Exception": {
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Extension": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string",
+          "maxLength": 1
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "sun.util.locale.Extension",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "StringBuffer": {
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "BufferedReader": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Reader"
+        },
+        {
+          "properties": {
+            "skipLF": {
+              "type": "boolean"
+            },
+            "nChars": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "cb": {
+              "type": "array",
+              "uniqueItems": false,
+              "items": {
+                "type": "string",
+                "maxLength": 1
+              }
+            },
+            "markedChar": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "markedSkipLF": {
+              "type": "boolean"
+            },
+            "nextChar": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "in": {
+              "$ref": "#/definitions/Reader",
+              "x-WM-TYPE_ARGUMENTS": []
+            },
+            "readAheadLimit": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "java.io.BufferedReader",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "OutputStreamWriter": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Writer"
+        },
+        {
+          "properties": {
+            "se": {
+              "$ref": "#/definitions/StreamEncoder",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        }
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "java.io.OutputStreamWriter",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "FilterOutputStream": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OutputStream"
+        },
+        {
+          "properties": {
+            "out": {
+              "$ref": "#/definitions/OutputStream",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          }
+        }
+      ],
+      "x-WM-FULLY_QUALIFIED_NAME": "java.io.FilterOutputStream",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Principal": {
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.security.Principal",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "Writer": {
+      "properties": {
+        "lock": {
+          "$ref": "#/definitions/Object",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "writeBuffer": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "type": "string",
+            "maxLength": 1
+          }
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "java.io.Writer",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "BaseLocale": {
+      "properties": {
+        "variant": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "script": {
+          "type": "string"
+        },
+        "hash": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "sun.util.locale.BaseLocale",
+      "x-WM-TAGS": [
+        "UserController"
+      ]
+    },
+    "MultipartHttpServletRequest": {
+      "properties": {
+        "requestHeaders": {
+          "$ref": "#/definitions/HttpHeaders",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "requestMethod": {
+          "type": "string",
+          "enum": [
+            "GET",
+            "HEAD",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE",
+            "OPTIONS",
+            "TRACE"
+          ]
+        },
+        "authType": {
+          "type": "string"
+        },
+        "cookies": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "$ref": "#/definitions/Cookie",
+            "x-WM-TYPE_ARGUMENTS": []
+          }
+        },
+        "headerNames": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "pathInfo": {
+          "type": "string"
+        },
+        "pathTranslated": {
+          "type": "string"
+        },
+        "contextPath": {
+          "type": "string"
+        },
+        "queryString": {
+          "type": "string"
+        },
+        "remoteUser": {
+          "type": "string"
+        },
+        "userPrincipal": {
+          "$ref": "#/definitions/Principal",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "requestedSessionId": {
+          "type": "string"
+        },
+        "requestURI": {
+          "type": "string"
+        },
+        "requestURL": {
+          "$ref": "#/definitions/StringBuffer",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "servletPath": {
+          "type": "string"
+        },
+        "session": {
+          "$ref": "#/definitions/HttpSession",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "requestedSessionIdValid": {
+          "type": "boolean"
+        },
+        "requestedSessionIdFromCookie": {
+          "type": "boolean"
+        },
+        "requestedSessionIdFromURL": {
+          "type": "boolean"
+        },
+        "requestedSessionIdFromUrl": {
+          "type": "boolean"
+        },
+        "parts": {
+          "type": "array",
+          "uniqueItems": false,
+          "items": {
+            "$ref": "#/definitions/Part",
+            "x-WM-TYPE_ARGUMENTS": []
+          },
+          "x-WM-IS_LIST": true
+        },
+        "method": {
+          "type": "string"
+        },
+        "contentLength": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "parameterNames": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "locale": {
+          "$ref": "#/definitions/Locale",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "parameterMap": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "attributeNames": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "characterEncoding": {
+          "type": "string"
+        },
+        "serverName": {
+          "type": "string"
+        },
+        "serverPort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "reader": {
+          "$ref": "#/definitions/BufferedReader",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "remoteAddr": {
+          "type": "string"
+        },
+        "remoteHost": {
+          "type": "string"
+        },
+        "locales": {
+          "$ref": "#/definitions/Enumeration",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "$ref": "#/definitions/Locale",
+              "x-WM-TYPE_ARGUMENTS": []
+            }
+          ]
+        },
+        "secure": {
+          "type": "boolean"
+        },
+        "remotePort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "localName": {
+          "type": "string"
+        },
+        "localAddr": {
+          "type": "string"
+        },
+        "localPort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "servletContext": {
+          "$ref": "#/definitions/ServletContext",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "asyncStarted": {
+          "type": "boolean"
+        },
+        "asyncSupported": {
+          "type": "boolean"
+        },
+        "asyncContext": {
+          "$ref": "#/definitions/AsyncContext",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "dispatcherType": {
+          "type": "string",
+          "enum": [
+            "FORWARD",
+            "INCLUDE",
+            "REQUEST",
+            "ASYNC",
+            "ERROR"
+          ]
+        },
+        "scheme": {
+          "type": "string"
+        },
+        "inputStream": {
+          "$ref": "#/definitions/ServletInputStream",
+          "x-WM-TYPE_ARGUMENTS": []
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "fileNames": {
+          "$ref": "#/definitions/Iterator",
+          "x-WM-TYPE_ARGUMENTS": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "multiFileMap": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/MultipartFile",
+            "x-WM-TYPE_ARGUMENTS": []
+          }
+        },
+        "fileMap": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/MultipartFile",
+            "x-WM-TYPE_ARGUMENTS": []
+          }
+        }
+      },
+      "x-WM-FULLY_QUALIFIED_NAME": "org.springframework.web.multipart.MultipartHttpServletRequest",
+      "x-WM-TAGS": [
+        "UserController",
+        "DepartmentController",
+        "controller2.VacationController",
+        "EmployeeController"
+      ]
+    }
+  }
+}

@@ -15,7 +15,6 @@
  */
 package com.wavemaker.tools.apidocs.tools.parser.impl;
 
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -42,6 +41,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 import com.wavemaker.tools.apidocs.tools.parser.parser.ModelParser;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
+import com.wavemaker.tools.apidocs.tools.parser.util.AnnotationUtils;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.MethodUtils;
@@ -147,6 +147,7 @@ public class ReflectionModelParser implements ModelParser {
             PropertyParser parser = new PropertyParserImpl(field.getGenericType());
             final Property property = parser.parse();
             property.setRequired(isRequired(field));
+            property.setReadOnly(isReadOnly(field));
             properties.put(findFieldName(field), property);
         }
         return properties;
@@ -154,8 +155,10 @@ public class ReflectionModelParser implements ModelParser {
 
     protected String findFieldName(Field field) {
         String name = field.getName();
-        if (field.isAnnotationPresent(JsonProperty.class)) {
-            final String value = field.getAnnotation(JsonProperty.class).value();
+        final Optional<JsonProperty> jsonPropertyOptional = AnnotationUtils
+                .findAnnotationForProperty(field, JsonProperty.class);
+        if (jsonPropertyOptional.isPresent()) {
+            final String value = jsonPropertyOptional.get().value();
             if (StringUtils.isNotBlank(value)) {
                 name = value;
             }
@@ -163,8 +166,32 @@ public class ReflectionModelParser implements ModelParser {
         return name;
     }
 
-    protected boolean isRequired(AnnotatedElement field) {
-        return field.isAnnotationPresent(NotNull.class);
+    protected boolean isReadOnly(Field field) {
+        boolean readOnly = false;
+
+        final Optional<JsonProperty> jsonPropertyOptional = AnnotationUtils
+                .findAnnotationForProperty(field, JsonProperty.class);
+
+        if (jsonPropertyOptional.isPresent()) {
+            final JsonProperty.Access access = jsonPropertyOptional.get().access();
+            readOnly = (access == JsonProperty.Access.READ_ONLY);
+        }
+
+        return readOnly;
+    }
+
+    protected boolean isRequired(Field field) {
+        boolean required = AnnotationUtils.findAnnotationForProperty(field, NotNull.class).isPresent();
+
+        if (!required) {
+            final Optional<JsonProperty> jsonPropertyOptional = AnnotationUtils
+                    .findAnnotationForProperty(field, JsonProperty.class);
+            if (jsonPropertyOptional.isPresent()) {
+                required = jsonPropertyOptional.get().required();
+            }
+        }
+
+        return required;
     }
 
     protected List<String> findRequiredFields(Map<String, Property> propertyMap) {
@@ -180,7 +207,6 @@ public class ReflectionModelParser implements ModelParser {
 
         return requiredFields;
     }
-
 
     protected void assertClass() {
         if (modelClass == null) {

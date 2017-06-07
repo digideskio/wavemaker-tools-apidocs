@@ -62,7 +62,7 @@ public interface Property {
 
     Boolean getReadOnly();
 
-    void setReadOnly(Boolean example);
+    void setReadOnly(Boolean readOnly);
 
     void setPosition(Integer position);
 

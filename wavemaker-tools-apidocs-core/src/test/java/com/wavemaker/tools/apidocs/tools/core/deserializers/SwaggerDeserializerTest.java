@@ -74,4 +74,11 @@ public class SwaggerDeserializerTest extends BaseDeserializerTest {
         Assert.assertNotNull(swagger);
         objectMapper.writeValue(new File("target", "weather_api.json"), swagger);
     }
+
+    @Test
+    public void deserializeParserGeneratedSwagger() throws IOException {
+        final Swagger swagger = objectMapper
+                .readValue(this.getClass().getResourceAsStream("/parser_generated_swagger.json"), Swagger.class);
+        Assert.assertNotNull(swagger);
+    }
 }
