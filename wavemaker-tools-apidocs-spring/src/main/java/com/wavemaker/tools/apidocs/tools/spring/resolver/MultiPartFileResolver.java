@@ -40,6 +40,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.properties.FileProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
 import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
+import com.wavemaker.tools.apidocs.tools.parser.util.Utils;
 import com.wavemaker.tools.apidocs.tools.spring.parser.SpringParameterParser;
 
 /**
@@ -61,7 +62,7 @@ public class MultiPartFileResolver implements ParameterResolver {
         Parameter parameter = parameterParser.parse();
 
         if (!(parameter instanceof BodyParameter)) {
-            final boolean array = typeInformation.isArray();
+            final boolean array = Utils.isArray(typeInformation);
             Property property = new FileProperty();
             property.setRequired(true);
             if (parameter instanceof FormParameter) {

@@ -15,10 +15,13 @@
  */
 package com.wavemaker.tools.apidocs.tools.parser.util;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -62,6 +65,15 @@ public class Utils {
             }
         }
         return superTypes;
+    }
+
+    public static boolean isArray(TypeInformation typeInfo) {
+        return typeInfo.isArray() || Collection.class.isAssignableFrom(typeInfo.getActualType());
+    }
+
+    public static Class<?> getArrayTypeArgument(TypeInformation typeInfo) {
+        return typeInfo.getTypeArguments().isEmpty() ? Object.class :
+                typeInfo.getTypeArguments().get(0);
     }
 
 

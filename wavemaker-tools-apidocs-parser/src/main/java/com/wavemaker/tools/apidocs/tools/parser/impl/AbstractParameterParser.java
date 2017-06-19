@@ -17,7 +17,6 @@ package com.wavemaker.tools.apidocs.tools.parser.impl;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,6 +49,7 @@ import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
+import com.wavemaker.tools.apidocs.tools.parser.util.Utils;
 import com.wordnik.swagger.annotations.ApiParam;
 
 /**
@@ -120,9 +120,9 @@ public abstract class AbstractParameterParser implements ParameterParser {
         }
 
         TypeInformation typeInformation = TypeUtil.extractTypeInformation(dataType);
-        if (typeInformation.isArray()) {
+        if (Utils.isArray(typeInformation)) {
             ((AbstractParameter) parameter).setFullyQualifiedType(DataTypeUtil.getFullyQualifiedName(
-                    typeInformation.getTypeArguments().get(0)));
+                    Utils.getArrayTypeArgument(typeInformation)));
         } else {
             ((AbstractParameter) parameter).setFullyQualifiedType(DataTypeUtil.getFullyQualifiedName(
                     typeInformation.getActualType()));
@@ -174,7 +174,7 @@ public abstract class AbstractParameterParser implements ParameterParser {
         TypeInformation typeInfo = TypeUtil.extractTypeInformation(dataType);
         Model schema = getModel(typeInfo);
         if (schema instanceof ArrayModel) {
-            parameter.name(ContextUtil.getUniqueName(typeInfo.getTypeArguments().get(0)));
+            parameter.name(ContextUtil.getUniqueName(Utils.getArrayTypeArgument(typeInfo)));
         } else {
             parameter.name(ContextUtil.getUniqueName(typeInfo.getActualType()));
         }
@@ -183,9 +183,9 @@ public abstract class AbstractParameterParser implements ParameterParser {
 
     protected Model getModel(final TypeInformation typeInfo) {
         Model schema = null;
-        if (typeInfo.isArray() || Collection.class.isAssignableFrom(typeInfo.getActualType())) {
+        if (Utils.isArray(typeInfo)) {
             schema = new ArrayModel();
-            PropertyParser propertyParser = new PropertyParserImpl(typeInfo.getTypeArguments().get(0));
+            PropertyParser propertyParser = new PropertyParserImpl(Utils.getArrayTypeArgument(typeInfo));
             ((ArrayModel) schema).items(propertyParser.parse());
             ((ArrayModel) schema).setIsList(!typeInfo.isArray());
         } else {

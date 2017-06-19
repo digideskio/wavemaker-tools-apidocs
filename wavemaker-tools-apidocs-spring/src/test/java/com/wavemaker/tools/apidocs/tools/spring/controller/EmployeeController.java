@@ -124,5 +124,12 @@ public class EmployeeController {
             @RequestParam(name = "required") String required) {
         return null;
     }
+
+    @RequestMapping(value = "/listType", method = RequestMethod.GET)
+    public Employee withListType(
+            @RequestParam(name = "list1", required = false) List list1,
+            @RequestParam(name = "list2", required = false) List<String> list2) {
+        return null;
+    }
 }
 

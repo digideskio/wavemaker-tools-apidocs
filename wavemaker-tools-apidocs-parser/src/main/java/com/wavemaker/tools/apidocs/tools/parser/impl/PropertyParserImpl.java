@@ -34,11 +34,11 @@ import org.apache.commons.lang3.ClassUtils;
 import com.wavemaker.tools.apidocs.tools.core.model.TypeInformation;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.*;
 import com.wavemaker.tools.apidocs.tools.core.utils.CollectionUtil;
-import com.wavemaker.tools.apidocs.tools.parser.exception.PropertyParserException;
 import com.wavemaker.tools.apidocs.tools.parser.parser.PropertyParser;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
+import com.wavemaker.tools.apidocs.tools.parser.util.Utils;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -63,14 +63,10 @@ public class PropertyParserImpl implements PropertyParser {
         Property property;
         TypeInformation typeInfo = TypeUtil.extractTypeInformation(type);
 
-        if (!typeInfo.getTypeArguments().isEmpty()) {
-            if (isArray(typeInfo)) {
-                property = feedArrayProperty(typeInfo);
-            } else if (Map.class.isAssignableFrom(typeInfo.getActualType())) {
-                property = feedMapProperty(typeInfo);
-            } else {
-                property = feedObjectProperty(typeInfo);
-            }
+        if (Utils.isArray(typeInfo)) {
+            property = feedArrayProperty(typeInfo);
+        } else if (Map.class.isAssignableFrom(typeInfo.getActualType())) {
+            property = feedMapProperty(typeInfo);
         } else {
             Class<?> actualType = typeInfo.getActualType();
             if (DataTypeUtil.isEnum(actualType) || String.class.equals(actualType)) {
@@ -100,32 +96,25 @@ public class PropertyParserImpl implements PropertyParser {
     }
 
     private Property feedArrayProperty(TypeInformation typeInformation) {
-        List<Class<?>> typeArguments = typeInformation.getTypeArguments();
-        if (CollectionUtil.isNotEmpty(typeArguments) && typeArguments.size() == 1) {
-            Class<?> typeArgument = typeArguments.get(0);
-            ArrayProperty property = new ArrayProperty(parseType(typeArgument));
+        Class<?> typeArgument = Utils.getArrayTypeArgument(typeInformation);
 
-            if (Collection.class.isAssignableFrom(typeInformation.getActualType())) {
-                property.setIsList(true);
-            }
+        ArrayProperty property = new ArrayProperty(parseType(typeArgument));
 
-            if (Set.class.isAssignableFrom(typeInformation.getActualType())) {
-                property.uniqueItems();
-            } // XXX think about remaining properties
-            return property;
+        if (Collection.class.isAssignableFrom(typeInformation.getActualType())) {
+            property.setIsList(true);
         }
-        throw new PropertyParserException("Not a valid array type property, No Type arguments available (or) More " +
-                "than 1 type arguments available for type:" + typeArguments);
+
+        if (Set.class.isAssignableFrom(typeInformation.getActualType())) {
+            property.uniqueItems();
+        }
+        return property;
     }
 
     private Property feedMapProperty(TypeInformation typeInfo) {
         List<Class<?>> typeArguments = typeInfo.getTypeArguments();
-        if (CollectionUtil.isNotEmpty(typeArguments) && typeArguments.size() == 2) {
-            // 0:key, 1:value            Key:String (by default)
-            return new MapProperty(parseType(typeArguments.get(1)));
-        }
-        throw new PropertyParserException("Not a valid map type property, No Type arguments available (or) More " +
-                "than 2 type arguments available for type:" + typeArguments);
+        Class<?> valueType = CollectionUtil.isEmpty(typeArguments) ? Object.class : typeArguments.get(1);
+        // 0:key, 1:value            Key:String (by default)
+        return new MapProperty(parseType(valueType));
     }
 
     private Property feedPrimitiveProperty(Class<?> type) {
@@ -176,9 +165,5 @@ public class PropertyParserImpl implements PropertyParser {
 
         refProperty.setTypeArguments(typeArgProps);
         return refProperty;
-    }
-
-    private boolean isArray(TypeInformation typeInformation) {
-        return (typeInformation.isArray() || Collection.class.isAssignableFrom(typeInformation.getActualType()));
     }
 }

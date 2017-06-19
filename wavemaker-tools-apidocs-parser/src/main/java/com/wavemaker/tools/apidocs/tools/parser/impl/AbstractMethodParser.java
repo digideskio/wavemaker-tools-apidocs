@@ -42,6 +42,7 @@ import com.wavemaker.tools.apidocs.tools.parser.resolver.ParameterResolver;
 import com.wavemaker.tools.apidocs.tools.parser.util.ContextUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.DataTypeUtil;
 import com.wavemaker.tools.apidocs.tools.parser.util.TypeUtil;
+import com.wavemaker.tools.apidocs.tools.parser.util.Utils;
 import com.wordnik.swagger.annotations.ApiOperation;
 import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
@@ -116,7 +117,7 @@ public abstract class AbstractMethodParser implements MethodParser {
             for (int i = 0; i < types.length; i++) {
                 Type type = types[i];
                 final TypeInformation typeInformation = TypeUtil.extractTypeInformation(type);
-                Class<?> actualType = typeInformation.isArray() ? typeInformation.getTypeArguments().get(0)
+                Class<?> actualType = Utils.isArray(typeInformation) ? Utils.getArrayTypeArgument(typeInformation)
                         : typeInformation.getActualType();
                 ParameterResolver resolver = ContextUtil.getConfiguration().getParameterResolvers()
                         .getResolver(actualType);
