@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class IntegerProperty extends AbstractNumericProperty implements Property {
+public class IntegerProperty extends AbstractNumericProperty {
     public static final String TYPE = "integer";
 
     public IntegerProperty() {

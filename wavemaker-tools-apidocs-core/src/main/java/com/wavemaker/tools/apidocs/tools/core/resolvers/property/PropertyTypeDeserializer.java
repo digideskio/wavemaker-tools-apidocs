@@ -18,19 +18,15 @@ package com.wavemaker.tools.apidocs.tools.core.resolvers.property;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.BeanProperty;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
-import com.fasterxml.jackson.databind.jsontype.TypeIdResolver;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.*;
-import com.wavemaker.tools.apidocs.tools.core.resolvers.CustomAsTypeDeserializer;
+import com.wavemaker.tools.apidocs.tools.core.resolvers.ExtendedStdDeserializer;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 26/3/15
  */
-public class PropertyTypeDeserializer extends CustomAsTypeDeserializer {
+public class PropertyTypeDeserializer extends ExtendedStdDeserializer<Property> {
 
     private static final Map<String, Class<? extends Property>> subTypesMap = new HashMap<>();
 
@@ -52,18 +48,13 @@ public class PropertyTypeDeserializer extends CustomAsTypeDeserializer {
 
     public static final String NULL = "null";
 
-    public PropertyTypeDeserializer(final PropertyTypeDeserializer src, final BeanProperty property) {
-        super(src, property);
+    public PropertyTypeDeserializer() {
+        super(Property.class);
     }
 
-    public PropertyTypeDeserializer(
-            final JavaType bt, final TypeIdResolver idRes,
-            final String typePropertyName, final boolean typeIdVisible, final Class<?> defaultImpl) {
-        super(bt, idRes, typePropertyName, typeIdVisible, defaultImpl);
-    }
 
     @Override
-    protected Class<?> findSubType(JsonNode node) {
+    protected Class<? extends Property> findSubType(ObjectNode node) {
         Class<? extends Property> subType = null;
         if (node.get("format") != null) {
             String format = node.get("format").asText();
@@ -100,10 +91,5 @@ public class PropertyTypeDeserializer extends CustomAsTypeDeserializer {
         }
 
         return subType;
-    }
-
-    @Override
-    protected TypeDeserializer newInstance(final BeanProperty property) {
-        return new PropertyTypeDeserializer(this, property);
     }
 }

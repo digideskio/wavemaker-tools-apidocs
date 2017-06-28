@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class BooleanProperty extends AbstractProperty implements Property {
+public class BooleanProperty extends AbstractProperty {
 
     public static final String TYPE = "boolean";
 

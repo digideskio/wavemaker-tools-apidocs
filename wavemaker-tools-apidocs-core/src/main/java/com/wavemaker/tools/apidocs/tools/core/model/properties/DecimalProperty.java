@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class DecimalProperty extends AbstractNumericProperty implements Property {
+public class DecimalProperty extends AbstractNumericProperty {
     public static final String TYPE = "number";
 
     public DecimalProperty() {

@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class FloatProperty extends AbstractNumericProperty implements Property {
+public class FloatProperty extends AbstractNumericProperty {
     public FloatProperty() {
         super.type = "number";
         super.format = "float";

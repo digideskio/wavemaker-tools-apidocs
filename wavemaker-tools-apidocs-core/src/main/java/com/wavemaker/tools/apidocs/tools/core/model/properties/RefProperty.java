@@ -25,7 +25,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
 import com.wavemaker.tools.apidocs.tools.core.utils.JsonUtils;
 
-public class RefProperty extends AbstractProperty implements Property {
+public class RefProperty extends AbstractProperty {
     public static final String TYPE_ARGUMENTS_EXT = "TYPE_ARGUMENTS";
 
     private static final TypeReference<List<Property>> propertyListTypeRef = new TypeReference<List<Property>>() {

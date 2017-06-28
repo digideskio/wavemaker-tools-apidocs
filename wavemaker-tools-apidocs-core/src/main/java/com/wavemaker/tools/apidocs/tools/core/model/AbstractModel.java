@@ -25,8 +25,10 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.collect.Sets;
 
+@JsonDeserialize
 public abstract class AbstractModel implements Model, ExtensibleEntity {
     private static final String TAG_EXT = "TAGS";
     private static final String FULLY_QUALIFIED_NAME_EXT = "FULLY_QUALIFIED_NAME";

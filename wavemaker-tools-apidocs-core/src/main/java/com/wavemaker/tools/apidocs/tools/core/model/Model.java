@@ -18,14 +18,12 @@ package com.wavemaker.tools.apidocs.tools.core.model;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonTypeResolver;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
-import com.wavemaker.tools.apidocs.tools.core.resolvers.model.ModelTypeResolver;
+import com.wavemaker.tools.apidocs.tools.core.resolvers.model.ModelTypeDeserializer;
 
+@JsonDeserialize(using = ModelTypeDeserializer.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
-@JsonTypeResolver(ModelTypeResolver.class)
 public interface Model {
     String getDescription();
 

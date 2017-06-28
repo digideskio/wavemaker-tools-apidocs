@@ -19,7 +19,7 @@ import java.util.List;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class UUIDProperty extends AbstractProperty implements Property {
+public class UUIDProperty extends AbstractProperty {
     protected List<String> _enum;
     protected Integer minLength = null, maxLength = null;
     protected String pattern = null;

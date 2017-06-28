@@ -17,14 +17,11 @@ package com.wavemaker.tools.apidocs.tools.core.model.parameters;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonTypeResolver;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.wavemaker.tools.apidocs.tools.core.model.ExtensibleEntity;
-import com.wavemaker.tools.apidocs.tools.core.resolvers.parameter.ParameterTypeResolver;
+import com.wavemaker.tools.apidocs.tools.core.resolvers.parameter.ParameterTypeDeserializer;
 
-
-@JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
-@JsonTypeResolver(ParameterTypeResolver.class)
+@JsonDeserialize(using = ParameterTypeDeserializer.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public interface Parameter extends ExtensibleEntity {
     String getIn();

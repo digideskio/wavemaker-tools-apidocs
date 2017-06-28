@@ -16,7 +16,7 @@
 package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 
-public abstract class AbstractNumericProperty extends AbstractProperty implements Property {
+public abstract class AbstractNumericProperty extends AbstractProperty {
     protected Double minimum = null, maximum = null, exclusiveMinimum = null, exclusiveMaximum = null;
 
     public AbstractNumericProperty minimum(Double minimum) {

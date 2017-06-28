@@ -15,12 +15,10 @@
  */
 package com.wavemaker.tools.apidocs.tools.core.deserializers;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -39,12 +37,10 @@ public class ModelDeserializerTest extends BaseDeserializerTest {
 
     @Test
     public void deserializerTest() throws IOException {
-        TypeReference<Map<String, Model>> propertyTypeReference = new TypeReference<Map<String, Model>>() {
+        TypeReference<Map<String, Model>> modelTypeReference = new TypeReference<Map<String, Model>>() {
         };
         InputStream inputStream = this.getClass().getResourceAsStream(TEST_JSON_FILE);
-        Map<String, Model> modelMap = objectMapper.readValue(inputStream, propertyTypeReference);
-        Assert.assertNotNull(modelMap);
-        objectMapper.writeValue(new File("target", "test_model.json"), modelMap);
+        test(inputStream, modelTypeReference);
     }
 
 }

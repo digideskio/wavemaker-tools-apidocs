@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class DoubleProperty extends AbstractNumericProperty implements Property {
+public class DoubleProperty extends AbstractNumericProperty {
     public DoubleProperty() {
         super.type = "number";
         super.format = "double";

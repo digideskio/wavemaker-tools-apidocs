@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class LongProperty extends AbstractNumericProperty implements Property {
+public class LongProperty extends AbstractNumericProperty {
     public LongProperty() {
         super.type = "integer";
         super.format = "int64";

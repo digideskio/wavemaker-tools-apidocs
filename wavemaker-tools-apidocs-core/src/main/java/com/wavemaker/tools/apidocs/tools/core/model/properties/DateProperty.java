@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class DateProperty extends AbstractProperty implements Property {
+public class DateProperty extends AbstractProperty {
     public DateProperty() {
         super.type = "string";
         super.format = "date";

@@ -16,15 +16,17 @@
 package com.wavemaker.tools.apidocs.tools.core.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonTypeResolver;
-import com.wavemaker.tools.apidocs.tools.core.resolvers.security.SecuritySchemDefinitionTypeResolver;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
-@JsonTypeResolver(SecuritySchemDefinitionTypeResolver.class)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(name = "basic", value = BasicAuthDefinition.class),
+        @JsonSubTypes.Type(name = "apiKey", value = ApiKeyAuthDefinition.class),
+        @JsonSubTypes.Type(name = "oauth2", value = OAuth2Definition.class)})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public interface SecuritySchemeDefinition {
-	String getType();
+    String getType();
 
     void setType(String type);
 }

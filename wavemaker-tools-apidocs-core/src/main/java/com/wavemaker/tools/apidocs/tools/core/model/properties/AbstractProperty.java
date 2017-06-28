@@ -21,10 +21,12 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.wavemaker.tools.apidocs.tools.core.model.ExtensibleEntity;
 import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
+@JsonDeserialize()
 public abstract class AbstractProperty implements Property, ExtensibleEntity {
 
     private static final String SUB_FORMAT_EXT = "SUB_FORMAT";

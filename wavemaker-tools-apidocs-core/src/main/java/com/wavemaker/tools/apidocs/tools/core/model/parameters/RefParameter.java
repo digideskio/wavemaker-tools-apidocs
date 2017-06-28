@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.parameters;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class RefParameter extends AbstractParameter implements Parameter {
+public class RefParameter extends AbstractParameter {
     String ref;
 
     public RefParameter(String ref) {

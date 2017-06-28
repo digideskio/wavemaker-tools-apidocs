@@ -19,11 +19,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class ArrayProperty extends AbstractProperty implements Property {
+public class ArrayProperty extends AbstractProperty {
     public static final String IS_LIST_EXT = "IS_LIST";
     public static final String TYPE = "array";
 
-    protected Boolean uniqueItems = false;
+    protected Boolean uniqueItems;
     protected Property items;
 
     public ArrayProperty() {

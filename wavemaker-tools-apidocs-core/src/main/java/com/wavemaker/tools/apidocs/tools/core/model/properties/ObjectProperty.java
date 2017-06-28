@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class ObjectProperty extends AbstractProperty implements Property {
+public class ObjectProperty extends AbstractProperty {
     public ObjectProperty() {
         super.type = "object";
     }

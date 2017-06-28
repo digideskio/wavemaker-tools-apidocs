@@ -15,7 +15,6 @@
  */
 package com.wavemaker.tools.apidocs.tools.core.deserializers;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
@@ -26,9 +25,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.ArrayProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
+import com.wavemaker.tools.apidocs.tools.core.model.properties.RefProperty;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.StringProperty;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
@@ -46,18 +47,18 @@ public class PropertyDeserializerTest extends BaseDeserializerTest {
         TypeReference<Map<String, Property>> propertyTypeReference = new TypeReference<Map<String, Property>>() {
         };
         InputStream inputStream = this.getClass().getResourceAsStream(TEST_JSON_FILE);
-        Map<String, Property> propertyMap = objectMapper.readValue(inputStream, propertyTypeReference);
-        assertNotNull(propertyMap);
-        objectMapper.writeValue(new File("target", "test_properties.json"), propertyMap);
+
+        final Map<String, Property> propertyMap = test(inputStream, propertyTypeReference);
+
+        assertTrue(!propertyMap.isEmpty());
     }
 
     @Test
     public void deserializerTypeArgsTest() throws IOException {
-
         InputStream inputStream = this.getClass().getResourceAsStream("/test_properties_type_args.json");
-        Property property = objectMapper.readValue(inputStream, Property.class);
-        assertNotNull(property);
-        objectMapper.writeValue(new File("target", "test_properties_type_args.json"), property);
+
+        final Property property = test(inputStream, Property.class);
+        assertTrue(property instanceof RefProperty);
     }
 
     @Test

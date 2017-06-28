@@ -17,8 +17,10 @@ package com.wavemaker.tools.apidocs.tools.core.model.parameters;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 
+@JsonDeserialize
 public interface SerializableParameter extends Parameter {
     String getType();
 

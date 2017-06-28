@@ -21,8 +21,10 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
 
+@JsonDeserialize
 public abstract class AbstractParameter implements Parameter {
     public static final String EDITABLE_EXT = "EDITABLE";
     public static final String RESOLVER_EXT = "RESOLVER";

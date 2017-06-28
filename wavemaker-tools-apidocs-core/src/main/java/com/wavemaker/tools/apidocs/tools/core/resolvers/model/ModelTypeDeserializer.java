@@ -15,35 +15,26 @@
  */
 package com.wavemaker.tools.apidocs.tools.core.resolvers.model;
 
-import com.fasterxml.jackson.databind.BeanProperty;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
-import com.fasterxml.jackson.databind.jsontype.TypeIdResolver;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.wavemaker.tools.apidocs.tools.core.model.ArrayModel;
 import com.wavemaker.tools.apidocs.tools.core.model.ComposedModel;
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
 import com.wavemaker.tools.apidocs.tools.core.model.ModelImpl;
 import com.wavemaker.tools.apidocs.tools.core.model.RefModel;
-import com.wavemaker.tools.apidocs.tools.core.resolvers.CustomAsTypeDeserializer;
+import com.wavemaker.tools.apidocs.tools.core.resolvers.ExtendedStdDeserializer;
 
 /**
  * @author <a href="mailto:dilip.gundu@wavemaker.com">Dilip Kumar</a>
  * @since 27/3/15
  */
-public class ModelTypeDeserializer extends CustomAsTypeDeserializer {
-    public ModelTypeDeserializer(
-            final JavaType bt, final TypeIdResolver idRes,
-            final String typePropertyName, final boolean typeIdVisible, final Class<?> defaultImpl) {
-        super(bt, idRes, typePropertyName, typeIdVisible, defaultImpl);
-    }
+public class ModelTypeDeserializer extends ExtendedStdDeserializer<Model> {
 
-    public ModelTypeDeserializer(final ModelTypeDeserializer src, final BeanProperty property) {
-        super(src, property);
+    public ModelTypeDeserializer() {
+        super(Model.class);
     }
 
     @Override
-    protected Class<?> findSubType(final JsonNode node) {
+    protected Class<? extends Model> findSubType(final ObjectNode node) {
         Class<? extends Model> subType;
 
         if (node.get("$ref") != null) {
@@ -64,10 +55,4 @@ public class ModelTypeDeserializer extends CustomAsTypeDeserializer {
 
         return subType;
     }
-
-    @Override
-    protected TypeDeserializer newInstance(final BeanProperty property) {
-        return new ModelTypeDeserializer(this, property);
-    }
-
 }

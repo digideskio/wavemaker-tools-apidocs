@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class MapProperty extends AbstractProperty implements Property {
+public class MapProperty extends AbstractProperty {
     Property property;
 
     public MapProperty() {

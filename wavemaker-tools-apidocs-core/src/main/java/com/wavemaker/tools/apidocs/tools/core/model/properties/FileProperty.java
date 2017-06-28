@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.properties;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class FileProperty extends AbstractProperty implements Property {
+public class FileProperty extends AbstractProperty {
     public FileProperty() {
         super.type = "file";
     }

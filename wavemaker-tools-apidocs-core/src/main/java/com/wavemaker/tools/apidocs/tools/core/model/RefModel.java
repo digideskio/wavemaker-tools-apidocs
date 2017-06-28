@@ -27,9 +27,11 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.Property;
 import com.wavemaker.tools.apidocs.tools.core.model.properties.RefProperty;
 
+@JsonDeserialize
 public class RefModel implements Model, ExtensibleEntity {
 
     private static final ObjectMapper objectMapper = new ObjectMapper(); // configuration shared across objects.

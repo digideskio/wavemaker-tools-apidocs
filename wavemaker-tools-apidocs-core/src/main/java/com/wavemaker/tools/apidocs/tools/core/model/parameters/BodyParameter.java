@@ -17,7 +17,7 @@ package com.wavemaker.tools.apidocs.tools.core.model.parameters;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Model;
 
-public class BodyParameter extends AbstractParameter implements Parameter {
+public class BodyParameter extends AbstractParameter {
     Model schema;
 
     public BodyParameter() {

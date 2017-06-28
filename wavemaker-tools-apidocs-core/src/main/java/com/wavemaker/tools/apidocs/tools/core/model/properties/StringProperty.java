@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.wavemaker.tools.apidocs.tools.core.model.Xml;
 
-public class StringProperty extends AbstractProperty implements Property {
+public class StringProperty extends AbstractProperty {
     public static final String TYPE = "string";
 
     protected List<String> _enum;

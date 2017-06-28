@@ -15,15 +15,12 @@
  */
 package com.wavemaker.tools.apidocs.tools.core.deserializers;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Test;
 
 import com.wavemaker.tools.apidocs.tools.core.model.parameters.Parameter;
-
-import static junit.framework.TestCase.assertNotNull;
 
 /**
  * @author <a href="mailto:nishanth.modhugu@wavemaker.com">Nishanth Reddy</a>
@@ -41,9 +38,6 @@ public class ParameterDeserializerTest extends BaseDeserializerTest {
     public void deserializerTest() throws IOException {
         InputStream inputStream = this.getClass().getResourceAsStream(
                 TEST_JSON_FILE);
-        Parameter parameter = objectMapper.readValue(inputStream,
-                Parameter.class);
-	    assertNotNull(parameter);
-        objectMapper.writeValue(new File("target", "test_parameters.json"), parameter);
+        test(inputStream, Parameter.class);
     }
 }
