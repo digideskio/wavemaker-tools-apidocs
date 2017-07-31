@@ -20,9 +20,14 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wavemaker.tools.apidocs.tools.core.model.ExtensibleEntity;
+import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
 
-public class OAuth2Definition implements SecuritySchemeDefinition {
+public class OAuth2Definition implements SecuritySchemeDefinition, ExtensibleEntity {
     private Map<String, Object> vendorExtensions = new HashMap<>();
+    private static final String PROVIDER_ID = "providerId";
+
 
     private String type = "oauth2";
     private String authorizationUrl;
@@ -107,6 +112,16 @@ public class OAuth2Definition implements SecuritySchemeDefinition {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @JsonIgnore
+    public String getProviderId() {
+        return (String) VendorUtils.getWMExtension(this, PROVIDER_ID);
+    }
+
+    @JsonIgnore
+    public void setProviderId(String providerId) {
+        VendorUtils.addWMExtension(this, PROVIDER_ID, providerId);
     }
 
     @JsonAnyGetter
