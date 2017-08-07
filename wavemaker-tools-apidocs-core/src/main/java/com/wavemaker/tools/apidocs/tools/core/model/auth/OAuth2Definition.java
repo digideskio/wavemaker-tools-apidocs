@@ -26,7 +26,7 @@ import com.wavemaker.tools.apidocs.tools.core.model.VendorUtils;
 
 public class OAuth2Definition implements SecuritySchemeDefinition, ExtensibleEntity {
     private Map<String, Object> vendorExtensions = new HashMap<>();
-    private static final String PROVIDER_ID = "providerId";
+    private static final String PROVIDER_ID = "PROVIDER_ID";
 
 
     private String type = "oauth2";
