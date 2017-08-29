@@ -34,6 +34,8 @@ public class OAuth2Definition implements SecuritySchemeDefinition, ExtensibleEnt
     private String tokenUrl;
     private String flow;
     private Map<String, String> scopes;
+    private String sendAccessTokenAs;
+    private String accessTokenParamName;
 
     public OAuth2Definition() {
     }
@@ -112,6 +114,22 @@ public class OAuth2Definition implements SecuritySchemeDefinition, ExtensibleEnt
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getSendAccessTokenAs() {
+        return sendAccessTokenAs;
+    }
+
+    public void setSendAccessTokenAs(String sendAccessTokenAs) {
+        this.sendAccessTokenAs = sendAccessTokenAs;
+    }
+
+    public String getAccessTokenParamName() {
+        return accessTokenParamName;
+    }
+
+    public void setAccessTokenParamName(String accessTokenParamName) {
+        this.accessTokenParamName = accessTokenParamName;
     }
 
     @JsonIgnore
